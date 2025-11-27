@@ -7,7 +7,87 @@ import {
 import { db } from '../firebase/firebase.config';
 import type { Order, OrderStatus, OrderItem, CustomerInfo, Address } from '../types';
 
-// All sample data removed. No customers, addresses, or products are preloaded.
+// --- Sample Data for Demo Orders ---
+const sampleCustomers: CustomerInfo[] = [
+  {
+    id: 'cust1',
+    firstName: 'Alice',
+    lastName: 'Smith',
+    email: 'alice@example.com',
+    phone: '555-1234',
+    avatar: '',
+    joinedAt: new Date(),
+    totalOrders: 5,
+    totalSpent: 500,
+  },
+  {
+    id: 'cust2',
+    firstName: 'Bob',
+    lastName: 'Johnson',
+    email: 'bob@example.com',
+    phone: '555-5678',
+    avatar: '',
+    joinedAt: new Date(),
+    totalOrders: 2,
+    totalSpent: 120,
+  },
+  {
+    id: 'cust3',
+    firstName: 'Carol',
+    lastName: 'Williams',
+    email: 'carol@example.com',
+    phone: '555-8765',
+    avatar: '',
+    joinedAt: new Date(),
+    totalOrders: 8,
+    totalSpent: 900,
+  },
+];
+
+const sampleAddresses: Address[] = [
+  {
+    street: '123 Main St',
+    city: 'Springfield',
+    state: 'IL',
+    postalCode: '62701',
+    country: 'USA',
+  },
+  {
+    street: '456 Oak Ave',
+    city: 'Centerville',
+    state: 'CA',
+    postalCode: '90210',
+    country: 'USA',
+  },
+  {
+    street: '789 Pine Rd',
+    city: 'Lakeview',
+    state: 'NY',
+    postalCode: '10001',
+    country: 'USA',
+  },
+];
+
+const sampleProducts: Omit<OrderItem, 'quantity' | 'selectedSize' | 'selectedColor'>[] = [
+  {
+    id: 'prod1',
+    name: 'Wireless Headphones',
+    price: 199.99,
+    image: 'https://via.placeholder.com/400x400?text=Headphones',
+  },
+  {
+    id: 'prod2',
+    name: 'Smart Watch Pro',
+    price: 299.99,
+    image: 'https://via.placeholder.com/400x400?text=Smart+Watch',
+  },
+  {
+    id: 'prod3',
+    name: 'Organic Cotton T-Shirt',
+    price: 29.99,
+    image: 'https://via.placeholder.com/400x400?text=T-Shirt',
+  },
+];
     category: 'Electronics',
     images: ['https://via.placeholder.com/400x400?text=Headphones'],
     stock: 50,
