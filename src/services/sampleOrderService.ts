@@ -88,50 +88,6 @@ const sampleProducts: Omit<OrderItem, 'quantity' | 'selectedSize' | 'selectedCol
     image: 'https://via.placeholder.com/400x400?text=T-Shirt',
   },
 ];
-    category: 'Electronics',
-    images: ['https://via.placeholder.com/400x400?text=Headphones'],
-    stock: 50,
-    rating: 4.5,
-    reviewCount: 127,
-    features: ['Noise Canceling', 'Bluetooth 5.0', '30-hour battery'],
-    tags: ['electronics', 'audio', 'wireless'],
-    featured: true,
-    createdAt: new Date(),
-    updatedAt: new Date()
-  },
-  {
-    id: 'prod2',
-    name: 'Smart Watch Pro',
-    description: 'Advanced fitness tracking smartwatch',
-    price: 299.99,
-    category: 'Electronics',
-    images: ['https://via.placeholder.com/400x400?text=Smart+Watch'],
-    stock: 30,
-    rating: 4.7,
-    reviewCount: 89,
-    features: ['Heart Rate Monitor', 'GPS', 'Water Resistant'],
-    tags: ['electronics', 'fitness', 'smartwatch'],
-    featured: true,
-    createdAt: new Date(),
-    updatedAt: new Date()
-  },
-  {
-    id: 'prod3',
-    name: 'Organic Cotton T-Shirt',
-    description: 'Comfortable organic cotton t-shirt',
-    price: 29.99,
-    category: 'Clothing',
-    images: ['https://via.placeholder.com/400x400?text=T-Shirt'],
-    stock: 100,
-    rating: 4.3,
-    reviewCount: 67,
-    features: ['Organic Cotton', 'Pre-shrunk', 'Machine Washable'],
-    tags: ['clothing', 'organic', 'casual'],
-    featured: false,
-    createdAt: new Date(),
-    updatedAt: new Date()
-  }
-];
 
 const generateOrderNumber = () => {
   const timestamp = Date.now().toString().slice(-6);

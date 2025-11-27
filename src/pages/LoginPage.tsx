@@ -2,14 +2,13 @@ import React, { useState } from 'react';
 import { Container, Row, Col, Card, Form, Button, Alert, Spinner } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
-import { useToast } from '../hooks/useToast';
 
 const LoginPage: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const { currentUser, login, logout } = useAuth();
+  const { currentUser, login } = useAuth();
   // const { showToast } = useToast();
   const navigate = useNavigate();
 
@@ -44,17 +43,7 @@ const LoginPage: React.FC = () => {
     setLoading(false);
   };
 
-  const handleGoogleSignIn = async () => {
-    try {
-      setError('');
-      setLoading(true);
-      await googleSignIn();
-    } catch (error) {
-      console.error('Google sign in error:', error);
-      setError('Failed to sign in with Google');
-    }
-    setLoading(false);
-  };
+  
 
   return (
     <Container className="py-5">

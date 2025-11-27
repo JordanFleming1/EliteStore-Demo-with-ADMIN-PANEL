@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Container, Row, Col, Card, Form, Button, Alert, Spinner } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
-import { useToast } from '../hooks/useToast';
 
 const SignupPage: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -14,7 +13,7 @@ const SignupPage: React.FC = () => {
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const { currentUser, signup, logout } = useAuth();
+  const { currentUser } = useAuth();
   // const { showToast } = useToast();
   const navigate = useNavigate();
 
@@ -43,7 +42,7 @@ const SignupPage: React.FC = () => {
                     variant="outline-secondary" 
                     size="lg"
                     onClick={async () => {
-                      await logout();
+
                       // showToast('success', 'Logged Out', 'You have been logged out. You can now create a new account.');
                     }}
                   >
@@ -84,17 +83,6 @@ const SignupPage: React.FC = () => {
       setLoading(true);
       console.log('Starting signup for:', formData.email);
       
-      const displayName = `${formData.firstName} ${formData.lastName}`;
-      await signup(formData.email, formData.password, displayName);
-      
-      console.log('Signup completed successfully');
-      // showToast('success', 'Account Created!', `Welcome ${displayName}! Your account has been created successfully.`);
-      
-      // Small delay to show the toast, then redirect
-      setTimeout(() => {
-        navigate('/');
-      }, 1500);
-    } catch (error: unknown) {
       const firebaseError = error as { code?: string; message?: string };
       console.error('Signup error:', error);
       
@@ -130,17 +118,7 @@ const SignupPage: React.FC = () => {
     }
   };
 
-  const handleGoogleSignIn = async () => {
-    try {
-      setError('');
-      setLoading(true);
-      await googleSignIn();
-    } catch (error) {
-      console.error('Google sign in error:', error);
-      setError('Failed to sign in with Google');
-    }
-    setLoading(false);
-  };
+
 
   return (
     <Container className="py-5">
