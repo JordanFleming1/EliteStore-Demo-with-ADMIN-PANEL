@@ -1,0 +1,45 @@
+Firebase Storage Security Rules for your project:
+
+Go to Firebase Console → Storage → Rules and replace the current rules with:
+
+```
+rules_version = '2';
+
+service firebase.storage {
+  match /b/{bucket}/o {
+    // Allow authenticated users to upload product images
+    match /products/{fileName} {
+      allow read: if true; // Allow public read access to product images
+      allow write: if request.auth != null; // Allow authenticated users to upload
+    }
+    
+    // Allow public read access to all files (for product display)
+    match /{allPaths=**} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+  }
+}
+```
+
+Alternative simpler rules (for development/testing):
+
+```
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /{allPaths=**} {
+      allow read, write: if true;
+    }
+  }
+}
+```
+
+Steps to apply:
+1. Go to https://console.firebase.google.com/
+2. Select your project: "ecommerce-store---fiverr-gig"
+3. Go to Storage → Rules
+4. Replace the current rules with one of the above
+5. Click "Publish"
+
+This should resolve the CORS issues you're experiencing with image uploads.

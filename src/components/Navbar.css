@@ -1,0 +1,21 @@
+
+
+/* Employer Welcome Button (keep only this custom style) */
+.navbar-employer-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+.navbar-employer-button:hover {
+  background-color: #0056b3;
+  transform: scale(1.1);
+}
+.navbar-employer-button:active {
+  transform: scale(0.95);
+}
+

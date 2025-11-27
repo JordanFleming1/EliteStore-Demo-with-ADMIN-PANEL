@@ -1,0 +1,609 @@
+/* --- Navbar Theme: Minimal (White) --- */
+.navbar-minimal {
+  background: #fff;
+  color: #222;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+}
+.navbar-minimal .nav-link {
+  color: #222;
+  transition: color 0.2s;
+}
+.navbar-minimal .nav-link:hover {
+  color: #0d6efd;
+}
+
+/* --- Navbar Theme: Frosted --- */
+.navbar-frosted {
+  background: rgba(255,255,255,0.8);
+  color: #222;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+}
+.navbar-frosted .nav-link {
+  color: #222;
+  transition: color 0.2s;
+}
+.navbar-frosted .nav-link:hover {
+  color: #0d6efd;
+}
+
+/* --- Navbar Theme: Retro Sunset --- */
+.navbar-retro-sunset {
+  background: linear-gradient(90deg, #ff9966 0%, #ff5e62 100%);
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(255,153,102,0.15);
+}
+.navbar-retro-sunset .nav-link {
+  color: #fff;
+  font-family: 'Courier New', Courier, monospace;
+  letter-spacing: 1px;
+  transition: color 0.2s;
+}
+.navbar-retro-sunset .nav-link:hover {
+  color: #222;
+}
+
+/* --- Navbar Theme: Underline --- */
+.navbar-underline {
+  background: #fff;
+  color: #222;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  border-bottom: 2px solid #0d6efd;
+}
+.navbar-underline .nav-link {
+  color: #222;
+  position: relative;
+  transition: color 0.2s;
+}
+.navbar-underline .nav-link:hover {
+  color: #0d6efd;
+}
+.navbar-underline .nav-link.active::after {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: #0d6efd;
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+}
+/* --- Navbar Theme: Dark Mode --- */
+.navbar-darkmode {
+  background: #222;
+  color: #fff;
+  border-bottom: 1px solid #333;
+}
+.navbar-darkmode .nav-link {
+  color: #bbb;
+}
+.navbar-darkmode .nav-link:hover {
+  color: #fff;
+}
+
+/* --- Navbar Theme: Minimal Shadow --- */
+
+/* --- Navbar Theme: Pastel Gradient --- */
+.navbar-pastel {
+  background: linear-gradient(90deg, #a1c4fd 0%, #c2e9fb 100%);
+  color: #222;
+  box-shadow: 0 2px 8px rgba(161,196,253,0.15);
+}
+.navbar-pastel .nav-link {
+  color: #222;
+  transition: color 0.2s;
+}
+.navbar-pastel .nav-link:hover {
+  color: #0d6efd;
+}
+/* --- Navbar Theme: Gradient Blue-Purple --- */
+.navbar-gradient-blue {
+  background: linear-gradient(90deg, #0d6efd 0%, #6610f2 100%);
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+}
+.navbar-gradient-blue .nav-link {
+  color: #fff;
+  transition: color 0.2s;
+}
+.navbar-gradient-blue .nav-link:hover {
+  color: #ffd700;
+}
+
+
+/* --- Navbar Theme: Gradient Aqua --- */
+.navbar-gradient-aqua {
+  background: linear-gradient(90deg, #43cea2 0%, #185a9d 100%);
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(67,206,162,0.15);
+}
+.navbar-gradient-aqua .nav-link {
+  color: #fff;
+  transition: color 0.2s;
+}
+.navbar-gradient-aqua .nav-link.active,
+.navbar-gradient-aqua .nav-link:focus,
+.navbar-gradient-aqua .nav-link:hover {
+  color: #ffe082;
+  text-shadow: 0 1px 8px #185a9d44;
+}
+
+/* --- Navbar Theme: Gradient Pink-Orange --- */
+.navbar-gradient-pink {
+  background: linear-gradient(90deg, #ff9966 0%, #ff5e62 50%, #ff7eb3 100%);
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(255,153,102,0.15);
+}
+.navbar-gradient-pink .nav-link {
+  color: #fff;
+  font-weight: 500;
+  text-shadow: 0 1px 4px #ff5e6244;
+  transition: color 0.2s, text-shadow 0.2s;
+}
+.navbar-gradient-pink .nav-link.active,
+.navbar-gradient-pink .nav-link:focus,
+.navbar-gradient-pink .nav-link:hover {
+  color: #222;
+  background: rgba(255,255,255,0.15);
+  text-shadow: none;
+}
+
+/* --- Navbar Theme: Gradient Indigo --- */
+.navbar-gradient-indigo {
+  background: linear-gradient(90deg, #3f2b96 0%, #a8c0ff 100%);
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(63,43,150,0.15);
+}
+.navbar-gradient-indigo .nav-link {
+  color: #fff;
+  font-weight: 500;
+  text-shadow: 0 1px 4px #3f2b9644;
+  transition: color 0.2s, text-shadow 0.2s;
+}
+.navbar-gradient-indigo .nav-link.active,
+.navbar-gradient-indigo .nav-link:focus,
+.navbar-gradient-indigo .nav-link:hover {
+  color: #ffe082;
+  background: rgba(255,255,255,0.10);
+  text-shadow: none;
+}
+}
+/* Reset and base styles for EliteStore */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  line-height: 1.6;
+  color: #333;
+  background-color: #fff;
+  overflow-x: hidden;
+}
+
+/* Remove any default display flex that might interfere */
+body, #root {
+  display: block !important;
+  place-items: initial !important;
+  min-height: 100vh;
+}
+
+/* Ensure full width layout */
+#root {
+  width: 100%;
+}
+
+/* Reset button styles to not interfere with Bootstrap */
+button {
+  font-family: inherit;
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+/* Reset link styles */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+a:hover {
+  color: inherit;
+}
+
+/* Ensure headings are properly styled */
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  font-weight: 600;
+  line-height: 1.2;
+  color: inherit;
+}
+
+/* Remove any conflicting media queries */
+
+/* Dark theme search input placeholder */
+.search-dark-theme::placeholder {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+/* ============================================
+   MOBILE OPTIMIZATION & TOUCH-FRIENDLY STYLES
+   ============================================ */
+
+/* Enable smooth scrolling on mobile */
+html {
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+}
+
+/* Touch-friendly tap targets - minimum 44x44px */
+button, 
+.btn, 
+a[role="button"], 
+input[type="button"],
+input[type="submit"],
+input[type="reset"],
+.clickable,
+.nav-link,
+.dropdown-toggle {
+  min-height: 44px;
+  min-width: 44px;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Improved touch feedback */
+
+/* Only show click feedback for navigation bars */
+
+/* Remove hover effects on touch devices */
+@media (hover: none) and (pointer: coarse) {
+  /* moved to styles/homepage.css */
+}
+
+/* Larger text for better readability on mobile */
+@media (max-width: 768px) {
+  body {
+    font-size: 16px; /* Prevents zoom on iOS */
+    line-height: 1.5;
+  }
+  
+  /* Increase button padding for easier tapping */
+  .btn {
+    padding: 12px 24px;
+    font-size: 16px;
+  }
+  
+  .btn-sm {
+    padding: 10px 18px;
+    font-size: 14px;
+    min-height: 44px;
+  }
+  
+  .btn-lg {
+    padding: 16px 32px;
+    font-size: 18px;
+  }
+  
+  /* Touch-friendly form inputs */
+  .form-control,
+  .form-select {
+    font-size: 16px; /* Prevents iOS zoom */
+    padding: 14px 16px;
+    min-height: 48px;
+  }
+  
+  /* Larger checkboxes and radio buttons */
+  input[type="checkbox"],
+  input[type="radio"] {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+  }
+  
+  /* Better spacing for mobile */
+  .container {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+  
+  /* Stack navigation vertically with more spacing */
+  .navbar-nav .nav-link {
+    padding: 16px 20px;
+    font-size: 16px;
+  }
+  
+  /* Card spacing optimization */
+  .card {
+    margin-bottom: 20px;
+  }
+  
+  .card-body {
+    padding: 20px;
+  }
+  
+  /* Product card touch optimization */
+  /* moved to styles/homepage.css */
+  
+  /* Modal improvements for mobile */
+  .modal-dialog {
+    margin: 120px auto 32px auto !important;
+    display: block;
+    /* Remove vertical centering, use top margin for visibility */
+    /* Responsive: reduce margin on small screens */
+  }
+  
+  .modal-content {
+    border-radius: 12px;
+  }
+  
+  .modal-header,
+  .modal-footer {
+    padding: 16px;
+  }
+  
+  .modal-body {
+    padding: 20px 16px;
+  }
+}
+
+/* Swipe gesture optimization */
+/* moved to styles/homepage.css */
+
+/* Prevent accidental text selection during swipes */
+/* moved to styles/homepage.css */
+
+/* Make images responsive and prevent layout shift */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Optimize table for mobile */
+@media (max-width: 768px) {
+  .table-responsive {
+    border: 0;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  table {
+    font-size: 14px;
+  }
+  
+  th, td {
+    padding: 12px 8px;
+    min-width: 120px;
+  }
+}
+
+/* Bottom sheet style for mobile modals */
+@media (max-width: 576px) {
+  .modal-dialog {
+    margin: 80px auto 16px auto !important;
+    max-width: 100%;
+    display: block;
+  }
+  
+  .modal-fullscreen-sm-down .modal-content {
+    border-radius: 16px 16px 0 0;
+    min-height: 50vh;
+  }
+  
+  /* Pull-to-close indicator */
+  .modal-header::before {
+    content: '';
+    position: absolute;
+    top: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 4px;
+    background: #dee2e6;
+    border-radius: 2px;
+  }
+}
+
+/* Offcanvas menu optimization */
+.offcanvas {
+  touch-action: pan-y;
+}
+
+.offcanvas-body {
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Touch-friendly dropdown */
+.dropdown-menu {
+  font-size: 16px;
+}
+
+.dropdown-item {
+  padding: 14px 20px;
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+}
+
+/* Floating action buttons for mobile */
+@media (max-width: 768px) {
+  .cart-fab {
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+  }
+}
+
+/* Better focus states for keyboard navigation */
+button:focus,
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+  outline: 3px solid rgba(13, 110, 253, 0.5);
+  outline-offset: 2px;
+}
+
+/* Landscape mobile optimization */
+@media (max-width: 926px) and (orientation: landscape) {
+  .navbar {
+    min-height: 56px;
+  }
+  
+  /* moved to styles/homepage.css */
+  
+  .modal-dialog {
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+}
+
+/* Safe area insets for notched devices */
+@supports (padding: max(0px)) {
+  .navbar,
+  .offcanvas {
+    padding-left: max(12px, env(safe-area-inset-left));
+    padding-right: max(12px, env(safe-area-inset-right));
+  }
+  
+  .offcanvas {
+    padding-bottom: max(20px, env(safe-area-inset-bottom));
+  }
+}
+
+/* Prevent horizontal scroll on mobile */
+body {
+  overflow-x: hidden;
+  width: 100%;
+  position: relative;
+}
+
+/* Touch-optimized badges */
+.badge {
+  font-size: 0.85rem;
+  padding: 0.5em 0.8em;
+  font-weight: 600;
+}
+
+/* Loading spinner optimization */
+.spinner-border,
+.spinner-grow {
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* Improve readability in cards on mobile */
+@media (max-width: 768px) {
+  .card-title {
+    font-size: 1.1rem;
+    line-height: 1.4;
+  }
+  
+  .card-text {
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+}
+
+/* Sticky footer for mobile */
+@media (max-width: 768px) {
+  footer {
+    position: relative;
+    margin-top: auto;
+  }
+  
+  #root {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+}
+
+/* Pagination touch optimization */
+.pagination {
+  gap: 8px;
+}
+
+.page-link {
+  min-width: 44px;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+}
+
+/* Breadcrumb mobile optimization */
+@media (max-width: 576px) {
+  .breadcrumb {
+    font-size: 0.85rem;
+    padding: 8px 12px;
+  }
+  
+  .breadcrumb-item + .breadcrumb-item::before {
+    padding-right: 0.3rem;
+    padding-left: 0.3rem;
+  }
+}
+
+/* Touch-friendly quantity selector */
+.input-group .btn {
+  min-width: 48px;
+  min-height: 48px;
+  font-size: 18px;
+}
+
+.input-group .form-control {
+  min-height: 48px;
+  font-size: 16px;
+  text-align: center;
+}
+
+/* Pull-to-refresh hint (visual only) */
+@media (max-width: 768px) {
+  body {
+    overscroll-behavior-y: contain;
+  }
+}
+
+/* Optimize accordion for touch */
+.accordion-button {
+  padding: 16px 20px;
+  font-size: 16px;
+  min-height: 56px;
+}
+
+.accordion-body {
+  padding: 20px;
+  font-size: 15px;
+}
+
+/* Toast notifications mobile positioning */
+@media (max-width: 768px) {
+  .toast-container {
+    bottom: 20px !important;
+    left: 50% !important;
+    transform: translateX(-50%);
+    width: calc(100% - 40px);
+    max-width: 400px;
+  }
+}
+

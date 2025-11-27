@@ -1,0 +1,5 @@
+/* Styles for AdminHeroSlides page */
+.admin-hero-modal .modal-dialog {
+  margin-top: 120px !important;
+  margin-bottom: 0;
+}
