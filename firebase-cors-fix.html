@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Firebase Storage CORS Fix</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        .step { background: #f5f5f5; padding: 20px; margin: 20px 0; border-radius: 8px; }
+        .urgent { background: #ffebee; border-left: 4px solid #f44336; }
+        .success { background: #e8f5e8; border-left: 4px solid #4caf50; }
+        .code { background: #f0f0f0; padding: 10px; font-family: monospace; overflow-x: auto; }
+        a { color: #1976d2; text-decoration: none; font-weight: bold; }
+        a:hover { text-decoration: underline; }
+        h1, h2 { color: #333; }
+    </style>
+</head>
+<body>
+    <h1>🔥 Firebase Storage CORS Configuration</h1>
+    
+    <div class="step urgent">
+        <h2>🚨 Current Issue: CORS Blocking Image Uploads</h2>
+        <p>Your Firebase Storage bucket URL is correct, but CORS policy is blocking requests from localhost:5173</p>
+    </div>
+
+    <div class="step">
+        <h2>📍 Step 1: Firebase Console - Security Rules</h2>
+        <p><strong>Direct Link:</strong> <a href="https://console.firebase.google.com/project/ecommerce-store---fiverr-gig/storage/rules" target="_blank">Open Firebase Storage Rules</a></p>
+        <p>Replace the rules with this code:</p>
+        <div class="code">rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    allow read: if true;
+    match /products/{allPaths=**} {
+      allow write, delete: if request.auth != null;
+    }
+  }
+}</div>
+        <p><strong>Then click "Publish"</strong></p>
+    </div>
+
+    <div class="step">
+        <h2>🔧 Step 2: Google Cloud Console - CORS Headers</h2>
+        <p><strong>Direct Link:</strong> <a href="https://console.cloud.google.com/storage/browser/ecommerce-store---fiverr-gig.appspot.com" target="_blank">Open Storage Bucket in Google Cloud</a></p>
+        <p>1. Click on the bucket name</p>
+        <p>2. Go to "Configuration" tab</p>
+        <p>3. Find "CORS" section and click "Edit"</p>
+        <p>4. Add this configuration:</p>
+        <div class="code">[
+  {
+    "origin": ["*"],
+    "method": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    "maxAgeSeconds": 3600,
+    "responseHeader": ["Content-Type", "x-goog-resumable"]
+  }
+]</div>
+        <p><strong>Then click "Save"</strong></p>
+    </div>
+
+    <div class="step success">
+        <h2>✅ After Configuration</h2>
+        <p>Go back to your admin panel and try uploading an image. You should see:</p>
+        <div class="code">Upload progress: 100%
+Resumable upload completed
+Download URL obtained: https://firebasestorage.googleapis.com/...
+Image uploaded successfully!</div>
+    </div>
+
+    <div class="step">
+        <h2>🆘 If Still Not Working</h2>
+        <p>Try the temporary Chrome CORS bypass:</p>
+        <ol>
+            <li>Close all Chrome windows</li>
+            <li>Open Command Prompt as Administrator</li>
+            <li>Run: <code>"C:\Program Files\Google\Chrome\Application\chrome.exe" --disable-web-security --user-data-dir="C:\temp\chrome_dev"</code></li>
+            <li>This opens Chrome with CORS disabled for testing only</li>
+        </ol>
+    </div>
+</body>
+</html>

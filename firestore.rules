@@ -1,0 +1,26 @@
+rules_version = '2';
+
+// DEVELOPMENT RULES - More permissive for testing
+// ⚠️ DO NOT USE IN PRODUCTION ⚠️
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Allow authenticated users to read/write everything for development
+    match /{document=**} {
+      allow read, write: if request.auth != null;
+    }
+    
+    // Allow public read for products and categories (for store frontend)
+    match /products/{productId} {
+      allow read: if true;
+    }
+    
+    match /categories/{categoryId} {
+      allow read: if true;
+    }
+    
+    match /reviews/{reviewId} {
+      allow read: if true;
+    }
+  }
+}

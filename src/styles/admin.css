@@ -1,0 +1,5 @@
+
+/* Ensure admin main content is always below the fixed navbar */
+.admin-main-content {
+	padding-top: 80px !important;
+}

@@ -1,0 +1,419 @@
+import React, { createContext, useEffect, useState, useCallback } from 'react';
+import type { ReactNode } from 'react';
+import { 
+  collection, 
+  doc, 
+  getDocs, 
+  updateDoc, 
+  deleteDoc, 
+  query, 
+  orderBy, 
+  onSnapshot,
+  Timestamp,
+  writeBatch,
+  serverTimestamp
+} from 'firebase/firestore';
+import { db, auth } from '../firebase/firebase.config';
+import type { Order, OrderStatus, OrderStatusHistory } from '../types';
+import { useToast } from '../hooks/useToast';
+
+interface OrdersContextType {
+  orders: Order[];
+  loading: boolean;
+  error: string | null;
+  
+  // Order management functions
+  fetchOrders: () => Promise<void>;
+  updateOrderStatus: (orderId: string, status: OrderStatus, note?: string) => Promise<void>;
+  updateOrder: (orderId: string, updates: Partial<Order>) => Promise<void>;
+  deleteOrder: (orderId: string) => Promise<void>;
+  addAdminNote: (orderId: string, note: string) => Promise<void>;
+  updateShippingInfo: (orderId: string, shippingInfo: Partial<Order['shippingInfo']>) => Promise<void>;
+  bulkUpdateStatus: (orderIds: string[], status: OrderStatus) => Promise<void>;
+  
+  // Filtering and search
+  filterOrders: (status?: OrderStatus, searchTerm?: string, dateRange?: { start: Date; end: Date }) => Order[];
+  getOrderStats: () => {
+    total: number;
+    pending: number;
+    processing: number;
+    shipped: number;
+    delivered: number;
+    cancelled: number;
+    todayOrders: number;
+    revenue: number;
+  };
+  
+  // Real-time updates
+  subscribeToOrders: () => () => void;
+}
+
+const OrdersContext = createContext<OrdersContextType | undefined>(undefined);
+
+interface OrdersProviderProps {
+  children: ReactNode;
+}
+
+const OrdersProvider: React.FC<OrdersProviderProps> = ({ children }) => {
+  const [orders, setOrders] = useState<Order[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const { showToast } = useToast();
+
+  // Convert Firestore timestamp to Date
+  const convertTimestampToDate = (timestamp: Timestamp | { seconds: number } | Date | string): Date => {
+    if (timestamp && typeof timestamp === 'object' && 'toDate' in timestamp) {
+      return timestamp.toDate();
+    }
+    if (timestamp && typeof timestamp === 'object' && 'seconds' in timestamp) {
+      return new Date(timestamp.seconds * 1000);
+    }
+    return new Date(timestamp);
+  };
+
+  // Convert Firestore document to Order
+  const convertFirestoreToOrder = (doc: { id: string; data: () => any }): Order => {
+    const data = doc.data();
+    return {
+      ...data,
+      id: doc.id,
+      createdAt: convertTimestampToDate(data.createdAt),
+      updatedAt: convertTimestampToDate(data.updatedAt),
+      confirmedAt: data.confirmedAt ? convertTimestampToDate(data.confirmedAt) : undefined,
+      shippedAt: data.shippedAt ? convertTimestampToDate(data.shippedAt) : undefined,
+      deliveredAt: data.deliveredAt ? convertTimestampToDate(data.deliveredAt) : undefined,
+      statusHistory: data.statusHistory?.map((history: { status: OrderStatus; timestamp: any; note?: string; updatedBy: string }) => ({
+        ...history,
+        timestamp: convertTimestampToDate(history.timestamp)
+      })) || [],
+      shippingInfo: data.shippingInfo ? {
+        ...data.shippingInfo,
+        estimatedDelivery: data.shippingInfo.estimatedDelivery 
+          ? convertTimestampToDate(data.shippingInfo.estimatedDelivery) 
+          : undefined,
+        actualDelivery: data.shippingInfo.actualDelivery 
+          ? convertTimestampToDate(data.shippingInfo.actualDelivery) 
+          : undefined,
+      } : undefined,
+    } as Order;
+  };
+
+  // Fetch all orders from Firestore
+  const fetchOrders = useCallback(async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      
+      console.log('🔍 Attempting to fetch orders from Firestore...');
+      console.log('Current auth user:', auth.currentUser?.email);
+      
+      const ordersRef = collection(db, 'orders');
+      const q = query(ordersRef, orderBy('createdAt', 'desc'));
+      const querySnapshot = await getDocs(q);
+      
+      const ordersData: Order[] = [];
+      querySnapshot.forEach((doc) => {
+        ordersData.push(convertFirestoreToOrder(doc));
+      });
+      
+      setOrders(ordersData);
+      console.log('✅ Orders fetched successfully:', ordersData.length);
+    } catch (err) {
+      console.error('❌ Error fetching orders:', err);
+      
+      if (err instanceof Error && err.message.includes('permission')) {
+        console.log('🚨 PERMISSION DENIED ERROR DETECTED');
+        console.log('📋 Quick Fix Instructions:');
+        console.log('1. Go to Firebase Console: https://console.firebase.google.com/');
+        console.log('2. Select project: ecommerce-store---fiverr-gig');
+        console.log('3. Go to Firestore Database → Rules');
+        console.log('4. Replace rules with the development rules from firestore-dev.rules');
+        console.log('5. Click Publish');
+        
+        setError('Firebase permissions error. Please check the Firebase Console and update Firestore rules. See browser console for detailed instructions.');
+        showToast('error', 'Permissions Error', 'Please update Firebase Firestore rules. Check console for instructions.');
+      } else {
+        setError(err instanceof Error ? err.message : 'Failed to fetch orders');
+        showToast('error', 'Error', 'Failed to fetch orders');
+      }
+    } finally {
+      setLoading(false);
+    }
+  }, [showToast]);
+
+  // Update order status with history tracking
+  const updateOrderStatus = async (orderId: string, status: OrderStatus, note?: string) => {
+    try {
+      const orderRef = doc(db, 'orders', orderId);
+      
+      // Find the current order to get existing history
+      const currentOrder = orders.find(o => o.id === orderId);
+      if (!currentOrder) {
+        throw new Error('Order not found');
+      }
+
+      // Create new status history entry
+      const newStatusEntry: OrderStatusHistory = {
+        status,
+        timestamp: new Date(),
+        note,
+        updatedBy: 'admin' // In a real app, this would be the current admin user ID
+      };
+
+      const updates: Partial<Order> = {
+        status,
+        statusHistory: [...(currentOrder.statusHistory || []), newStatusEntry],
+        updatedAt: new Date()
+      };
+
+      // Add specific timestamps based on status
+      switch (status) {
+        case 'confirmed':
+          updates.confirmedAt = new Date();
+          break;
+        case 'shipped':
+          updates.shippedAt = new Date();
+          break;
+        case 'delivered':
+          updates.deliveredAt = new Date();
+          break;
+      }
+
+      await updateDoc(orderRef, {
+        ...updates,
+        updatedAt: serverTimestamp(),
+        ...(updates.confirmedAt && { confirmedAt: Timestamp.fromDate(updates.confirmedAt) }),
+        ...(updates.shippedAt && { shippedAt: Timestamp.fromDate(updates.shippedAt) }),
+        ...(updates.deliveredAt && { deliveredAt: Timestamp.fromDate(updates.deliveredAt) }),
+        statusHistory: updates.statusHistory?.map(h => ({
+          ...h,
+          timestamp: Timestamp.fromDate(h.timestamp)
+        }))
+      });
+
+      // Update local state
+      setOrders(prev => prev.map(order => 
+        order.id === orderId ? { ...order, ...updates } : order
+      ));
+
+      showToast('success', 'Success', `Order status updated to ${status}`);
+    } catch (err) {
+      console.error('❌ Error updating order status:', err);
+      showToast('error', 'Error', 'Failed to update order status');
+    }
+  };
+
+  // Update order with partial data
+  const updateOrder = async (orderId: string, updates: Partial<Order>) => {
+    try {
+      const orderRef = doc(db, 'orders', orderId);
+      
+      const updateData = {
+        ...updates,
+        updatedAt: serverTimestamp()
+      };
+
+      await updateDoc(orderRef, updateData);
+
+      // Update local state
+      setOrders(prev => prev.map(order => 
+        order.id === orderId ? { ...order, ...updates, updatedAt: new Date() } : order
+      ));
+
+      showToast('success', 'Success', 'Order updated successfully');
+    } catch (err) {
+      console.error('❌ Error updating order:', err);
+      showToast('error', 'Error', 'Failed to update order');
+    }
+  };
+
+  // Delete order
+  const deleteOrder = async (orderId: string) => {
+    try {
+      await deleteDoc(doc(db, 'orders', orderId));
+      
+      setOrders(prev => prev.filter(order => order.id !== orderId));
+      showToast('success', 'Success', 'Order deleted successfully');
+    } catch (err) {
+      console.error('❌ Error deleting order:', err);
+      showToast('error', 'Error', 'Failed to delete order');
+    }
+  };
+
+  // Add admin note to order
+  const addAdminNote = async (orderId: string, note: string) => {
+    try {
+      const orderRef = doc(db, 'orders', orderId);
+      await updateDoc(orderRef, {
+        adminNotes: note,
+        updatedAt: serverTimestamp()
+      });
+
+      setOrders(prev => prev.map(order => 
+        order.id === orderId ? { ...order, adminNotes: note, updatedAt: new Date() } : order
+      ));
+
+      showToast('success', 'Success', 'Admin note added');
+    } catch (err) {
+      console.error('❌ Error adding admin note:', err);
+      showToast('error', 'Error', 'Failed to add admin note');
+    }
+  };
+
+  // Update shipping information
+  const updateShippingInfo = async (orderId: string, shippingInfo: Partial<Order['shippingInfo']>) => {
+    try {
+      const orderRef = doc(db, 'orders', orderId);
+      const currentOrder = orders.find(o => o.id === orderId);
+      
+      const updatedShippingInfo = {
+        courier: '',
+        trackingNumber: '',
+        ...currentOrder?.shippingInfo,
+        ...shippingInfo
+      };
+
+      await updateDoc(orderRef, {
+        shippingInfo: updatedShippingInfo,
+        updatedAt: serverTimestamp()
+      });
+
+      setOrders(prev => prev.map(order => 
+        order.id === orderId ? { ...order, shippingInfo: updatedShippingInfo, updatedAt: new Date() } : order
+      ));
+
+      showToast('success', 'Success', 'Shipping info updated');
+    } catch (err) {
+      console.error('❌ Error updating shipping info:', err);
+      showToast('error', 'Error', 'Failed to update shipping info');
+    }
+  };
+
+  // Bulk update order status
+  const bulkUpdateStatus = async (orderIds: string[], status: OrderStatus) => {
+    try {
+      const batch = writeBatch(db);
+      
+      orderIds.forEach(orderId => {
+        const orderRef = doc(db, 'orders', orderId);
+        batch.update(orderRef, {
+          status,
+          updatedAt: serverTimestamp()
+        });
+      });
+
+      await batch.commit();
+      
+      // Update local state
+      setOrders(prev => prev.map(order => 
+        orderIds.includes(order.id) ? { ...order, status, updatedAt: new Date() } : order
+      ));
+
+      showToast('success', 'Success', `${orderIds.length} orders updated to ${status}`);
+    } catch (err) {
+      console.error('❌ Error bulk updating orders:', err);
+      showToast('error', 'Error', 'Failed to update orders');
+    }
+  };
+
+  // Filter orders by various criteria
+  const filterOrders = (status?: OrderStatus, searchTerm?: string, dateRange?: { start: Date; end: Date }) => {
+    return orders.filter(order => {
+      // Filter by status
+      if (status && order.status !== status) return false;
+      
+      // Filter by search term (order number, customer name, email)
+      if (searchTerm) {
+        const search = searchTerm.toLowerCase();
+        if (
+          !order.orderNumber.toLowerCase().includes(search) &&
+          !order.customer.displayName.toLowerCase().includes(search) &&
+          !order.customer.email.toLowerCase().includes(search)
+        ) {
+          return false;
+        }
+      }
+      
+      // Filter by date range
+      if (dateRange) {
+        const orderDate = order.createdAt;
+        if (orderDate < dateRange.start || orderDate > dateRange.end) {
+          return false;
+        }
+      }
+      
+      return true;
+    });
+  };
+
+  // Get order statistics
+  const getOrderStats = () => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const todayOrders = orders.filter(order => order.createdAt >= today);
+    
+    return {
+      total: orders.length,
+      pending: orders.filter(o => o.status === 'pending').length,
+      processing: orders.filter(o => ['confirmed', 'processing', 'packed'].includes(o.status)).length,
+      shipped: orders.filter(o => ['shipped', 'out_for_delivery'].includes(o.status)).length,
+      delivered: orders.filter(o => o.status === 'delivered').length,
+      cancelled: orders.filter(o => ['cancelled', 'returned', 'refunded'].includes(o.status)).length,
+      todayOrders: todayOrders.length,
+      revenue: orders
+        .filter(o => ['delivered', 'shipped', 'out_for_delivery'].includes(o.status))
+        .reduce((total, order) => total + order.totalAmount, 0)
+    };
+  };
+
+  // Subscribe to real-time order updates
+  const subscribeToOrders = () => {
+    const ordersRef = collection(db, 'orders');
+    const q = query(ordersRef, orderBy('createdAt', 'desc'));
+    
+    return onSnapshot(q, 
+      (snapshot) => {
+        const ordersData: Order[] = [];
+        snapshot.forEach((doc) => {
+          ordersData.push(convertFirestoreToOrder(doc));
+        });
+        setOrders(ordersData);
+        console.log('🔄 Orders updated in real-time:', ordersData.length);
+      },
+      (error) => {
+        console.error('❌ Real-time orders subscription error:', error);
+        setError('Real-time updates failed');
+      }
+    );
+  };
+
+  // Load orders on component mount
+  useEffect(() => {
+    fetchOrders();
+  }, [fetchOrders]);
+
+  const value: OrdersContextType = {
+    orders,
+    loading,
+    error,
+    fetchOrders,
+    updateOrderStatus,
+    updateOrder,
+    deleteOrder,
+    addAdminNote,
+    updateShippingInfo,
+    bulkUpdateStatus,
+    filterOrders,
+    getOrderStats,
+    subscribeToOrders
+  };
+
+  return (
+    <OrdersContext.Provider value={value}>
+      {children}
+    </OrdersContext.Provider>
+  );
+};
+
+export { OrdersProvider, OrdersContext };
+export default OrdersContext;
