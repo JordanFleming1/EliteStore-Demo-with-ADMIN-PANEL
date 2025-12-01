@@ -26,50 +26,51 @@ interface AuthProviderProps {
   children: React.ReactNode;
 }
 
+function AuthProvider({ children }: AuthProviderProps) {
   const [currentUser, setCurrentUser] = useState<(Customer & { role?: string }) | null>(null);
   const [firebaseUser, setFirebaseUser] = useState<any>(null);
   const [loading, setLoading] = useState(false);
 
   // Listen for auth state changes
-    React.useEffect(() => {
-      const unsubscribe = onAuthStateChanged(auth, (user) => {
-        setFirebaseUser(user);
-        (async () => {
-          if (user) {
-            // Ensure admin profile exists in Firestore
-            if (user.email === 'admin@elitestore.com') {
-              const adminDocRef = doc(db, 'users', user.uid);
-              const adminDoc = await getDoc(adminDocRef);
-              if (!adminDoc.exists()) {
-                await setDoc(adminDocRef, {
-                  displayName: 'EliteStore Admin',
-                  email: user.email,
-                  totalOrders: 0,
-                  totalSpent: 0,
-                  joinedAt: new Date().toISOString(),
-                  role: 'admin',
-                });
-              }
+  React.useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setFirebaseUser(user);
+      (async () => {
+        if (user) {
+          // Ensure admin profile exists in Firestore
+          if (user.email === 'admin@elitestore.com') {
+            const adminDocRef = doc(db, 'users', user.uid);
+            const adminDoc = await getDoc(adminDocRef);
+            if (!adminDoc.exists()) {
+              await setDoc(adminDocRef, {
+                displayName: 'EliteStore Admin',
+                email: user.email,
+                totalOrders: 0,
+                totalSpent: 0,
+                joinedAt: new Date().toISOString(),
+                role: 'admin',
+              });
             }
-            // Set current user from Firestore profile
-            const userDoc = await getDoc(doc(db, 'users', user.uid));
-            const profile = userDoc.exists() ? userDoc.data() : {};
-            setCurrentUser({
-              id: user.uid,
-              email: user.email || '',
-              displayName: user.displayName || profile.displayName || (user.email ? user.email.split('@')[0] : ''),
-              totalOrders: profile.totalOrders || 0,
-              totalSpent: profile.totalSpent || 0,
-              joinedAt: profile.joinedAt || new Date().toISOString(),
-              role: profile.role || (user.email === 'admin@elitestore.com' ? 'admin' : 'customer'),
-            });
-          } else {
-            setCurrentUser(null);
           }
-        })();
-      });
-      return () => unsubscribe();
-    }, []);
+          // Set current user from Firestore profile
+          const userDoc = await getDoc(doc(db, 'users', user.uid));
+          const profile = userDoc.exists() ? userDoc.data() : {};
+          setCurrentUser({
+            id: user.uid,
+            email: user.email || '',
+            displayName: user.displayName || profile.displayName || (user.email ? user.email.split('@')[0] : ''),
+            totalOrders: profile.totalOrders || 0,
+            totalSpent: profile.totalSpent || 0,
+            joinedAt: profile.joinedAt || new Date().toISOString(),
+            role: profile.role || (user.email === 'admin@elitestore.com' ? 'admin' : 'customer'),
+          });
+        } else {
+          setCurrentUser(null);
+        }
+      })();
+    });
+    return () => unsubscribe();
+  }, []);
 
   const signup = async (email: string, password: string, displayName: string) => {
     setLoading(true);
