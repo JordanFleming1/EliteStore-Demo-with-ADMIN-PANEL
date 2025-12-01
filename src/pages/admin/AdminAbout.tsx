@@ -59,10 +59,23 @@ const AdminAbout: React.FC = () => {
     try {
       const data = await api.getAboutPageSettings();
       setSettings({
-        ...data,
-        ...(Array.isArray(data.stats) ? { stats: data.stats } : {}),
-        values: Array.isArray(data.values) ? data.values : [],
+        storeName: typeof data.storeName === 'string' ? data.storeName : '',
+        heroTitle: typeof data.heroTitle === 'string' ? data.heroTitle : '',
+        heroDescription: typeof data.heroDescription === 'string' ? data.heroDescription : '',
+        foundedYear: typeof data.foundedYear === 'string' ? data.foundedYear : '',
+        storyTitle: typeof data.storyTitle === 'string' ? data.storyTitle : '',
+        storyParagraph1: typeof data.storyParagraph1 === 'string' ? data.storyParagraph1 : '',
+        storyParagraph2: typeof data.storyParagraph2 === 'string' ? data.storyParagraph2 : '',
+        storyParagraph3: typeof data.storyParagraph3 === 'string' ? data.storyParagraph3 : '',
+        missionTitle: typeof data.missionTitle === 'string' ? data.missionTitle : '',
+        missionDescription: typeof data.missionDescription === 'string' ? data.missionDescription : '',
         teamMembers: Array.isArray(data.teamMembers) ? data.teamMembers : [],
+        sustainabilityTitle: typeof data.sustainabilityTitle === 'string' ? data.sustainabilityTitle : '',
+        sustainabilityDescription: typeof data.sustainabilityDescription === 'string' ? data.sustainabilityDescription : '',
+        sustainabilityList: Array.isArray(data.sustainabilityList) ? data.sustainabilityList : [],
+        communityTitle: typeof data.communityTitle === 'string' ? data.communityTitle : '',
+        communityDescription: typeof data.communityDescription === 'string' ? data.communityDescription : '',
+        communityList: Array.isArray(data.communityList) ? data.communityList : [],
       });
     } catch (error) {
       console.error('Error fetching about settings:', error);

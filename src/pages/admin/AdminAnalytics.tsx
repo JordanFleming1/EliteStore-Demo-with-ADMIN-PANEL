@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   Container,
   Row,
   Col,
   Card,
   Badge,
-  Spinner,
-  Alert,
+  // Spinner and Alert imports removed
   ButtonGroup,
   Button,
   Table
@@ -42,7 +41,7 @@ ChartJS.register(
 );
 
 const AdminAnalytics: React.FC = () => {
-  const { orders, loading, error } = useOrders();
+  const { orders } = useOrders(); // loading and error removed
   const [timeRange, setTimeRange] = useState<'7d' | '30d' | '90d'>('30d');
 
   // Calculate stats from orders
@@ -123,7 +122,7 @@ const AdminAnalytics: React.FC = () => {
   const categoryMap: Record<string, { sales: number; products: number; revenue: number }> = {};
   orders.forEach(order => {
     if (order.items) {
-      order.items.forEach(item => {
+      order.items.forEach((item: import('../../types').OrderItem) => {
         if (!categoryMap[item.category]) {
           categoryMap[item.category] = { sales: 0, products: 0, revenue: 0 };
         }
@@ -384,7 +383,7 @@ const AdminAnalytics: React.FC = () => {
                       const productSales = new Map<string, { name: string; unitsSold: number; revenue: number }>();
                       orders.forEach(order => {
                         if (order.items) {
-                          order.items.forEach(item => {
+                          order.items.forEach((item: import('../../types').OrderItem) => {
                             const existing = productSales.get(item.id) || { name: item.name, unitsSold: 0, revenue: 0 };
                             existing.unitsSold += item.quantity;
                             existing.revenue += item.price * item.quantity;
@@ -453,7 +452,7 @@ const AdminAnalytics: React.FC = () => {
                   </thead>
                   <tbody>
                     {categoryBreakdown.length > 0 ? (
-                      categoryBreakdown.map((category, idx) => (
+                      categoryBreakdown.map((category) => (
                         <tr key={category.category}>
                           <td>
                             <div className="fw-bold">{category.category}</div>
