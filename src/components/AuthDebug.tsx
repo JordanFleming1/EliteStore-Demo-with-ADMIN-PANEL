@@ -26,9 +26,9 @@ const AuthDebug: React.FC = () => {
         {currentUser && (
           <Alert variant="secondary">
             <strong>User Role:</strong> {currentUser.role}<br/>
-            <strong>Created:</strong> {currentUser.createdAt?.toString()}<br/>
-            <strong>Addresses:</strong> {currentUser.addresses?.length || 0}<br/>
-            <strong>Wishlist:</strong> {currentUser.wishlist?.length || 0}
+            <strong>Created:</strong> {(currentUser as any).createdAt?.toString() || ''}<br/>
+            <strong>Addresses:</strong> {(currentUser as any).addresses?.length || 0}<br/>
+            <strong>Wishlist:</strong> {(currentUser as any).wishlist?.length || 0}
           </Alert>
         )}
       </Card.Body>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import EmployerWelcome from '../components/EmployerWelcome';
 import './Navbar.css';
 

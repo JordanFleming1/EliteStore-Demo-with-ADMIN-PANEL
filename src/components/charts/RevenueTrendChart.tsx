@@ -2,8 +2,8 @@
 import React from 'react';
 import { Line } from 'react-chartjs-2';
 import { format, subDays, eachDayOfInterval } from 'date-fns';
-import type { Order } from '../types/index';
-import { defaultChartOptions, chartColors } from '../utils/chartConfig';
+import type { Order } from '../../types';
+import { defaultChartOptions, chartColors } from '../../utils/chartConfig';
 
 interface RevenueTrendChartProps {
   orders: Order[];
