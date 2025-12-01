@@ -28,7 +28,7 @@ interface AuthProviderProps {
 
 function AuthProvider({ children }: AuthProviderProps) {
   const [currentUser, setCurrentUser] = useState<(Customer & { role?: string }) | null>(null);
-  const [firebaseUser, setFirebaseUser] = useState<any>(null);
+  const [firebaseUser, setFirebaseUser] = useState<FirebaseUser | null>(null);
   const [loading, setLoading] = useState(false);
 
   // Listen for auth state changes

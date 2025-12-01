@@ -60,7 +60,7 @@ const AdminAbout: React.FC = () => {
       const data = await api.getAboutPageSettings();
       setSettings({
         ...data,
-        stats: Array.isArray(data.stats) ? data.stats : [],
+        ...(Array.isArray(data.stats) ? { stats: data.stats } : {}),
         values: Array.isArray(data.values) ? data.values : [],
         teamMembers: Array.isArray(data.teamMembers) ? data.teamMembers : [],
       });
@@ -130,7 +130,7 @@ const AdminAbout: React.FC = () => {
     setSaving(true);
 
     try {
-      await api.saveAboutPageSettings(settings);
+      await api.saveAboutPageSettings(settings as unknown as Record<string, unknown>);
       showAlert('success', 'About page settings saved successfully!');
       // Reload settings to confirm save
       await fetchSettings();

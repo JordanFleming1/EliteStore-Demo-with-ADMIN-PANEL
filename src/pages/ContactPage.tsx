@@ -35,7 +35,7 @@ const ContactPage: React.FC = () => {
     try {
       const api = await import('../api/simple-api');
       const data = await api.default.getContactSettings();
-      setContactSettings(data);
+      setContactSettings(data as unknown as ContactSettings);
     } catch (error) {
       console.error('Error fetching contact settings:', error);
     }

@@ -35,7 +35,7 @@ const AboutPage: React.FC = () => {
   const fetchSettings = async () => {
     try {
       const data = await api.getAboutPageSettings();
-        setSettings(data as AboutSettings);
+        setSettings(data as unknown as AboutSettings);
     } catch (error) {
       console.error('Error fetching about settings:', error);
     } finally {

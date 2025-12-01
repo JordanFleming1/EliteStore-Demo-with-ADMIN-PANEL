@@ -50,8 +50,8 @@ const AdminContact: React.FC = () => {
     try {
       const settingsData = await api.getContactSettings();
       const messagesData = await api.getContactMessages();
-      setSettings(settingsData);
-      setMessages(messagesData);
+      setSettings(settingsData as unknown as ContactSettings);
+      setMessages(messagesData as unknown as ContactMessage[]);
     } catch (error) {
       console.error('Error fetching contact data:', error);
       showAlert('danger', 'Failed to load contact data');
@@ -74,7 +74,7 @@ const AdminContact: React.FC = () => {
     e.preventDefault();
     setSaving(true);
     try {
-      await api.saveContactSettings(settings);
+      await api.saveContactSettings(settings as unknown as Record<string, unknown>);
       showAlert('success', 'Contact settings saved successfully!');
     } catch (error) {
       console.error('Error saving settings:', error);
