@@ -1,6 +1,4 @@
 export * from './api-types';
-// Explicitly export all order-related types for global use
-export type { Order, OrderStatus, OrderStatusHistory, OrderItem, CustomerInfo, Address };
 export interface Product {
   id: string;
   name: string;
