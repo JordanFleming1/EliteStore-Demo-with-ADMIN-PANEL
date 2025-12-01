@@ -10,8 +10,10 @@ import {
 } from 'firebase/auth';
 import { doc, setDoc, getDoc } from 'firebase/firestore';
 
+import type { User as FirebaseUser } from 'firebase/auth';
 interface AuthContextType {
   currentUser: (Customer & { role?: string }) | null;
+  firebaseUser: FirebaseUser | null;
   loading: boolean;
   login: (email: string, password: string) => Promise<void>;
   signup: (email: string, password: string, displayName: string) => Promise<void>;
@@ -24,13 +26,14 @@ interface AuthProviderProps {
   children: React.ReactNode;
 }
 
-export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [currentUser, setCurrentUser] = useState<(Customer & { role?: string }) | null>(null);
+  const [firebaseUser, setFirebaseUser] = useState<any>(null);
   const [loading, setLoading] = useState(false);
 
   // Listen for auth state changes
     React.useEffect(() => {
       const unsubscribe = onAuthStateChanged(auth, (user) => {
+        setFirebaseUser(user);
         (async () => {
           if (user) {
             // Ensure admin profile exists in Firestore
@@ -132,6 +135,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const value: AuthContextType = {
     currentUser,
+    firebaseUser,
     loading,
     signup,
     login,
@@ -143,6 +147,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       {loading ? <AuthLoader /> : children}
     </AuthContext.Provider>
   );
-};
+}
 
 export { AuthContext };

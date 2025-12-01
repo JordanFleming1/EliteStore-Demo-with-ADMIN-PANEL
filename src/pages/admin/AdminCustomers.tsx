@@ -14,7 +14,8 @@ import {
   Modal,
   Pagination
 } from 'react-bootstrap';
-import api, { type Customer } from '../../api/simple-api';
+import api from '../../api/simple-api';
+import type { Customer } from '../../types/api-types';
 
 const AdminCustomers: React.FC = () => {
     const [showEmailModal, setShowEmailModal] = useState(false);

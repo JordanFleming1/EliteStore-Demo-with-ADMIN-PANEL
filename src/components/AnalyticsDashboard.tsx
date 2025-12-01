@@ -49,7 +49,8 @@ export const AnalyticsDashboard: React.FC<AnalyticsDashboardProps> = ({ classNam
         ]);
         setStats(orderStats);
         setProducts(productsData);
-        setCustomers(customersData);
+        // Ensure all customer objects have a defined phone property
+        setCustomers(customersData.map(c => ({ ...c, phone: c.phone || '' })));
       } catch (error) {
         console.error('Failed to load analytics data:', error);
       }
@@ -397,7 +398,7 @@ export const AnalyticsDashboard: React.FC<AnalyticsDashboardProps> = ({ classNam
                   }>();
 
                   orders.forEach(order => {
-                    order.items.forEach(item => {
+                    order.items.forEach((item: any) => {
                       const existing = productSales.get(item.id) || {
                         name: item.name,
                         quantity: 0,

@@ -19,7 +19,7 @@ import {
   deleteObject 
 } from 'firebase/storage';
 import { db, storage } from '../firebase/firebase.config';
-import { type Product } from '../types';
+import type { Product } from '../types/index';
 
 export class ProductService {
   private collectionName = 'products';
@@ -30,7 +30,7 @@ export class ProductService {
       const q = query(collection(db, this.collectionName), orderBy('createdAt', 'desc'));
       const querySnapshot = await getDocs(q);
       
-      return querySnapshot.docs.map(doc => ({
+      return querySnapshot.docs.map((doc: any) => ({
         id: doc.id,
         ...doc.data(),
         createdAt: doc.data().createdAt?.toDate() || new Date(),

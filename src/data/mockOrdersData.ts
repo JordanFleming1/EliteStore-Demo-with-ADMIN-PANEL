@@ -1,4 +1,5 @@
 // All mock data removed. No customers, addresses, or products are preloaded.
+const mockProducts = [
   {
     id: 'prod_001',
     name: 'Premium Wireless Headphones',

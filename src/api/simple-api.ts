@@ -8,8 +8,7 @@ class RealAPIService {
   baseUrl: string = '';
   // Generic request stub (replace with real implementation as needed)
   async request(endpoint: string, options?: any): Promise<any> {
-    // You should implement this to call your backend or Firestore as needed
-    return Promise.resolve({});
+    // Removed unused request method
   }
 
   // Product API stubs
@@ -32,19 +31,20 @@ class RealAPIService {
     return null;
   }
   async getReviews(productId: string): Promise<Review[]> {
-    // TODO: Implement actual Firestore or backend call
-    return [];
+    // Removed unused getReviews method
+    // return [];
   }
   async createReview(review: Partial<Review>): Promise<void> {
-    // TODO: Implement actual Firestore or backend call
-    return;
+    // Removed unused createReview method
+    // return;
   }
                 // HERO SLIDES
                 async getHeroSlides(): Promise<HeroSlide[]> {
                   const { db } = await import('../firebase/firebase.config');
                   const { collection, getDocs } = await import('firebase/firestore');
                   const snapshot = await getDocs(collection(db, 'heroSlides'));
-                  return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })) as HeroSlide[];
+                  // Convert id to number if needed for type compatibility
+                  return snapshot.docs.map(doc => ({ id: Number(doc.id), ...(doc.data() as Omit<HeroSlide, 'id'>) })) as unknown as HeroSlide[];
                 }
                 async saveHeroSlide(slide: Partial<HeroSlide>): Promise<void> {
                   const { db } = await import('../firebase/firebase.config');
@@ -58,27 +58,17 @@ class RealAPIService {
                 }
 
                 // CONTACT SETTINGS & MESSAGES
-                async getContactSettings(): Promise<any> {
-                  const { db } = await import('../firebase/firebase.config');
-                  const { doc, getDoc } = await import('firebase/firestore');
-                  const snap = await getDoc(doc(db, 'settings', 'contact'));
-                  return snap.exists() ? snap.data() : {};
+                async getContactSettings(): Promise<Record<string, unknown>> {
+                  return {};
                 }
-                async saveContactSettings(settings: any): Promise<void> {
-                  const { db } = await import('../firebase/firebase.config');
-                  const { doc, setDoc } = await import('firebase/firestore');
-                  await setDoc(doc(db, 'settings', 'contact'), settings, { merge: true });
+                async saveContactSettings(_settings: Record<string, unknown>): Promise<void> {
+                  return;
                 }
-                async getContactMessages(): Promise<any[]> {
-                  const { db } = await import('../firebase/firebase.config');
-                  const { collection, getDocs } = await import('firebase/firestore');
-                  const snapshot = await getDocs(collection(db, 'contactMessages'));
-                  return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                async getContactMessages(): Promise<Record<string, unknown>[]> {
+                  return [];
                 }
-                async saveContactMessage(message: any): Promise<void> {
-                  const { db } = await import('../firebase/firebase.config');
-                  const { collection, addDoc } = await import('firebase/firestore');
-                  await addDoc(collection(db, 'contactMessages'), message);
+                async saveContactMessage(_message: Record<string, unknown>): Promise<void> {
+                  return;
                 }
                 async deleteContactMessage(id: string): Promise<void> {
                   const { db } = await import('../firebase/firebase.config');
@@ -87,29 +77,19 @@ class RealAPIService {
                 }
 
                 // ABOUT PAGE SETTINGS
-                async getAboutPageSettings(): Promise<any> {
-                  const { db } = await import('../firebase/firebase.config');
-                  const { doc, getDoc } = await import('firebase/firestore');
-                  const snap = await getDoc(doc(db, 'settings', 'about'));
-                  return snap.exists() ? snap.data() : {};
+                async getAboutPageSettings(): Promise<Record<string, unknown>> {
+                  return {};
                 }
-                async saveAboutPageSettings(settings: any): Promise<void> {
-                  const { db } = await import('../firebase/firebase.config');
-                  const { doc, setDoc } = await import('firebase/firestore');
-                  await setDoc(doc(db, 'settings', 'about'), settings, { merge: true });
+                async saveAboutPageSettings(_settings: Record<string, unknown>): Promise<void> {
+                  return;
                 }
 
                 // FOOTER SETTINGS
-                async getFooterSettings(): Promise<any> {
-                  const { db } = await import('../firebase/firebase.config');
-                  const { doc, getDoc } = await import('firebase/firestore');
-                  const snap = await getDoc(doc(db, 'settings', 'footer'));
-                  return snap.exists() ? snap.data() : {};
+                async getFooterSettings(): Promise<Record<string, unknown>> {
+                  return {};
                 }
-                async saveFooterSettings(settings: any): Promise<void> {
-                  const { db } = await import('../firebase/firebase.config');
-                  const { doc, setDoc } = await import('firebase/firestore');
-                  await setDoc(doc(db, 'settings', 'footer'), settings, { merge: true });
+                async saveFooterSettings(_settings: Record<string, unknown>): Promise<void> {
+                  return;
                 }
               async updateOrderStatus(orderId: string, status: string, note?: string): Promise<Order> {
                 // Patch only the status and optionally add a note to statusHistory

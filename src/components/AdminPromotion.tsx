@@ -25,7 +25,7 @@ const AdminPromotion: React.FC = () => {
       setLoading(true);
       
       // Update user role in Firestore
-      const userRef = doc(db, 'users', currentUser.uid);
+      const userRef = doc(db, 'users', currentUser.id);
       await updateDoc(userRef, {
         role: 'admin',
         updatedAt: new Date()

@@ -120,7 +120,7 @@ service cloud.firestore {
       <Card.Body>
         <Alert variant="info">
           <strong>Firebase Auth User:</strong> {firebaseUser ? `${firebaseUser.email} (${firebaseUser.uid})` : 'None'}<br/>
-          <strong>App Current User:</strong> {currentUser ? `${currentUser.email} (${currentUser.uid})` : 'None'}
+          <strong>App Current User:</strong> {currentUser ? `${currentUser.email} (${currentUser.id})` : 'None'}
         </Alert>
         
         <div className="d-grid gap-2 mb-3">

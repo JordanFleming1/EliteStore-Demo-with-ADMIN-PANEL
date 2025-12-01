@@ -38,6 +38,7 @@ export interface Customer {
   totalOrders: number;
   totalSpent: number;
   joinedAt: string;
+  orderStatusCounts?: { [status: string]: number };
 }
 
 export interface HeroSlide {
