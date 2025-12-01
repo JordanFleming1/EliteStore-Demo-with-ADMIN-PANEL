@@ -8,7 +8,7 @@ import '../../styles/admin-hero-slides.css';
 
 const AdminHeroSlides: React.FC = () => {
   const [slides, setSlides] = useState<HeroSlide[]>([]);
-  const [loading, setLoading] = useState(true);
+  // Removed unused loading and setLoading
   const [showModal, setShowModal] = useState(false);
   const [editingSlide, setEditingSlide] = useState<HeroSlide | null>(null);
   const [uploadingImage, setUploadingImage] = useState(false);
@@ -35,7 +35,7 @@ const AdminHeroSlides: React.FC = () => {
     try {
       const data = await api.getHeroSlides();
       setSlides(
-        data.map((s: any) => ({
+        data.map((s: HeroSlide) => ({
           ...s,
           id: typeof s.id === 'string' ? parseInt(s.id, 10) : s.id,
           subtitle: s.subtitle || '',
@@ -98,7 +98,7 @@ const AdminHeroSlides: React.FC = () => {
   };
 
   // Handler for deactivate confirmation
-  const handleToggleActive = (slide: HeroSlide) => {
+  // Removed unused handleToggleActive
     if (slide.isActive) {
       setSlideToDeactivate(slide);
       setShowDeactivateModal(true);
@@ -343,7 +343,7 @@ const AdminHeroSlides: React.FC = () => {
                       reader.readAsDataURL(file);
                     });
                     setFormData(prev => ({ ...prev, image: base64 }));
-                  } catch (error) {
+                  } catch {
                     alert('Failed to upload image. Please try again.');
                   } finally {
                     setUploadingImage(false);

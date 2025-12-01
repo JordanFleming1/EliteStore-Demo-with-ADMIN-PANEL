@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import type { OrderItem } from '../../types';
 import {
   Container,
   Row,
@@ -122,7 +123,7 @@ const AdminAnalytics: React.FC = () => {
   const categoryMap: Record<string, { sales: number; products: number; revenue: number }> = {};
   orders.forEach(order => {
     if (order.items) {
-      order.items.forEach((item: import('../../types').OrderItem) => {
+      order.items.forEach((item: OrderItem) => {
         if (!categoryMap[item.category]) {
           categoryMap[item.category] = { sales: 0, products: 0, revenue: 0 };
         }
@@ -383,7 +384,7 @@ const AdminAnalytics: React.FC = () => {
                       const productSales = new Map<string, { name: string; unitsSold: number; revenue: number }>();
                       orders.forEach(order => {
                         if (order.items) {
-                          order.items.forEach((item: import('../../types').OrderItem) => {
+                          order.items.forEach((item: OrderItem) => {
                             const existing = productSales.get(item.id) || { name: item.name, unitsSold: 0, revenue: 0 };
                             existing.unitsSold += item.quantity;
                             existing.revenue += item.price * item.quantity;
