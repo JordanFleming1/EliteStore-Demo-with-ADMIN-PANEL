@@ -150,3 +150,4 @@ interface AuthProviderProps {
 }
 
 export { AuthContext };
+export default AuthProvider;
