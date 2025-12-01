@@ -16,6 +16,12 @@ interface AboutSettings {
   stats: Array<{ number: string; label: string; icon: string }>;
   values: Array<{ icon: string; title: string; description: string; color: string }>;
   teamMembers: Array<{ name: string; role: string; image: string; bio: string }>;
+  sustainabilityTitle?: string;
+  sustainabilityDescription?: string;
+  sustainabilityList?: string[];
+  communityTitle?: string;
+  communityDescription?: string;
+  communityList?: string[];
 }
 
 const AboutPage: React.FC = () => {
@@ -29,7 +35,7 @@ const AboutPage: React.FC = () => {
   const fetchSettings = async () => {
     try {
       const data = await api.getAboutPageSettings();
-      setSettings(data);
+        setSettings(data as AboutSettings);
     } catch (error) {
       console.error('Error fetching about settings:', error);
     } finally {
@@ -190,7 +196,7 @@ const AboutPage: React.FC = () => {
                 {settings.sustainabilityDescription || "We're committed to reducing our environmental impact through sustainable business practices."}
               </p>
               <ul className="list-unstyled text-muted">
-                {(settings.sustainabilityList || []).map((item, idx) => (
+                {(settings.sustainabilityList || []).map((item: string, idx: number) => (
                   <li className="mb-2" key={idx}>
                     <i className="fas fa-check text-success me-2"></i>
                     {item}
@@ -211,7 +217,7 @@ const AboutPage: React.FC = () => {
                 {settings.communityDescription || "We believe in giving back to the communities we serve."}
               </p>
               <ul className="list-unstyled text-muted">
-                {(settings.communityList || []).map((item, idx) => (
+                {(settings.communityList || []).map((item: string, idx: number) => (
                   <li className="mb-2" key={idx}>
                     <i className="fas fa-heart text-danger me-2"></i>
                     {item}

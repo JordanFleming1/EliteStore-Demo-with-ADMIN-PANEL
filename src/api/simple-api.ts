@@ -7,8 +7,9 @@ import type { AnalyticsData, Customer, HeroSlide } from '../types/api-types';
 class RealAPIService {
   baseUrl: string = '';
   // Generic request stub (replace with real implementation as needed)
-  async request(endpoint: string, options?: any): Promise<any> {
-    // Removed unused request method
+  async request(_endpoint: string, _options?: unknown): Promise<unknown> {
+    // No-op for mock
+    return {};
   }
 
   // Product API stubs
@@ -30,13 +31,13 @@ class RealAPIService {
     }
     return null;
   }
-  async getReviews(productId: string): Promise<Review[]> {
-    // Removed unused getReviews method
-    // return [];
+  async getReviews(_productId: string): Promise<Review[]> {
+    // No-op for mock
+    return [];
   }
-  async createReview(review: Partial<Review>): Promise<void> {
-    // Removed unused createReview method
-    // return;
+  async createReview(_review: Partial<Review>): Promise<void> {
+    // No-op for mock
+    return;
   }
                 // HERO SLIDES
                 async getHeroSlides(): Promise<HeroSlide[]> {
