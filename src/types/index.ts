@@ -1,3 +1,12 @@
+// Explicit named exports for Vercel/TypeScript compatibility
+export type {
+  Order,
+  OrderStatus,
+  OrderStatusHistory,
+  OrderItem,
+  CustomerInfo,
+  Address
+};
 export * from './api-types';
 export interface Product {
   id: string;
