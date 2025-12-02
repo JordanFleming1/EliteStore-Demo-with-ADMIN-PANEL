@@ -1,4 +1,6 @@
 export * from './api-types';
+
+// Directly export all types/interfaces needed globally
 export interface Product {
   id: string;
   name: string;
