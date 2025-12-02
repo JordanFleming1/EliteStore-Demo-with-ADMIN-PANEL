@@ -1,4 +1,3 @@
-export type { OrderItem };
 export * from './api-types';
 export interface Product {
   id: string;
@@ -67,6 +66,7 @@ export interface OrderItem {
   image?: string; // Product image
   selectedSize?: string;
   selectedColor?: string;
+  category?: string; // Added for analytics and reporting
 }
 
 export interface OrderStatusHistory {

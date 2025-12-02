@@ -124,12 +124,13 @@ const AdminAnalytics: React.FC = () => {
   orders.forEach(order => {
     if (order.items) {
       order.items.forEach((item: OrderItem) => {
-        if (!categoryMap[item.category]) {
-          categoryMap[item.category] = { sales: 0, products: 0, revenue: 0 };
+        const category: string = item.category || 'Uncategorized';
+        if (!categoryMap[category]) {
+          categoryMap[category] = { sales: 0, products: 0, revenue: 0 };
         }
-        categoryMap[item.category].sales += item.quantity;
-        categoryMap[item.category].products += 1;
-        categoryMap[item.category].revenue += item.price * item.quantity;
+        categoryMap[category].sales += item.quantity;
+        categoryMap[category].products += 1;
+        categoryMap[category].revenue += item.price * item.quantity;
       });
     }
   });

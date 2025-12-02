@@ -139,6 +139,7 @@ const generateMockOrder = (id: string): Order => {
       subtotal,
       selectedSize: Math.random() > 0.7 ? getRandomElement(['S', 'M', 'L', 'XL']) : undefined,
       selectedColor: Math.random() > 0.7 ? getRandomElement(['Black', 'White', 'Blue', 'Red', 'Gray']) : undefined,
+      category: product.category,
     });
     
     selectedProducts.push(product);
