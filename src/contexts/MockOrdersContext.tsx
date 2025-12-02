@@ -1,4 +1,4 @@
-import type { Order, OrderStatus, OrderStatusHistory } from '../types/index';
+import type { Order, OrderStatus, OrderStatusHistory, PaymentStatus, CustomerInfo } from '../types/index';
 import React, { createContext, useEffect, useState, useCallback } from 'react';
 import type { ReactNode } from 'react';
 
@@ -81,6 +81,13 @@ const MockOrdersProvider: React.FC<OrdersProviderProps> = ({ children }) => {
             id: typeof order.id === 'string' ? order.id : `order-${idx}`,
             orderNumber: typeof order.orderNumber === 'string' ? order.orderNumber : `ORD-${new Date().getTime()}-${idx}`,
             userId: typeof order.userId === 'string' ? order.userId : `user-${idx}`,
+            customer: order.customer && typeof order.customer === 'object' && typeof order.customer.id === 'string' && typeof order.customer.email === 'string' && typeof order.customer.displayName === 'string'
+              ? order.customer as CustomerInfo
+              : {
+                  id: `customer-${idx}`,
+                  email: `customer${idx}@example.com`,
+                  displayName: `Customer ${idx}`
+                },
             items: Array.isArray(order.items) ? order.items : [],
             subtotal: typeof order.subtotal === 'number' ? order.subtotal : 0,
             shippingCost: typeof order.shippingCost === 'number' ? order.shippingCost : 0,
