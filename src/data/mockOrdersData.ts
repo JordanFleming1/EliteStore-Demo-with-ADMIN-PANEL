@@ -4,42 +4,44 @@ import type { Order, OrderStatus, OrderStatusHistory, OrderItem, CustomerInfo, A
 const mockCustomers: CustomerInfo[] = [
   {
     id: 'cust_001',
-    firstName: 'Alice',
-    lastName: 'Smith',
     email: 'alice@example.com',
+    displayName: 'Alice Smith',
     phone: '555-1234',
-    avatar: '',
-    joinedAt: new Date('2023-12-01'),
-    totalOrders: 3,
-    totalSpent: 350.5,
   },
   {
     id: 'cust_002',
-    firstName: 'Bob',
-    lastName: 'Johnson',
     email: 'bob@example.com',
+    displayName: 'Bob Johnson',
     phone: '555-5678',
-    avatar: '',
-    joinedAt: new Date('2024-01-10'),
-    totalOrders: 1,
-    totalSpent: 79.99,
   },
 ];
 
 const mockAddresses: Address[] = [
   {
+    id: 'addr_001',
+    type: 'shipping',
+    firstName: 'Alice',
+    lastName: 'Smith',
     street: '123 Main St',
     city: 'Springfield',
     state: 'IL',
-    postalCode: '62701',
+    zipCode: '62701',
     country: 'USA',
+    phone: '555-1234',
+    isDefault: true,
   },
   {
+    id: 'addr_002',
+    type: 'billing',
+    firstName: 'Bob',
+    lastName: 'Johnson',
     street: '456 Oak Ave',
     city: 'Centerville',
     state: 'CA',
-    postalCode: '90210',
+    zipCode: '90210',
     country: 'USA',
+    phone: '555-5678',
+    isDefault: false,
   },
 ];
 const mockProducts = [
@@ -175,11 +177,11 @@ const generateMockOrder = (id: string): Order => {
     const subtotal = price * quantity;
     
     orderItems.push({
-      productId: product.id,
-      product,
-      quantity,
+      id: product.id,
+      name: product.name,
       price,
-      subtotal,
+      quantity,
+      image: product.images?.[0],
       selectedSize: Math.random() > 0.7 ? getRandomElement(['S', 'M', 'L', 'XL']) : undefined,
       selectedColor: Math.random() > 0.7 ? getRandomElement(['Black', 'White', 'Blue', 'Red', 'Gray']) : undefined,
       category: product.category,
@@ -189,7 +191,7 @@ const generateMockOrder = (id: string): Order => {
   }
   
   // Calculate pricing
-  const subtotal = orderItems.reduce((sum, item) => sum + item.subtotal, 0);
+  const subtotal = orderItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
   const shippingCost = subtotal > 50 ? 0 : 9.99; // Free shipping over $50
   const taxRate = 0.08; // 8% tax
   const taxAmount = subtotal * taxRate;

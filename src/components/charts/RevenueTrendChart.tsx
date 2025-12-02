@@ -64,12 +64,12 @@ export const RevenueTrendChart: React.FC<RevenueTrendChartProps> = ({
       tooltip: {
         ...defaultChartOptions.plugins?.tooltip,
         callbacks: {
-          label: (context: { dataIndex: number; parsed: { y: number } }) => {
-            const dataIndex = context.dataIndex;
-            const revenue = context.parsed.y;
+          label(this: any, tooltipItem: any) {
+            const dataIndex = tooltipItem.dataIndex;
+            const revenue = tooltipItem.parsed.y;
             const orderCount = dailyRevenue[dataIndex].orderCount;
             return [
-              `Revenue: $${revenue.toFixed(2)}`,
+              `Revenue: $${revenue?.toFixed(2)}`,
               `Orders: ${orderCount}`,
             ];
           },

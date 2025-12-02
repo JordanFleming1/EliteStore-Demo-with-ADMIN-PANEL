@@ -1,7 +1,7 @@
-import type { Order, OrderStatus, OrderStatusHistory, OrderItem, CustomerInfo, Address } from '../types/index';
+import type { Order, OrderStatus, OrderStatusHistory } from '../types/index';
 import React, { createContext, useEffect, useState, useCallback } from 'react';
 import type { ReactNode } from 'react';
-import type { Order, OrderStatus, OrderStatusHistory } from '../types/index';
+
 import { useToast } from '../hooks/useToast';
 import { generateMockOrders } from '../data/mockOrdersData';
 
