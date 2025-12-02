@@ -446,5 +446,5 @@ const AdminHeroSlides: React.FC = () => {
   );
 }
 
-// Vercel trigger: ensure latest commit is deployed
+export default AdminHeroSlides;
 export default AdminHeroSlides;
