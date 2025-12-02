@@ -45,11 +45,16 @@ const AdminFooter: React.FC = () => {
         brandName: typeof data?.brandName === 'string' ? data.brandName : '',
         brandDescription: typeof data?.brandDescription === 'string' ? data.brandDescription : '',
         copyrightText: typeof data?.copyrightText === 'string' ? data.copyrightText : '',
-        socialLinks: {
-          facebook: typeof data?.socialLinks?.facebook === 'string' ? data.socialLinks.facebook : '',
-          twitter: typeof data?.socialLinks?.twitter === 'string' ? data.socialLinks.twitter : '',
-          instagram: typeof data?.socialLinks?.instagram === 'string' ? data.socialLinks.instagram : '',
-          linkedin: typeof data?.socialLinks?.linkedin === 'string' ? data.socialLinks.linkedin : '',
+        socialLinks: typeof data?.socialLinks === 'object' && data.socialLinks !== null ? {
+          facebook: typeof data.socialLinks.facebook === 'string' ? data.socialLinks.facebook : '',
+          twitter: typeof data.socialLinks.twitter === 'string' ? data.socialLinks.twitter : '',
+          instagram: typeof data.socialLinks.instagram === 'string' ? data.socialLinks.instagram : '',
+          linkedin: typeof data.socialLinks.linkedin === 'string' ? data.socialLinks.linkedin : '',
+        } : {
+          facebook: '',
+          twitter: '',
+          instagram: '',
+          linkedin: ''
         },
       });
     } catch (error) {

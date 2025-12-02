@@ -76,18 +76,31 @@ const MockOrdersProvider: React.FC<OrdersProviderProps> = ({ children }) => {
           confirmedAt: order.confirmedAt ? new Date(order.confirmedAt as string) : undefined,
           shippedAt: order.shippedAt ? new Date(order.shippedAt as string) : undefined,
           deliveredAt: order.deliveredAt ? new Date(order.deliveredAt as string) : undefined,
-          statusHistory: (order.statusHistory as Array<Partial<OrderStatusHistory>>)?.map((h) => ({
-            ...h,
-            timestamp: h.timestamp ? new Date(h.timestamp as string) : undefined
-          })) as OrderStatusHistory[] || []
+          statusHistory: Array.isArray(order.statusHistory)
+            ? (order.statusHistory as Array<Partial<OrderStatusHistory>>).map((h) => ({
+                ...h,
+                timestamp: h.timestamp ? new Date(h.timestamp as string) : undefined
+              })) as OrderStatusHistory[]
+            : []
         })) as Order[];
         console.log('📁 Loaded orders from localStorage:', ordersData.length);
       } else {
         // Generate fresh mock data
         ordersData = generateMockOrders(25);
-        
-        // Save to localStorage
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(ordersData));
+        // Convert all Date fields to ISO strings for storage
+        const serializableOrders = ordersData.map((order) => ({
+          ...order,
+          createdAt: order.createdAt ? order.createdAt.toISOString() : undefined,
+          updatedAt: order.updatedAt ? order.updatedAt.toISOString() : undefined,
+          confirmedAt: order.confirmedAt ? order.confirmedAt.toISOString() : undefined,
+          shippedAt: order.shippedAt ? order.shippedAt.toISOString() : undefined,
+          deliveredAt: order.deliveredAt ? order.deliveredAt.toISOString() : undefined,
+          statusHistory: order.statusHistory?.map((h) => ({
+            ...h,
+            timestamp: h.timestamp ? h.timestamp.toISOString() : undefined
+          })) || []
+        }));
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(serializableOrders));
         console.log('🎲 Generated new mock orders:', ordersData.length);
       }
       
