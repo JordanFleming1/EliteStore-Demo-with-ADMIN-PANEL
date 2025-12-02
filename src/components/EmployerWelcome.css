@@ -36,7 +36,6 @@
 }
 
 /* Popup container */
-
 .employer-welcome-popup {
   background: rgba(255,255,255,0.97);
   padding: 36px 44px;
@@ -47,42 +46,6 @@
   text-align: center;
   color: #222;
   font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
-  box-sizing: border-box;
-}
-
-@media (max-width: 600px) {
-  .employer-welcome-popup {
-    padding: 10px 2vw 14px 2vw;
-    max-width: 99vw;
-    width: 99vw;
-    border-radius: 8px;
-    font-size: 0.97em;
-    max-height: 90vh;
-    overflow-y: auto;
-    box-sizing: border-box;
-  }
-  .employer-welcome-overlay {
-    align-items: flex-start;
-    padding-top: 6vw;
-    padding-bottom: 6vw;
-  }
-  .employer-welcome-popup h2 {
-    font-size: 1.1em;
-    margin-bottom: 10px;
-  }
-  .employer-welcome-popup p,
-  .employer-welcome-popup ul,
-  .employer-welcome-popup li,
-  .employer-welcome-popup div {
-    font-size: 0.97em !important;
-    word-break: break-word;
-  }
-  .close-button {
-    width: 100%;
-    padding: 12px 0;
-    font-size: 1em;
-    margin-top: 14px;
-  }
 }
 
 .employer-welcome-popup h2 {

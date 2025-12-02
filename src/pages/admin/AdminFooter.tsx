@@ -42,27 +42,15 @@ const AdminFooter: React.FC = () => {
     try {
       const data = await api.getFooterSettings();
       setSettings({
-        brandName: typeof data?.brandName === 'string' ? data.brandName : '',
-        brandDescription: typeof data?.brandDescription === 'string' ? data.brandDescription : '',
-        copyrightText: typeof data?.copyrightText === 'string' ? data.copyrightText : '',
-        socialLinks:
-          data && typeof data.socialLinks === 'object' && data.socialLinks !== null &&
-          'facebook' in data.socialLinks &&
-          'twitter' in data.socialLinks &&
-          'instagram' in data.socialLinks &&
-          'linkedin' in data.socialLinks
-            ? {
-                facebook: typeof data.socialLinks.facebook === 'string' ? data.socialLinks.facebook : '',
-                twitter: typeof data.socialLinks.twitter === 'string' ? data.socialLinks.twitter : '',
-                instagram: typeof data.socialLinks.instagram === 'string' ? data.socialLinks.instagram : '',
-                linkedin: typeof data.socialLinks.linkedin === 'string' ? data.socialLinks.linkedin : '',
-              }
-            : {
-                facebook: '',
-                twitter: '',
-                instagram: '',
-                linkedin: ''
-              },
+        brandName: data?.brandName || '',
+        brandDescription: data?.brandDescription || '',
+        copyrightText: data?.copyrightText || '',
+        socialLinks: {
+          facebook: data?.socialLinks?.facebook || '',
+          twitter: data?.socialLinks?.twitter || '',
+          instagram: data?.socialLinks?.instagram || '',
+          linkedin: data?.socialLinks?.linkedin || '',
+        },
       });
     } catch (error) {
       console.error('Error fetching footer settings:', error);
