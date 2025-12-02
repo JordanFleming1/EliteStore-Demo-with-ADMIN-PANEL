@@ -79,6 +79,7 @@ const MockOrdersProvider: React.FC<OrdersProviderProps> = ({ children }) => {
           return {
             ...order,
             id: typeof order.id === 'string' ? order.id : `order-${idx}`,
+            orderNumber: typeof order.orderNumber === 'string' ? order.orderNumber : `ORD-${new Date().getTime()}-${idx}`,
             createdAt: order.createdAt ? new Date(order.createdAt as string) : new Date(),
             updatedAt: order.updatedAt ? new Date(order.updatedAt as string) : new Date(),
             confirmedAt: order.confirmedAt ? new Date(order.confirmedAt as string) : undefined,
