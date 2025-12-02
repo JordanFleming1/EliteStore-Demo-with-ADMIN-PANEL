@@ -69,20 +69,23 @@ const MockOrdersProvider: React.FC<OrdersProviderProps> = ({ children }) => {
       if (savedOrders) {
         // Parse saved orders and convert date strings back to Date objects
         const parsedOrders = JSON.parse(savedOrders) as Partial<Order>[];
-        ordersData = parsedOrders.map((order) => ({
-          ...order,
-          createdAt: order.createdAt ? new Date(order.createdAt as string) : undefined,
-          updatedAt: order.updatedAt ? new Date(order.updatedAt as string) : undefined,
-          confirmedAt: order.confirmedAt ? new Date(order.confirmedAt as string) : undefined,
-          shippedAt: order.shippedAt ? new Date(order.shippedAt as string) : undefined,
-          deliveredAt: order.deliveredAt ? new Date(order.deliveredAt as string) : undefined,
-          statusHistory: Array.isArray(order.statusHistory)
+        ordersData = parsedOrders.map((order) => {
+          const statusHistory = Array.isArray(order.statusHistory)
             ? (order.statusHistory as Array<Partial<OrderStatusHistory>>).map((h) => ({
                 ...h,
                 timestamp: h.timestamp ? new Date(h.timestamp as string) : undefined
-              })) as OrderStatusHistory[]
-            : []
-        })) as Order[];
+              }))
+            : [];
+          return {
+            ...order,
+            createdAt: order.createdAt ? new Date(order.createdAt as string) : undefined,
+            updatedAt: order.updatedAt ? new Date(order.updatedAt as string) : undefined,
+            confirmedAt: order.confirmedAt ? new Date(order.confirmedAt as string) : undefined,
+            shippedAt: order.shippedAt ? new Date(order.shippedAt as string) : undefined,
+            deliveredAt: order.deliveredAt ? new Date(order.deliveredAt as string) : undefined,
+            statusHistory: statusHistory
+          } as Order;
+        });
         console.log('📁 Loaded orders from localStorage:', ordersData.length);
       } else {
         // Generate fresh mock data
