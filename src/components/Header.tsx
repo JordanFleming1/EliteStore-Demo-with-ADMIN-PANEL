@@ -420,9 +420,7 @@ const Header: React.FC = () => {
           </Form>
 
           <Nav className="flex-column">
-            <div className="navbar-employer-mobile" style={{ marginBottom: 12 }}>
-              <NavbarEmployerButton />
-            </div>
+
 
             <Nav.Link 
               as={Link} 
