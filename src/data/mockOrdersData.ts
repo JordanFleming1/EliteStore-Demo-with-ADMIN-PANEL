@@ -1,4 +1,4 @@
-import type { Order, OrderStatus, OrderStatusHistory, OrderItem, CustomerInfo, Address } from '../types/index';
+import type { Order, OrderStatus, OrderItem, CustomerInfo, Address } from '../types/index';
 
 // Minimal mock data for customers and addresses
 const mockCustomers: CustomerInfo[] = [
@@ -174,7 +174,7 @@ const generateMockOrder = (id: string): Order => {
     const product = getRandomElement(mockProducts);
     const quantity = Math.floor(Math.random() * 3) + 1; // 1-3 quantity
     const price = product.price;
-    const subtotal = price * quantity;
+    // const subtotal = price * quantity; // removed unused variable
     
     orderItems.push({
       id: product.id,

@@ -42,7 +42,9 @@ const AdminFooter: React.FC = () => {
     try {
       const data = await api.getFooterSettings();
       setSettings({
-        ...data,
+        brandName: data?.brandName || '',
+        brandDescription: data?.brandDescription || '',
+        copyrightText: data?.copyrightText || '',
         socialLinks: {
           facebook: data?.socialLinks?.facebook || '',
           twitter: data?.socialLinks?.twitter || '',

@@ -233,14 +233,14 @@ const ProductsPage: React.FC = () => {
                         {product.salePrice || product.discountPrice ? (
                           <>
                             <span className="fw-bold text-primary">
-                              {getCurrencySymbol(product.currency)}{(product.salePrice || product.discountPrice)?.toFixed(2)}
+                              {getCurrencySymbol(product.currency || '')}{(product.salePrice || product.discountPrice)?.toFixed(2)}
                             </span>
                             <span className="text-muted text-decoration-line-through ms-1 small">
-                              {getCurrencySymbol(product.currency)}{product.price.toFixed(2)}
+                              {getCurrencySymbol(product.currency || '')}{product.price.toFixed(2)}
                             </span>
                           </>
                         ) : (
-                          <span className="fw-bold text-primary">{getCurrencySymbol(product.currency)}{product.price.toFixed(2)}</span>
+                          <span className="fw-bold text-primary">{getCurrencySymbol(product.currency || '')}{product.price.toFixed(2)}</span>
                         )}
                       </div>
                       <Badge bg={product.stock > 0 ? 'success' : 'danger'} className="small">

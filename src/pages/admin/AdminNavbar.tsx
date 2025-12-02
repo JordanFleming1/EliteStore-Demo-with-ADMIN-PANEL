@@ -9,7 +9,7 @@ interface NavbarTheme {
 
 const AdminNavbar: React.FC = () => {
   const [currentTheme, setCurrentTheme] = useState<NavbarTheme['theme']>('dark');
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true); // removed unused variable
   const [saving, setSaving] = useState(false);
   const [alert, setAlert] = useState<{ show: boolean; variant: 'success' | 'danger'; message: string }>({
     show: false,
@@ -32,7 +32,7 @@ const AdminNavbar: React.FC = () => {
         // Optionally handle error
         setAlert({ show: true, variant: 'danger', message: 'Failed to load theme settings.' });
       } finally {
-        setLoading(false);
+        // setLoading(false); // removed unused variable
       }
     };
     fetchSettings();

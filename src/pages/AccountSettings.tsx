@@ -39,7 +39,7 @@ const AccountSettings: React.FC = () => {
     email: currentUser?.email || '',
     phone: '',
     dateOfBirth: '',
-    profilePicture: currentUser?.photoURL || ''
+    profilePicture: (typeof currentUser?.photoURL === 'string' ? currentUser.photoURL : '') || ''
   });
 
   const [addresses, setAddresses] = useState<Address[]>([

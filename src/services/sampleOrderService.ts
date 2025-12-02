@@ -129,7 +129,7 @@ export const createSampleOrder = async (): Promise<string> => {
       name: product.name,
       quantity,
       price,
-      image: product.images?.[0],
+      image: product.image,
       selectedSize: Math.random() > 0.7 ? getRandomElement(['S', 'M', 'L', 'XL']) : undefined,
       selectedColor: Math.random() > 0.7 ? getRandomElement(['Black', 'White', 'Blue', 'Red']) : undefined,
     });
