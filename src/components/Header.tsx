@@ -301,9 +301,7 @@ const Header: React.FC = () => {
               >
                 Contact
               </Nav.Link>
-              <div className="d-inline-block align-middle ms-2">
-                <NavbarEmployerButton />
-              </div>
+
             </Nav>
 
             <Form className="d-flex mx-3 flex-grow-1" style={{ maxWidth: '400px' }} onSubmit={handleSearch}>
