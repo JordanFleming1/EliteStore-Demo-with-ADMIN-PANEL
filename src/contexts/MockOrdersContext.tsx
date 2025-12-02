@@ -71,14 +71,14 @@ const MockOrdersProvider: React.FC<OrdersProviderProps> = ({ children }) => {
         const parsedOrders = JSON.parse(savedOrders) as Partial<Order>[];
         ordersData = parsedOrders.map((order) => ({
           ...order,
-          createdAt: new Date(order.createdAt as string),
-          updatedAt: new Date(order.updatedAt as string),
+          createdAt: order.createdAt ? new Date(order.createdAt as string) : undefined,
+          updatedAt: order.updatedAt ? new Date(order.updatedAt as string) : undefined,
           confirmedAt: order.confirmedAt ? new Date(order.confirmedAt as string) : undefined,
           shippedAt: order.shippedAt ? new Date(order.shippedAt as string) : undefined,
           deliveredAt: order.deliveredAt ? new Date(order.deliveredAt as string) : undefined,
           statusHistory: (order.statusHistory as Array<Partial<OrderStatusHistory>>)?.map((h) => ({
             ...h,
-            timestamp: new Date(h.timestamp as string)
+            timestamp: h.timestamp ? new Date(h.timestamp as string) : undefined
           })) || []
         })) as Order[];
         console.log('📁 Loaded orders from localStorage:', ordersData.length);
