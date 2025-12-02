@@ -1,3 +1,7 @@
+          {/* Add Employer Welcome button to mobile hamburger menu only */}
+          <div className="d-block d-lg-none my-2">
+            <NavbarEmployerButton />
+          </div>
 // Support all themes
 // ...existing code...
 import React, { useState, useEffect } from 'react';
@@ -302,10 +306,7 @@ const Header: React.FC = () => {
                 Contact
               </Nav.Link>
 
-                      {/* Add Employer Welcome button to mobile hamburger menu only */}
-                      <div className="d-lg-none my-2">
-                        <NavbarEmployerButton />
-                      </div>
+
             </Nav>
 
             <Form className="d-flex mx-3 flex-grow-1" style={{ maxWidth: '400px' }} onSubmit={handleSearch}>
