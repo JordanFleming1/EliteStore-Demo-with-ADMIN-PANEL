@@ -1,3 +1,19 @@
+/* Show/hide Employer Welcome button in correct context */
+.navbar-employer-desktop {
+  display: block;
+}
+.navbar-employer-mobile {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .navbar-employer-desktop {
+    display: none !important;
+  }
+  .navbar-employer-mobile {
+    display: block !important;
+  }
+}
 
 
 /* Employer Welcome Button (keep only this custom style) */

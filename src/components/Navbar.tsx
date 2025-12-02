@@ -12,7 +12,9 @@ const Navbar = () => {
   return (
     <nav className="navbar">
       {/* Add other nav links here if needed */}
-      <NavbarEmployerButton />
+      <div className="navbar-employer-desktop">
+        <NavbarEmployerButton />
+      </div>
     </nav>
   );
 };
