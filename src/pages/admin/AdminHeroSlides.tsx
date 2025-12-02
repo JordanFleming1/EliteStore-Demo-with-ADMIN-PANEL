@@ -447,4 +447,3 @@ const AdminHeroSlides: React.FC = () => {
 }
 
 export default AdminHeroSlides;
-export default AdminHeroSlides;
