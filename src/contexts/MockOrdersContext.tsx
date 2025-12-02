@@ -80,15 +80,51 @@ const MockOrdersProvider: React.FC<OrdersProviderProps> = ({ children }) => {
             ...order,
             id: typeof order.id === 'string' ? order.id : `order-${idx}`,
             orderNumber: typeof order.orderNumber === 'string' ? order.orderNumber : `ORD-${new Date().getTime()}-${idx}`,
+            userId: typeof order.userId === 'string' ? order.userId : `user-${idx}`,
+            items: Array.isArray(order.items) ? order.items : [],
+            subtotal: typeof order.subtotal === 'number' ? order.subtotal : 0,
+            shippingCost: typeof order.shippingCost === 'number' ? order.shippingCost : 0,
+            taxAmount: typeof order.taxAmount === 'number' ? order.taxAmount : 0,
+            discountAmount: typeof order.discountAmount === 'number' ? order.discountAmount : 0,
+            totalAmount: typeof order.totalAmount === 'number' ? order.totalAmount : 0,
+            status: typeof order.status === 'string' ? order.status as OrderStatus : 'pending',
+            paymentStatus: typeof order.paymentStatus === 'string' ? order.paymentStatus as PaymentStatus : 'pending',
+            statusHistory: statusHistory.map((h) => ({
+              ...h,
+              timestamp: h.timestamp ? new Date(h.timestamp as string) : undefined
+            })),
+            shippingAddress: order.shippingAddress ? order.shippingAddress : {
+              id: `shipping-${idx}`,
+              type: 'shipping',
+              firstName: '',
+              lastName: '',
+              street: '',
+              city: '',
+              state: '',
+              zipCode: '',
+              country: '',
+              phone: '',
+              isDefault: true
+            },
+            billingAddress: order.billingAddress ? order.billingAddress : {
+              id: `billing-${idx}`,
+              type: 'billing',
+              firstName: '',
+              lastName: '',
+              street: '',
+              city: '',
+              state: '',
+              zipCode: '',
+              country: '',
+              phone: '',
+              isDefault: true
+            },
+            paymentMethod: typeof order.paymentMethod === 'string' ? order.paymentMethod : 'unknown',
             createdAt: order.createdAt ? new Date(order.createdAt as string) : new Date(),
             updatedAt: order.updatedAt ? new Date(order.updatedAt as string) : new Date(),
             confirmedAt: order.confirmedAt ? new Date(order.confirmedAt as string) : undefined,
             shippedAt: order.shippedAt ? new Date(order.shippedAt as string) : undefined,
-            deliveredAt: order.deliveredAt ? new Date(order.deliveredAt as string) : undefined,
-            statusHistory: statusHistory.map((h) => ({
-              ...h,
-              timestamp: h.timestamp ? new Date(h.timestamp as string) : undefined
-            }))
+            deliveredAt: order.deliveredAt ? new Date(order.deliveredAt as string) : undefined
           };
         });
         console.log('📁 Loaded orders from localStorage:', ordersData.length);
