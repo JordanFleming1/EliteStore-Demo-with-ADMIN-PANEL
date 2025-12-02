@@ -9,7 +9,6 @@ const NavbarEmployerButton = () => {
       <button
         onClick={() => setShowPopup(true)}
         className="navbar-employer-button"
-        style={{ marginLeft: 8 }}
       >
         Employer Welcome
       </button>

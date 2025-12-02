@@ -1,21 +1,33 @@
 
 
 /* Employer Welcome Button (keep only this custom style) */
+
 .navbar-employer-button {
-  background-color: #007bff;
-  color: white;
+  background: none;
+  color: #185a9d;
   border: none;
-  padding: 10px 15px;
+  padding: 10px 18px;
   border-radius: 5px;
   cursor: pointer;
-  font-size: 14px;
-  transition: transform 0.3s ease, background-color 0.3s ease;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: background 0.2s, color 0.2s;
+  display: inline-block;
+  outline: none;
 }
-.navbar-employer-button:hover {
-  background-color: #0056b3;
-  transform: scale(1.1);
+.navbar-employer-button:hover,
+.navbar-employer-button:focus {
+  background: #e3f0fa;
+  color: #007bff;
 }
-.navbar-employer-button:active {
-  transform: scale(0.95);
+
+@media (max-width: 600px) {
+  .navbar-employer-button {
+    font-size: 0.98em;
+    padding: 10px 8px;
+    width: 100%;
+    border-radius: 0;
+    text-align: center;
+  }
 }
 
