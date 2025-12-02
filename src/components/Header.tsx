@@ -1,7 +1,4 @@
-          {/* Add Employer Welcome button to mobile hamburger menu only */}
-          <div className="d-block d-lg-none my-2">
-            <NavbarEmployerButton />
-          </div>
+
 // Support all themes
 // ...existing code...
 import React, { useState, useEffect } from 'react';
