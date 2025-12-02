@@ -1,6 +1,6 @@
 import React, { createContext, useEffect, useState, useCallback } from 'react';
 import type { ReactNode } from 'react';
-import type { Order, OrderStatus, OrderStatusHistory } from '../types';
+import type { Order, OrderStatus, OrderStatusHistory } from '../types/index';
 import { useToast } from '../hooks/useToast';
 import { generateMockOrders } from '../data/mockOrdersData';
 

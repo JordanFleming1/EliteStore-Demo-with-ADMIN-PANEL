@@ -5,7 +5,7 @@ import {
   Timestamp 
 } from 'firebase/firestore';
 import { db } from '../firebase/firebase.config';
-import type { Order, OrderStatus, OrderItem, CustomerInfo, Address } from '../types';
+import type { Order, OrderStatus, OrderItem, CustomerInfo, Address } from '../types/index';
 
 // --- Sample Data for Demo Orders ---
 const sampleCustomers: CustomerInfo[] = [

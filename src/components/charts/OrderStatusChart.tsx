@@ -1,7 +1,7 @@
 // Order Status Distribution Chart
 import React from 'react';
 import { Doughnut } from 'react-chartjs-2';
-import type { Order } from '../../types';
+import type { Order } from '../../types/index';
 import { defaultChartOptions, chartColorArray } from '../../utils/chartConfig';
 
 interface OrderStatusChartProps {
