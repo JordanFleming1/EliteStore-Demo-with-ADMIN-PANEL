@@ -35,45 +35,13 @@ import AdminFooter from './pages/admin/AdminFooter';
 import AdminNavbar from './pages/admin/AdminNavbar';
 import './App.css';
 import Navbar from './components/Navbar';
-import EmployerWelcome from './components/EmployerWelcome';
+// import EmployerWelcome from './components/EmployerWelcome';
 
 function AppContent() {
   const location = useLocation();
   const isAdminRoute = location.pathname.startsWith('/admin');
   const { currentUser } = useAuth();
-  // EmployerWelcome popup state
-  const [showEmployerWelcome, setShowEmployerWelcome] = React.useState(false);
 
-
-  // Show popup on first visit (non-admin routes only)
-  React.useEffect(() => {
-    if (!isAdminRoute) {
-      const dismissed = localStorage.getItem('employerWelcomeDismissed');
-      if (!dismissed) {
-        setShowEmployerWelcome(true);
-        // Disable scrolling when popup is open
-        document.body.style.overflow = 'hidden';
-      }
-    }
-    // Clean up: restore scrolling if popup is not shown
-    return () => {
-      document.body.style.overflow = '';
-    };
-  }, [isAdminRoute]);
-
-  React.useEffect(() => {
-    if (showEmployerWelcome) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
-  }, [showEmployerWelcome]);
-
-  const handleCloseEmployerWelcome = () => {
-    setShowEmployerWelcome(false);
-    localStorage.setItem('employerWelcomeDismissed', 'true');
-    document.body.style.overflow = '';
-  };
 
   // Persist route on change
   useEffect(() => {
@@ -100,9 +68,8 @@ function AppContent() {
   // No global loading spinner: always render content
   return (
     <div className="d-flex flex-column min-vh-100">
-      {!isAdminRoute && !showEmployerWelcome && <Header />}
-      {!isAdminRoute && !showEmployerWelcome && <Navbar />}
-      {showEmployerWelcome && <EmployerWelcome onClose={handleCloseEmployerWelcome} />}
+      {!isAdminRoute && <Header />}
+      {!isAdminRoute && <Navbar />}
       <main className="flex-grow-1">
         <Routes>
           <Route path="/" element={<HomePage />} />
