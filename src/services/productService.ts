@@ -30,7 +30,9 @@ export class ProductService {
       const q = query(collection(db, this.collectionName), orderBy('createdAt', 'desc'));
       const querySnapshot = await getDocs(q);
       
-      return querySnapshot.docs.map((doc: any) => ({
+      // Use 'any' for doc to access Firestore DocumentSnapshot methods
+      // Use Firestore DocumentData type for doc
+      return querySnapshot.docs.map((doc: import('firebase/firestore').DocumentData) => ({
         id: doc.id,
         ...doc.data(),
         createdAt: doc.data().createdAt?.toDate() || new Date(),

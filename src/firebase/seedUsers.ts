@@ -28,7 +28,6 @@ async function seedUsers() {
   } catch (err) {
     console.error('Admin user error:', err);
   }
-12314326
   // Create non-admin users in Firebase Auth and Firestore 'users' table
   for (const customer of customers) {
     try {

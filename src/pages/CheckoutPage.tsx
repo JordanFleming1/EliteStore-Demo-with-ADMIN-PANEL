@@ -263,7 +263,7 @@ const CheckoutPage: React.FC = () => {
       };
       // Save order to API
       try {
-        await api.createOrder(orderData);
+        await api.createOrder();
         if (ordersContext?.refreshData) {
           await ordersContext.refreshData();
         }

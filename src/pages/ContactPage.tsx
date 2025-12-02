@@ -53,13 +53,7 @@ const ContactPage: React.FC = () => {
     try {
       // Save message to Firestore
       const api = await import('../api/simple-api');
-      const messageData = {
-        id: `MSG-${Date.now()}`,
-        ...formData,
-        createdAt: new Date().toISOString(),
-        read: false
-      };
-      await api.default.saveContactMessage(messageData);
+        await api.default.saveContactMessage();
       setAlertVariant('success');
       setAlertMessage('Thank you for your message! We\'ll get back to you within 24 hours.');
       setShowAlert(true);

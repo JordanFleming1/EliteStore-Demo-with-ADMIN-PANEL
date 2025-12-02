@@ -7,6 +7,7 @@ import { OrderStatusChart } from './charts/OrderStatusChart';
 import { format } from 'date-fns';
 import api from '../api/simple-api';
 import type { Product } from '../types/index';
+import type { OrderItem } from '../types/index';
 
 interface Customer {
   id: string;
@@ -398,7 +399,7 @@ export const AnalyticsDashboard: React.FC<AnalyticsDashboardProps> = ({ classNam
                   }>();
 
                   orders.forEach(order => {
-                    order.items.forEach((item: any) => {
+                    order.items.forEach((item: OrderItem) => {
                       const existing = productSales.get(item.id) || {
                         name: item.name,
                         quantity: 0,

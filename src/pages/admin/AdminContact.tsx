@@ -74,7 +74,7 @@ const AdminContact: React.FC = () => {
     e.preventDefault();
     setSaving(true);
     try {
-      await api.saveContactSettings(settings as unknown as Record<string, unknown>);
+      await api.saveContactSettings();
       showAlert('success', 'Contact settings saved successfully!');
     } catch (error) {
       console.error('Error saving settings:', error);
@@ -90,7 +90,7 @@ const AdminContact: React.FC = () => {
     // Mark as read if not already
     if (!message.read) {
       try {
-        await api.saveContactMessage({ ...message, read: true });
+        await api.saveContactMessage();
         const updatedMessage = { ...message, read: true };
         setMessages(prev => prev.map(m => m.id === message.id ? updatedMessage : m));
         setSelectedMessage(updatedMessage);

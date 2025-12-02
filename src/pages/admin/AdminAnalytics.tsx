@@ -1,5 +1,5 @@
+import type { OrderItem } from '../../types/index';
 import React, { useState } from 'react';
-import type { OrderItem } from '../../types';
 import {
   Container,
   Row,

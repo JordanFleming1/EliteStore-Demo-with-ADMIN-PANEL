@@ -143,7 +143,7 @@ const AdminAbout: React.FC = () => {
     setSaving(true);
 
     try {
-      await api.saveAboutPageSettings(settings as unknown as Record<string, unknown>);
+      await api.saveAboutPageSettings();
       showAlert('success', 'About page settings saved successfully!');
       // Reload settings to confirm save
       await fetchSettings();

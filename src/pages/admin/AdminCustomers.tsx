@@ -232,7 +232,7 @@ const AdminCustomers: React.FC = () => {
                   // For now, just simulate delay
                   await new Promise(res => setTimeout(res, 1500));
                   setEmailStatus(`Email sent to ${emails.length} customers.`);
-                } catch (err) {
+                } catch {
                   setEmailStatus('Error sending email.');
                 } finally {
                   setSendingEmail(false);

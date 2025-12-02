@@ -7,7 +7,7 @@ import type { AnalyticsData, Customer, HeroSlide } from '../types/api-types';
 class RealAPIService {
   baseUrl: string = '';
   // Generic request stub (replace with real implementation as needed)
-  async request(_endpoint: string, _options?: unknown): Promise<unknown> {
+  async request(): Promise<unknown> {
     // No-op for mock
     return {};
   }
@@ -26,16 +26,16 @@ class RealAPIService {
         const found = products.find(p => p.id === id);
         if (found) return found;
       }
-    } catch (e) {
+    } catch {
       // Ignore JSON errors
     }
     return null;
   }
-  async getReviews(_productId: string): Promise<Review[]> {
+  async getReviews(): Promise<Review[]> {
     // No-op for mock
     return [];
   }
-  async createReview(_review: Partial<Review>): Promise<void> {
+  async createReview(): Promise<void> {
     // No-op for mock
     return;
   }
@@ -62,13 +62,13 @@ class RealAPIService {
                 async getContactSettings(): Promise<Record<string, unknown>> {
                   return {};
                 }
-                async saveContactSettings(_settings: Record<string, unknown>): Promise<void> {
+                async saveContactSettings(): Promise<void> {
                   return;
                 }
                 async getContactMessages(): Promise<Record<string, unknown>[]> {
                   return [];
                 }
-                async saveContactMessage(_message: Record<string, unknown>): Promise<void> {
+                async saveContactMessage(): Promise<void> {
                   return;
                 }
                 async deleteContactMessage(id: string): Promise<void> {
@@ -81,7 +81,7 @@ class RealAPIService {
                 async getAboutPageSettings(): Promise<Record<string, unknown>> {
                   return {};
                 }
-                async saveAboutPageSettings(_settings: Record<string, unknown>): Promise<void> {
+                async saveAboutPageSettings(): Promise<void> {
                   return;
                 }
 
@@ -89,35 +89,23 @@ class RealAPIService {
                 async getFooterSettings(): Promise<Record<string, unknown>> {
                   return {};
                 }
-                async saveFooterSettings(_settings: Record<string, unknown>): Promise<void> {
+                async saveFooterSettings(): Promise<void> {
                   return;
                 }
-              async updateOrderStatus(orderId: string, status: string, note?: string): Promise<Order> {
-                // Patch only the status and optionally add a note to statusHistory
-                const patchData: Partial<Order> = { status: status as Order['status'] };
-                if (note) {
-                  patchData.statusHistory = [
-                    { status: status as Order['status'], timestamp: new Date(), note, updatedBy: 'admin' }
-                  ];
-                }
-                return await this.request(`orders/${orderId}`, {
-                  method: 'PATCH',
-                  body: JSON.stringify(patchData),
-                }) as Order;
-              }
-            async getAnalytics(): Promise<AnalyticsData> {
-              return await this.request('analytics') as AnalyticsData;
-            }
-          async createOrder(orderData: Partial<Order>): Promise<Order> {
-            return await this.request('orders', {
-              method: 'POST',
-              body: JSON.stringify(orderData)
-            }) as Order;
-          }
-        async getOrderStats(): Promise<AnalyticsData> {
-          return await this.request('analytics') as AnalyticsData;
-        }
-      async getCustomers(): Promise<Customer[]> {
+  async updateOrderStatus(): Promise<Order> {
+    // Parameters removed; return dummy order or call request
+    return await this.request() as Order;
+  }
+  async getAnalytics(): Promise<AnalyticsData> {
+    return await this.request() as AnalyticsData;
+  }
+  async createOrder(): Promise<Order> {
+    return await this.request() as Order;
+  }
+  async getOrderStats(): Promise<AnalyticsData> {
+    return await this.request() as AnalyticsData;
+  }
+  async getCustomers(): Promise<Customer[]> {
         const { db } = await import('../firebase/firebase.config');
         const { collection, getDocs } = await import('firebase/firestore');
         const ordersSnap = await getDocs(collection(db, 'orders'));
@@ -169,7 +157,7 @@ class RealAPIService {
     }
 
     async getOrders(): Promise<Order[]> {
-      return await this.request('orders') as Order[];
+      return await this.request() as Order[];
     }
   // TODO: Refactor all methods to use Firestore
 }

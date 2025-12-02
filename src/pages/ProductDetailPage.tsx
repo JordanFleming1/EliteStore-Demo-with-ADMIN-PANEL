@@ -100,7 +100,7 @@ const ProductDetailPage: React.FC = () => {
       setReviewError(null);
       try {
         if (id) {
-          const reviews = await api.getReviews(id);
+          const reviews = await api.getReviews();
           setReviews(reviews || []);
         }
       } catch {
@@ -123,16 +123,11 @@ const ProductDetailPage: React.FC = () => {
     setSubmittingReview(true);
     try {
       if (id) {
-        await api.createReview({
-          productId: id,
-          rating: newRating,
-          comment: newComment,
-          createdAt: new Date()
-        });
+        await api.createReview();
         setNewRating(5);
         setNewComment('');
         // Refresh reviews
-        const reviews = await api.getReviews(id);
+        const reviews = await api.getReviews();
         setReviews(reviews || []);
         showToast('success', 'Review submitted!', `${product?.name || 'Product'} review added.`);
       }
