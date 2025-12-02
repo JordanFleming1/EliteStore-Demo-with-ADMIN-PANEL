@@ -69,7 +69,7 @@ const MockOrdersProvider: React.FC<OrdersProviderProps> = ({ children }) => {
       if (savedOrders) {
         // Parse saved orders and convert date strings back to Date objects
         const parsedOrders = JSON.parse(savedOrders) as Partial<Order>[];
-        ordersData = parsedOrders.map((order) => {
+        ordersData = parsedOrders.map((order, idx) => {
           const statusHistory = Array.isArray(order.statusHistory)
             ? (order.statusHistory as Array<Partial<OrderStatusHistory>>).map((h) => ({
                 ...h,
@@ -78,8 +78,9 @@ const MockOrdersProvider: React.FC<OrdersProviderProps> = ({ children }) => {
             : [];
           return {
             ...order,
-            createdAt: order.createdAt ? new Date(order.createdAt as string) : undefined,
-            updatedAt: order.updatedAt ? new Date(order.updatedAt as string) : undefined,
+            id: typeof order.id === 'string' ? order.id : `order-${idx}`,
+            createdAt: order.createdAt ? new Date(order.createdAt as string) : new Date(),
+            updatedAt: order.updatedAt ? new Date(order.updatedAt as string) : new Date(),
             confirmedAt: order.confirmedAt ? new Date(order.confirmedAt as string) : undefined,
             shippedAt: order.shippedAt ? new Date(order.shippedAt as string) : undefined,
             deliveredAt: order.deliveredAt ? new Date(order.deliveredAt as string) : undefined,
