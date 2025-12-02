@@ -515,8 +515,8 @@ const AdminAnalytics: React.FC = () => {
                       // Calculate top customers from orders
                       const customerMap = new Map<string, { name: string; email: string; orderCount: number; totalSpent: number }>();
                       orders.forEach(order => {
-                        const customerId = order.customerId || order.customer?.id || 'unknown';
-                        const name = order.customer?.name || order.customer?.displayName || 'Unknown';
+                        const customerId = order.customer?.id || 'unknown';
+                        const name = order.customer?.displayName || 'Unknown';
                         const email = order.customer?.email || '';
                         const existing = customerMap.get(customerId) || { name, email, orderCount: 0, totalSpent: 0 };
                         existing.orderCount += 1;

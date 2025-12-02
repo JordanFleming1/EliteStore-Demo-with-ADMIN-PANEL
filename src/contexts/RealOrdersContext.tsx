@@ -1,3 +1,4 @@
+import type { Order, OrderStatus, OrderStatusHistory, OrderItem, CustomerInfo, Address } from '../types/index';
 // Real Orders Context using JSON Server API
 import React, { createContext, useEffect, useState, useCallback } from 'react';
 import { db } from '../firebase/firebase.config';

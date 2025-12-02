@@ -1,4 +1,47 @@
-// All mock data removed. No customers, addresses, or products are preloaded.
+import type { Order, OrderStatus, OrderStatusHistory, OrderItem, CustomerInfo, Address } from '../types/index';
+
+// Minimal mock data for customers and addresses
+const mockCustomers: CustomerInfo[] = [
+  {
+    id: 'cust_001',
+    firstName: 'Alice',
+    lastName: 'Smith',
+    email: 'alice@example.com',
+    phone: '555-1234',
+    avatar: '',
+    joinedAt: new Date('2023-12-01'),
+    totalOrders: 3,
+    totalSpent: 350.5,
+  },
+  {
+    id: 'cust_002',
+    firstName: 'Bob',
+    lastName: 'Johnson',
+    email: 'bob@example.com',
+    phone: '555-5678',
+    avatar: '',
+    joinedAt: new Date('2024-01-10'),
+    totalOrders: 1,
+    totalSpent: 79.99,
+  },
+];
+
+const mockAddresses: Address[] = [
+  {
+    street: '123 Main St',
+    city: 'Springfield',
+    state: 'IL',
+    postalCode: '62701',
+    country: 'USA',
+  },
+  {
+    street: '456 Oak Ave',
+    city: 'Centerville',
+    state: 'CA',
+    postalCode: '90210',
+    country: 'USA',
+  },
+];
 const mockProducts = [
   {
     id: 'prod_001',
