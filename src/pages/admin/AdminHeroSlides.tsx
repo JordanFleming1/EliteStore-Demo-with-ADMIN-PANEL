@@ -1,11 +1,24 @@
 // ...existing code...
   // ...existing code...
 
+
 import React, { useEffect, useState } from 'react';
 import { Container, Row, Col, Card, Button, Modal, Form, Spinner, Alert } from 'react-bootstrap';
 import api from '../../api/simple-api';
 import { type HeroSlide } from '../../types/api-types';
 import '../../styles/admin-hero-slides.css';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { storage } from '../../firebase/firebase.config';
+
+
+const GRADIENT_OPTIONS = [
+  { key: 'blue-purple', label: 'Blue-Purple', value: 'linear-gradient(90deg, #667eea 0%, #764ba2 100%)' },
+  { key: 'retro', label: 'Retro Sunset', value: 'linear-gradient(90deg, #ff9966 0%, #ff5e62 100%)' },
+  { key: 'pastel', label: 'Pastel', value: 'linear-gradient(90deg, #fbc2eb 0%, #a6c1ee 100%)' },
+  { key: 'aqua', label: 'Aqua', value: 'linear-gradient(90deg, #43cea2 0%, #185a9d 100%)' },
+  { key: 'pink-orange', label: 'Pink-Orange', value: 'linear-gradient(90deg, #ffb347 0%, #ff758c 50%, #ff7eb3 100%)' },
+  { key: 'indigo', label: 'Indigo', value: 'linear-gradient(90deg, #3f2b96 0%, #a8c0ff 100%)' },
+];
 
 const defaultSlide: Partial<HeroSlide> = {
   title: '',
@@ -13,8 +26,7 @@ const defaultSlide: Partial<HeroSlide> = {
   image: '',
   order: 1,
   isActive: true,
-  backgroundColor: '',
-  gradient: ''
+  gradient: GRADIENT_OPTIONS[0].value
 };
 
 const AdminHeroSlides: React.FC = () => {
@@ -24,6 +36,7 @@ const AdminHeroSlides: React.FC = () => {
   const [editingSlide, setEditingSlide] = useState<Partial<HeroSlide> | null>(null);
   const [saving, setSaving] = useState(false);
   const [alert, setAlert] = useState<{ show: boolean; variant: 'success' | 'danger'; message: string }>({ show: false, variant: 'success', message: '' });
+  const [uploadingImage, setUploadingImage] = useState(false);
 
   useEffect(() => {
     fetchSlides();
@@ -41,9 +54,28 @@ const AdminHeroSlides: React.FC = () => {
     }
   };
 
+
   const handleEdit = (slide?: HeroSlide) => {
     setEditingSlide(slide ? { ...slide } : { ...defaultSlide, order: slides.length + 1 });
     setShowModal(true);
+    setUploadingImage(false);
+  };
+
+  const handleImageUpload = async (file: File) => {
+    if (!editingSlide) return;
+    setUploadingImage(true);
+    try {
+      const fileName = `heroSlides/slide_${Date.now()}_${file.name}`;
+      const storageRef = ref(storage, fileName);
+      const snapshot = await uploadBytes(storageRef, file);
+      const downloadURL = await getDownloadURL(snapshot.ref);
+      setEditingSlide({ ...editingSlide, image: downloadURL });
+      setAlert({ show: true, variant: 'success', message: 'Image uploaded successfully.' });
+    } catch (error) {
+      setAlert({ show: true, variant: 'danger', message: `Failed to upload image. ${error}` });
+    } finally {
+      setUploadingImage(false);
+    }
   };
 
   const handleSave = async () => {
@@ -170,13 +202,26 @@ const AdminHeroSlides: React.FC = () => {
               />
             </Form.Group>
             <Form.Group className="mb-3">
-              <Form.Label>Image URL</Form.Label>
+              <Form.Label>Hero Image</Form.Label>
               <Form.Control
-                type="text"
-                value={editingSlide?.image || ''}
-                onChange={e => setEditingSlide({ ...editingSlide, image: e.target.value })}
-                placeholder="Image URL"
+                type="file"
+                accept="image/*"
+                onChange={e => {
+                  const file = e.target.files?.[0];
+                  if (file) handleImageUpload(file);
+                }}
+                disabled={uploadingImage}
               />
+              {uploadingImage && <Spinner animation="border" size="sm" className="ms-2" />}
+              {editingSlide?.image && (
+                <div className="mt-2">
+                  <img src={editingSlide.image} alt="Preview" className="img-fluid rounded border" style={{ maxHeight: 120 }} />
+                  <p className="text-success small mt-1">
+                    <i className="fas fa-check me-1"></i>
+                    Image uploaded
+                  </p>
+                </div>
+              )}
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>Order</Form.Label>
@@ -196,22 +241,18 @@ const AdminHeroSlides: React.FC = () => {
               />
             </Form.Group>
             <Form.Group className="mb-3">
-              <Form.Label>Background Color</Form.Label>
-              <Form.Control
-                type="text"
-                value={editingSlide?.backgroundColor || ''}
-                onChange={e => setEditingSlide({ ...editingSlide, backgroundColor: e.target.value })}
-                placeholder="e.g. #f093fb or linear-gradient(...)"
-              />
-            </Form.Group>
-            <Form.Group className="mb-3">
-              <Form.Label>Gradient</Form.Label>
-              <Form.Control
-                type="text"
-                value={editingSlide?.gradient || ''}
+              <Form.Label>Background Style</Form.Label>
+              <Form.Select
+                value={editingSlide?.gradient || GRADIENT_OPTIONS[0].value}
                 onChange={e => setEditingSlide({ ...editingSlide, gradient: e.target.value })}
-                placeholder="e.g. linear-gradient(135deg, #f093fb 0%, #f5576c 100%)"
-              />
+              >
+                {GRADIENT_OPTIONS.map(opt => (
+                  <option key={opt.key} value={opt.value}>{opt.label}</option>
+                ))}
+              </Form.Select>
+              <div className="mt-2">
+                <div style={{ height: 40, borderRadius: 8, background: editingSlide?.gradient || GRADIENT_OPTIONS[0].value }} />
+              </div>
             </Form.Group>
           </Form>
         </Modal.Body>
