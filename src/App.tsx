@@ -100,8 +100,8 @@ function AppContent() {
   // No global loading spinner: always render content
   return (
     <div className="d-flex flex-column min-vh-100">
+      {/* Only render the main Header/navbar, not the legacy Navbar */}
       {!isAdminRoute && !showEmployerWelcome && <Header />}
-      {!isAdminRoute && !showEmployerWelcome && <Navbar />}
       {showEmployerWelcome && <EmployerWelcome onClose={handleCloseEmployerWelcome} />}
       <main className="flex-grow-1">
         <Routes>
