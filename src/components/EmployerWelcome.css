@@ -1,3 +1,30 @@
+@media (max-width: 600px) {
+  .employer-welcome-popup {
+    max-width: 98vw;
+    width: 98vw;
+    padding: 16px 6px;
+    font-size: 0.98em;
+    border-radius: 10px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+    overflow-y: auto;
+    max-height: 90vh;
+  }
+  .employer-welcome-overlay {
+    align-items: flex-start;
+    padding-top: 12vw;
+    padding-bottom: 4vw;
+  }
+  .close-button {
+    width: 100%;
+    font-size: 1em;
+    padding: 12px 0;
+    margin-top: 18px;
+  }
+  .employer-welcome-popup ul {
+    margin-left: 10px !important;
+    font-size: 0.97em;
+  }
+}
 /* Popup entrance animation */
 .employer-welcome-animate {
   animation: employer-popup-in 0.5s cubic-bezier(0.23, 1, 0.32, 1);
