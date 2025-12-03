@@ -67,18 +67,18 @@ const MockOrdersProvider: React.FC<OrdersProviderProps> = ({ children }) => {
       let ordersData: Order[] = [];
       
       if (savedOrders) {
-        // Parse saved orders and ensure all date fields are strings
+        // Parse saved orders and ensure all date fields are Date objects
         const parsedOrders = JSON.parse(savedOrders) as Partial<Order>[];
         ordersData = parsedOrders.map((order) => ({
           ...order,
-          createdAt: order.createdAt ? (typeof order.createdAt === 'string' ? order.createdAt : (order.createdAt as Date).toISOString()) : undefined,
-          updatedAt: order.updatedAt ? (typeof order.updatedAt === 'string' ? order.updatedAt : (order.updatedAt as Date).toISOString()) : undefined,
-          confirmedAt: order.confirmedAt ? (typeof order.confirmedAt === 'string' ? order.confirmedAt : (order.confirmedAt as Date).toISOString()) : undefined,
-          shippedAt: order.shippedAt ? (typeof order.shippedAt === 'string' ? order.shippedAt : (order.shippedAt as Date).toISOString()) : undefined,
-          deliveredAt: order.deliveredAt ? (typeof order.deliveredAt === 'string' ? order.deliveredAt : (order.deliveredAt as Date).toISOString()) : undefined,
+          createdAt: order.createdAt ? new Date(order.createdAt) : undefined,
+          updatedAt: order.updatedAt ? new Date(order.updatedAt) : undefined,
+          confirmedAt: order.confirmedAt ? new Date(order.confirmedAt) : undefined,
+          shippedAt: order.shippedAt ? new Date(order.shippedAt) : undefined,
+          deliveredAt: order.deliveredAt ? new Date(order.deliveredAt) : undefined,
           statusHistory: (order.statusHistory as Array<Partial<OrderStatusHistory>>)?.map((h) => ({
             ...h,
-            timestamp: h.timestamp ? (typeof h.timestamp === 'string' ? new Date(h.timestamp) : h.timestamp) : undefined
+            timestamp: h.timestamp ? new Date(h.timestamp) : undefined
           })) || []
         })) as Order[];
         console.log('📁 Loaded orders from localStorage:', ordersData.length);

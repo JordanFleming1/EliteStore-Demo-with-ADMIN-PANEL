@@ -41,7 +41,9 @@ const AdminFooter: React.FC = () => {
   const fetchSettings = async () => {
     try {
       const data = await api.getFooterSettings();
-      const safeSocialLinks = (data && typeof data.socialLinks === 'object' && data.socialLinks !== null) ? data.socialLinks : {};
+      const safeSocialLinks = (data && typeof data.socialLinks === 'object' && data.socialLinks !== null)
+        ? data.socialLinks as Partial<FooterSettings['socialLinks']>
+        : {};
       setSettings({
         brandName: typeof data?.brandName === 'string' ? data.brandName : '',
         brandDescription: typeof data?.brandDescription === 'string' ? data.brandDescription : '',
