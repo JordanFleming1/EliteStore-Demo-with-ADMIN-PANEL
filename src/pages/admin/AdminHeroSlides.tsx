@@ -203,14 +203,16 @@ const AdminHeroSlides: React.FC = () => {
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>Hero Image</Form.Label>
-              <Form.Control
+              <input
                 type="file"
                 accept="image/*"
                 onChange={e => {
-                  const file = e.target.files?.[0];
+                  const target = e.target as HTMLInputElement;
+                  const file = target.files?.[0];
                   if (file) handleImageUpload(file);
                 }}
                 disabled={uploadingImage}
+                className="form-control"
               />
               {uploadingImage && <Spinner animation="border" size="sm" className="ms-2" />}
               {editingSlide?.image && (
