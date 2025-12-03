@@ -41,15 +41,16 @@ const AdminFooter: React.FC = () => {
   const fetchSettings = async () => {
     try {
       const data = await api.getFooterSettings();
+      const safeSocialLinks = (data && typeof data.socialLinks === 'object' && data.socialLinks !== null) ? data.socialLinks : {};
       setSettings({
         brandName: typeof data?.brandName === 'string' ? data.brandName : '',
         brandDescription: typeof data?.brandDescription === 'string' ? data.brandDescription : '',
         copyrightText: typeof data?.copyrightText === 'string' ? data.copyrightText : '',
         socialLinks: {
-          facebook: typeof data?.socialLinks?.facebook === 'string' ? data.socialLinks.facebook : '',
-          twitter: typeof data?.socialLinks?.twitter === 'string' ? data.socialLinks.twitter : '',
-          instagram: typeof data?.socialLinks?.instagram === 'string' ? data.socialLinks.instagram : '',
-          linkedin: typeof data?.socialLinks?.linkedin === 'string' ? data.socialLinks.linkedin : '',
+          facebook: typeof safeSocialLinks.facebook === 'string' ? safeSocialLinks.facebook : '',
+          twitter: typeof safeSocialLinks.twitter === 'string' ? safeSocialLinks.twitter : '',
+          instagram: typeof safeSocialLinks.instagram === 'string' ? safeSocialLinks.instagram : '',
+          linkedin: typeof safeSocialLinks.linkedin === 'string' ? safeSocialLinks.linkedin : '',
         },
       });
     } catch (error) {

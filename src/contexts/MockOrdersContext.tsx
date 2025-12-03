@@ -78,7 +78,7 @@ const MockOrdersProvider: React.FC<OrdersProviderProps> = ({ children }) => {
           deliveredAt: order.deliveredAt ? (typeof order.deliveredAt === 'string' ? order.deliveredAt : (order.deliveredAt as Date).toISOString()) : undefined,
           statusHistory: (order.statusHistory as Array<Partial<OrderStatusHistory>>)?.map((h) => ({
             ...h,
-            timestamp: h.timestamp ? (typeof h.timestamp === 'string' ? h.timestamp : (h.timestamp as Date).toISOString()) : undefined
+            timestamp: h.timestamp ? (typeof h.timestamp === 'string' ? new Date(h.timestamp) : h.timestamp) : undefined
           })) || []
         })) as Order[];
         console.log('📁 Loaded orders from localStorage:', ordersData.length);

@@ -34,7 +34,6 @@ import AdminAbout from './pages/admin/AdminAbout';
 import AdminFooter from './pages/admin/AdminFooter';
 import AdminNavbar from './pages/admin/AdminNavbar';
 import './App.css';
-import Navbar from './components/Navbar';
 import EmployerWelcome from './components/EmployerWelcome';
 
 function AppContent() {

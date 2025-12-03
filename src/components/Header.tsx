@@ -13,7 +13,6 @@ import NavbarEmployerButton from './NavbarEmployerButton';
 import { productService } from '../services/productService';
 
 
-type NavbarThemeType = 'light' | 'dark' | 'gradient' | 'frosted' | 'retro' | 'minimal' | 'pastel' | 'underline' | 'aqua' | 'pink-orange' | 'indigo';
 
 const Header: React.FC = () => {
   const { currentUser, logout } = useAuth();
