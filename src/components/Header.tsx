@@ -1,5 +1,6 @@
 
 // Support all themes
+
 // ...existing code...
 import React, { useState, useEffect } from 'react';
 import { useSiteSettings } from '../contexts/SiteSettingsContext';
@@ -340,6 +341,11 @@ const Header: React.FC = () => {
                 )}
               </Nav.Link>
 
+              {/* Employer Welcome button: Desktop only */}
+              <div className="d-none d-lg-block ms-2">
+                <NavbarEmployerButton />
+              </div>
+
               {currentUser ? (
                 <NavDropdown 
                   title={
@@ -418,6 +424,11 @@ const Header: React.FC = () => {
               </Button>
             </div>
           </Form>
+
+          {/* Employer Welcome button: Mobile only */}
+          <div className="d-block d-lg-none mb-3">
+            <NavbarEmployerButton />
+          </div>
 
           <Nav className="flex-column">
             <Nav.Link 
