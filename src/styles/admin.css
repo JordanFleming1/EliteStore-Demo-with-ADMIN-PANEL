@@ -1,3 +1,38 @@
+/* Mobile sidebar overlay and slide-in styles */
+@media (max-width: 991px) {
+	.admin-sidebar {
+		position: fixed;
+		top: 64px;
+		left: 0;
+		height: calc(100vh - 64px);
+		width: 80vw;
+		max-width: 320px;
+		background: #fff;
+		box-shadow: 2px 0 16px rgba(0,0,0,0.08);
+		z-index: 1050;
+		transform: translateX(-100%);
+		transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+		display: block;
+		overflow-y: auto;
+	}
+	.admin-sidebar.show {
+		transform: translateX(0);
+	}
+	.admin-sidebar-overlay {
+		position: fixed;
+		top: 64px;
+		left: 0;
+		width: 100vw;
+		height: calc(100vh - 64px);
+		background: rgba(0,0,0,0.18);
+		z-index: 1049;
+		display: block;
+	}
+	.admin-main-content {
+		margin-left: 0 !important;
+		padding-top: 80px !important;
+	}
+}
 
 /* Ensure admin main content is always below the fixed navbar */
 .admin-main-content {
