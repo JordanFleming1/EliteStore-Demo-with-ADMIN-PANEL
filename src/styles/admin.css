@@ -1,3 +1,31 @@
+/* Make hamburger menu and admin logo white on dark navbar */
+.admin-navbar .admin-sidebar-toggle {
+	background: none;
+	border: none;
+	color: #fff;
+	font-size: 1.7em;
+	padding: 0 8px;
+	margin-left: 4px;
+	cursor: pointer;
+	transition: color 0.2s;
+}
+.admin-navbar .admin-sidebar-toggle:focus {
+	outline: none;
+	color: #ffd700;
+}
+.admin-navbar .navbar-brand {
+	color: #fff !important;
+	font-weight: 700;
+	font-size: 1.25em;
+	letter-spacing: 0.5px;
+	display: flex;
+	align-items: center;
+}
+.admin-navbar .navbar-brand i {
+	color: #fff !important;
+	font-size: 1.3em;
+	margin-right: 6px;
+}
 /* Mobile sidebar overlay and slide-in styles */
 @media (max-width: 991px) {
 	.admin-sidebar {
