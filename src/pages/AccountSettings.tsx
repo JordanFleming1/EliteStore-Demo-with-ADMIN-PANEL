@@ -39,7 +39,8 @@ const AccountSettings: React.FC = () => {
     email: currentUser?.email || '',
     phone: '',
     dateOfBirth: '',
-    profilePicture: (typeof currentUser?.photoURL === 'string' ? currentUser.photoURL : '') || ''
+    // Use photoURL if it exists, otherwise fallback to empty string
+    profilePicture: (typeof (currentUser as any)?.photoURL === 'string' ? (currentUser as any).photoURL : '') || ''
   });
 
   const [addresses, setAddresses] = useState<Address[]>([

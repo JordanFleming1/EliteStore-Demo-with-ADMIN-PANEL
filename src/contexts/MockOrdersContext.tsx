@@ -67,18 +67,18 @@ const MockOrdersProvider: React.FC<OrdersProviderProps> = ({ children }) => {
       let ordersData: Order[] = [];
       
       if (savedOrders) {
-        // Parse saved orders and convert date strings back to Date objects
+        // Parse saved orders and ensure all date fields are strings
         const parsedOrders = JSON.parse(savedOrders) as Partial<Order>[];
         ordersData = parsedOrders.map((order) => ({
           ...order,
-          createdAt: order.createdAt ? new Date(order.createdAt as string).toISOString() : undefined,
-          updatedAt: order.updatedAt ? new Date(order.updatedAt as string).toISOString() : undefined,
-          confirmedAt: order.confirmedAt ? new Date(order.confirmedAt as string).toISOString() : undefined,
-          shippedAt: order.shippedAt ? new Date(order.shippedAt as string).toISOString() : undefined,
-          deliveredAt: order.deliveredAt ? new Date(order.deliveredAt as string).toISOString() : undefined,
+          createdAt: order.createdAt ? (typeof order.createdAt === 'string' ? order.createdAt : (order.createdAt as Date).toISOString()) : undefined,
+          updatedAt: order.updatedAt ? (typeof order.updatedAt === 'string' ? order.updatedAt : (order.updatedAt as Date).toISOString()) : undefined,
+          confirmedAt: order.confirmedAt ? (typeof order.confirmedAt === 'string' ? order.confirmedAt : (order.confirmedAt as Date).toISOString()) : undefined,
+          shippedAt: order.shippedAt ? (typeof order.shippedAt === 'string' ? order.shippedAt : (order.shippedAt as Date).toISOString()) : undefined,
+          deliveredAt: order.deliveredAt ? (typeof order.deliveredAt === 'string' ? order.deliveredAt : (order.deliveredAt as Date).toISOString()) : undefined,
           statusHistory: (order.statusHistory as Array<Partial<OrderStatusHistory>>)?.map((h) => ({
             ...h,
-            timestamp: h.timestamp ? new Date(h.timestamp as string).toISOString() : undefined
+            timestamp: h.timestamp ? (typeof h.timestamp === 'string' ? h.timestamp : (h.timestamp as Date).toISOString()) : undefined
           })) || []
         })) as Order[];
         console.log('📁 Loaded orders from localStorage:', ordersData.length);
