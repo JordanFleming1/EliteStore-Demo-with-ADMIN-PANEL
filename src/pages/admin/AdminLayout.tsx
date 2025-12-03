@@ -86,6 +86,25 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
         <Row className="g-0">
           {/* Sidebar */}
           <Col md={3} lg={2} className={`admin-sidebar bg-light${sidebarOpen ? ' show' : ''}`} onClick={handleSidebarClose}>
+            {/* Mobile quick actions */}
+            <div className="d-lg-none px-3 pt-3 pb-2 border-bottom mb-2">
+              <Button 
+                variant="outline-secondary"
+                onClick={() => { window.location.href = '/'; }}
+                className="w-100 mb-2"
+              >
+                <i className="fas fa-home me-1"></i>
+                View Store
+              </Button>
+              <Button 
+                variant="outline-light" 
+                onClick={handleLogout}
+                className="w-100"
+              >
+                <i className="fas fa-sign-out-alt me-1"></i>
+                Logout
+              </Button>
+            </div>
             <Nav className="flex-column admin-nav pt-3" onClick={e => e.stopPropagation()}>
               <Nav.Item>
                 <Nav.Link as={Link} to="/admin/dashboard" className="admin-nav-link">
