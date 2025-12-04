@@ -93,12 +93,22 @@ const AdminHeroSlides: React.FC = () => {
     }
   };
 
-  const handleDelete = async (id: number) => {
-    if (!window.confirm('Are you sure you want to delete this slide?')) return;
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [deleteSlideId, setDeleteSlideId] = useState<number | null>(null);
+
+  const confirmDeleteSlide = (id: number) => {
+    setDeleteSlideId(id);
+    setShowDeleteModal(true);
+  };
+
+  const handleDelete = async () => {
+    if (deleteSlideId == null) return;
     setSaving(true);
     try {
-      await api.deleteHeroSlide(String(id));
+      await api.deleteHeroSlide(String(deleteSlideId));
       setAlert({ show: true, variant: 'success', message: 'Hero slide deleted.' });
+      setShowDeleteModal(false);
+      setDeleteSlideId(null);
       fetchSlides();
     } catch (error) {
       setAlert({ show: true, variant: 'danger', message: `Failed to delete hero slide. ${error}` });
@@ -164,9 +174,26 @@ const AdminHeroSlides: React.FC = () => {
                       <Button variant="outline-primary" size="sm" onClick={() => handleEdit(slide)}>
                         <i className="fas fa-edit me-1"></i>Edit
                       </Button>
-                      <Button variant="outline-danger" size="sm" onClick={() => handleDelete(slide.id)}>
+                      <Button variant="outline-danger" size="sm" onClick={() => confirmDeleteSlide(slide.id)}>
                         <i className="fas fa-trash me-1"></i>Delete
                       </Button>
+                          {/* Delete Confirmation Modal */}
+                          <Modal show={showDeleteModal} onHide={() => setShowDeleteModal(false)} centered>
+                            <Modal.Header closeButton>
+                              <Modal.Title>Delete Hero Slide</Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body>
+                              <p>Are you sure you want to delete this hero slide? This action cannot be undone.</p>
+                            </Modal.Body>
+                            <Modal.Footer>
+                              <Button variant="secondary" onClick={() => setShowDeleteModal(false)} disabled={saving}>
+                                Cancel
+                              </Button>
+                              <Button variant="danger" onClick={handleDelete} disabled={saving}>
+                                {saving ? <Spinner animation="border" size="sm" /> : 'Delete'}
+                              </Button>
+                            </Modal.Footer>
+                          </Modal>
                     </div>
                   </Card.Body>
                 </Card>
