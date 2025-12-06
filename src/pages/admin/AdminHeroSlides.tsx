@@ -126,15 +126,9 @@ const AdminHeroSlides: React.FC = () => {
       <Row className="mb-4">
         <Col>
           <h2 className="fw-bold">Hero Slides</h2>
-          <p className="text-muted">Customize the homepage hero carousel. Add, edit, or remove slides. Changes are live instantly.</p>
-        </Col>
-        <Col className="text-end">
-          <Button variant="primary" onClick={() => handleEdit()}>
-            <i className="fas fa-plus me-2"></i>Add Slide
-          </Button>
-        </Col>
-      </Row>
-      {alert.show && (
+                    {/* Removed gradient/background badge */}
+                    <span className="badge bg-warning">Gradient: {slide.gradient || 'none'}</span>
+                    </div>
         <Alert variant={alert.variant} dismissible onClose={() => setAlert({ ...alert, show: false })}>
           {alert.message}
         </Alert>
@@ -178,7 +172,6 @@ const AdminHeroSlides: React.FC = () => {
                           return found ? found.label : (slide.backgroundColor || 'none');
                         })()
                       }</span>
-                      <span className="badge bg-warning">Gradient: {slide.gradient || 'none'}</span>
                     </div>
                     <div className="d-flex gap-2 mt-3">
                       <Button variant="outline-primary" size="sm" onClick={() => handleEdit(slide)}>
