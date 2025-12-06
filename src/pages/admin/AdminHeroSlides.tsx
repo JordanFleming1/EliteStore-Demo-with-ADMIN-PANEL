@@ -109,7 +109,11 @@ const AdminHeroSlides: React.FC = () => {
       setAlert({ show: true, variant: 'success', message: 'Hero slide deleted.' });
       setShowDeleteModal(false);
       setDeleteSlideId(null);
-      fetchSlides();
+      // Refetch slides, then if none remain, show fallback UI
+      await fetchSlides();
+      if (slides.length === 1) {
+        setSlides([]);
+      }
     } catch (error) {
       setAlert({ show: true, variant: 'danger', message: `Failed to delete hero slide. ${error}` });
     } finally {
@@ -167,7 +171,13 @@ const AdminHeroSlides: React.FC = () => {
                       <span className={`badge ${slide.isActive ? 'bg-success' : 'bg-danger'}`}>{slide.isActive ? 'Active' : 'Inactive'}</span>
                     </div>
                     <div className="mb-2">
-                      <span className="badge bg-info me-2">BG: {slide.backgroundColor || 'none'}</span>
+                      <span className="badge bg-info me-2">BG: {
+                        (() => {
+                          // Find the label for the gradient value
+                          const found = GRADIENT_OPTIONS.find(opt => opt.value === slide.gradient);
+                          return found ? found.label : (slide.backgroundColor || 'none');
+                        })()
+                      }</span>
                       <span className="badge bg-warning">Gradient: {slide.gradient || 'none'}</span>
                     </div>
                     <div className="d-flex gap-2 mt-3">
