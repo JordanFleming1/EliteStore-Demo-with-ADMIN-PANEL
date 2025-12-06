@@ -21,6 +21,23 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
   };
 
   const [sidebarOpen, setSidebarOpen] = React.useState(false);
+  // Get current theme from localStorage
+  const [currentTheme, setCurrentTheme] = React.useState<string>('dark');
+  React.useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const local = window.localStorage.getItem('siteSettings');
+      if (local) {
+        try {
+          const parsed = JSON.parse(local);
+          setCurrentTheme(parsed.navbarTheme || 'dark');
+        } catch {
+          setCurrentTheme('dark');
+        }
+      } else {
+        setCurrentTheme('dark');
+      }
+    }
+  }, []);
 
   const handleSidebarToggle = () => setSidebarOpen((open) => !open);
   const handleSidebarClose = () => setSidebarOpen(false);
@@ -28,7 +45,12 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
   return (
     <div className="admin-layout">
       {/* Admin Header */}
-      <Navbar bg="dark" variant="dark" expand="lg" className="admin-navbar fixed-top">
+      <Navbar
+        bg={currentTheme === 'light' || currentTheme === 'pastel' ? 'light' : 'dark'}
+        variant={currentTheme === 'light' || currentTheme === 'pastel' ? 'light' : 'dark'}
+        expand="lg"
+        className={`admin-navbar fixed-top theme-${currentTheme}`}
+      >
         <Container fluid>
           <Nav className="w-100 align-items-center d-flex flex-row justify-content-between">
             <div className="d-flex align-items-center">

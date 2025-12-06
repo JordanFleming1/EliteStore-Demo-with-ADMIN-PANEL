@@ -1,3 +1,19 @@
+/* Admin navbar logo color for each theme */
+.admin-navbar .navbar-brand {
+	transition: color 0.2s;
+}
+.admin-navbar.theme-dark .navbar-brand,
+.admin-navbar.theme-gradient .navbar-brand,
+.admin-navbar.theme-retro .navbar-brand,
+.admin-navbar.theme-aqua .navbar-brand,
+.admin-navbar.theme-indigo .navbar-brand,
+.admin-navbar.theme-pink-orange .navbar-brand {
+	color: #fff !important;
+}
+.admin-navbar.theme-light .navbar-brand,
+.admin-navbar.theme-pastel .navbar-brand {
+	color: #222 !important;
+}
 /* Make hamburger menu and admin logo white on dark navbar */
 .admin-navbar .admin-sidebar-toggle {
 	background: none;
