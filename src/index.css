@@ -162,8 +162,8 @@
 
 /* --- Navbar Theme: Gradient Aqua --- */
 .navbar-gradient-aqua {
-  background: linear-gradient(90deg, #43cea2 0%, #185a9d 100%);
-  color: #fff;
+  background: linear-gradient(90deg, #43cea2 0%, #185a9d 100%) !important;
+  color: #fff !important;
   box-shadow: 0 2px 8px rgba(67,206,162,0.15);
 }
 .navbar-gradient-aqua .nav-link {
