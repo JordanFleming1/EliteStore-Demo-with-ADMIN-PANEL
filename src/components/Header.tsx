@@ -90,7 +90,7 @@ const Header: React.FC = () => {
         return {
           bg: '',
           variant: 'dark' as const,
-          className: 'navbar-gradient-blue shadow-sm sticky-top',
+          className: 'navbar-gradient-aqua shadow-sm sticky-top',
           style: {},
           textClass: 'text-white'
         };
