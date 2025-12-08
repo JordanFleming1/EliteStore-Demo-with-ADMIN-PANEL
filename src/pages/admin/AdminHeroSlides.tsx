@@ -105,15 +105,13 @@ const AdminHeroSlides: React.FC = () => {
     if (deleteSlideId == null) return;
     setSaving(true);
     try {
-      await api.deleteHeroSlide(String(deleteSlideId));
+      // Always use string ID for Firestore
+      await api.deleteHeroSlide(deleteSlideId.toString());
       setAlert({ show: true, variant: 'success', message: 'Hero slide deleted.' });
       setShowDeleteModal(false);
       setDeleteSlideId(null);
-      // Refetch slides, then if none remain, show fallback UI
+      // Always reload slides from Firestore to reflect true state
       await fetchSlides();
-      if (slides.length === 1) {
-        setSlides([]);
-      }
     } catch (error) {
       setAlert({ show: true, variant: 'danger', message: `Failed to delete hero slide. ${error}` });
     } finally {
