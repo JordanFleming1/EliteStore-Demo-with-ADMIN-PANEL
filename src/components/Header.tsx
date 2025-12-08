@@ -83,100 +83,23 @@ const Header: React.FC = () => {
   const handleShowOffcanvas = () => setShowOffcanvas(true);
 
   // Get navbar styles based on theme
-  const getNavbarStyles = () => {
-    switch (navbarTheme) {
-      case 'light':
-        return {
-          bg: 'light',
-          variant: 'light' as const,
-          className: 'navbar-minimal shadow-sm bg-light sticky-top',
-          textClass: 'text-dark'
-        };
-      case 'gradient':
-        return {
-          bg: undefined,
-          variant: undefined,
-          className: 'navbar-gradient-aqua shadow-sm sticky-top',
-          style: {},
-          textClass: 'text-white'
-        };
-      case 'frosted':
-        return {
-          bg: undefined,
-          variant: undefined,
-          className: 'navbar-frosted shadow-sm sticky-top',
-          style: {},
-          textClass: 'text-dark'
-        };
-      case 'retro':
-        return {
-          bg: undefined,
-          variant: undefined,
-          className: 'navbar-retro-sunset shadow-sm sticky-top',
-          style: {},
-          textClass: 'text-dark'
-        };
-      case 'pink-orange':
-        return {
-          bg: undefined,
-          variant: undefined,
-          className: 'navbar-gradient-pink shadow-sm sticky-top',
-          style: {},
-          textClass: 'text-white'
-        };
-      case 'indigo':
-        return {
-          bg: undefined,
-          variant: undefined,
-          className: 'navbar-gradient-indigo shadow-sm sticky-top',
-          style: {},
-          textClass: 'text-white'
-        };
-      case 'minimal':
-        return {
-          bg: undefined,
-          variant: undefined,
-          className: 'navbar-minimal shadow-sm sticky-top',
-          style: {},
-          textClass: 'text-dark'
-        };
-      case 'pastel':
-        return {
-          bg: undefined,
-          variant: undefined,
-          className: 'navbar-pastel shadow-sm sticky-top',
-          style: {},
-          textClass: 'text-dark'
-        };
-      case 'underline':
-        return {
-          bg: undefined,
-          variant: undefined,
-          className: 'navbar-underline shadow-sm sticky-top',
-          style: {},
-          textClass: 'text-dark'
-        };
-      case 'aqua':
-        return {
-          bg: undefined,
-          variant: undefined,
-          className: 'navbar-gradient-aqua shadow-sm sticky-top',
-          style: {},
-          textClass: 'text-white'
-        };
-      case 'dark':
-      default:
-        return {
-          bg: 'dark',
-          variant: 'dark' as const,
-          className: 'navbar-darkmode shadow-sm bg-dark sticky-top',
-          style: {},
-          textClass: 'text-white'
-        };
-    }
+  // Map theme key to correct CSS class
+  const themeClassMap: Record<string, string> = {
+    light: 'navbar-minimal shadow-sm bg-light sticky-top',
+    dark: 'navbar-darkmode shadow-sm bg-dark sticky-top',
+    gradient: 'navbar-gradient-aqua shadow-sm sticky-top',
+    retro: 'navbar-retro-sunset shadow-sm sticky-top',
+    pastel: 'navbar-pastel shadow-sm sticky-top',
+    aqua: 'navbar-gradient-aqua shadow-sm sticky-top',
+    'pink-orange': 'navbar-gradient-pink shadow-sm sticky-top',
+    indigo: 'navbar-gradient-indigo shadow-sm sticky-top',
+    frosted: 'navbar-frosted shadow-sm sticky-top',
+    minimal: 'navbar-minimal shadow-sm sticky-top',
+    underline: 'navbar-underline shadow-sm sticky-top',
   };
-
-  const navbarStyles = getNavbarStyles();
+  const navbarClass = themeClassMap[navbarTheme] || themeClassMap['light'];
+  const navbarBg = (navbarTheme === 'light' || navbarTheme === 'dark') ? navbarTheme : undefined;
+  const navbarVariant = (navbarTheme === 'light' || navbarTheme === 'dark') ? navbarTheme : undefined;
 
   // Theme options for selector
 
@@ -189,10 +112,10 @@ const Header: React.FC = () => {
       <DebugThemeBanner />
       <Navbar 
         expand="lg" 
-        bg={navbarStyles.bg}
-        variant={navbarStyles.variant}
-        className={navbarStyles.className}
-        style={{ minHeight: '70px', ...navbarStyles.style }}
+        bg={navbarBg}
+        variant={navbarVariant}
+        className={navbarClass}
+        style={{ minHeight: '70px' }}
       >
         <Container fluid className="px-4">
           <Navbar.Brand as={Link} to="/" className="fw-bold fs-3 d-flex align-items-center">
