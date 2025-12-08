@@ -9,6 +9,12 @@ interface AdminLayoutProps {
 }
 
 const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
+    // Debug banner to show current theme
+    const DebugThemeBanner = () => (
+      <div style={{position: 'fixed', top: 0, left: 0, width: '100vw', zIndex: 9999, background: '#ffd700', color: '#222', textAlign: 'center', fontWeight: 700, fontSize: 16, padding: '4px 0'}}>
+        Admin Theme: <span style={{textTransform: 'capitalize'}}>{currentTheme}</span>
+      </div>
+    );
   const { logout } = useAuth();
   const navigate = useNavigate();
 
@@ -32,6 +38,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
   const isCustomTheme = !['light', 'dark', 'pastel'].includes(currentTheme);
   return (
     <div className="admin-layout">
+      <DebugThemeBanner />
       {/* Admin Header */}
       <Navbar
         expand="lg"
