@@ -68,7 +68,7 @@ const AdminNavbar: React.FC = () => {
   const themePreviewStyles: Record<string, { background: string; color: string }> = {
     light: { background: '#f8f9fa', color: '#212529' },
     dark: { background: '#212529', color: '#fff' },
-    gradient: { background: 'linear-gradient(90deg, #667eea 0%, #764ba2 100%)', color: '#fff' },
+    gradient: { background: 'linear-gradient(90deg, #43cea2 0%, #185a9d 100%)', color: '#fff' },
     retro: { background: 'linear-gradient(90deg, #ff9966 0%, #ff5e62 100%)', color: '#fff' },
     pastel: { background: 'linear-gradient(90deg, #fbc2eb 0%, #a6c1ee 100%)', color: '#212529' },
     aqua: { background: 'linear-gradient(90deg, #43cea2 0%, #185a9d 100%)', color: '#fff' },
@@ -127,7 +127,7 @@ const AdminNavbar: React.FC = () => {
             {
               key: 'gradient',
               name: 'Gradient',
-              preview: { background: 'linear-gradient(90deg, #667eea 0%, #764ba2 100%)', color: '#fff' },
+              preview: { background: 'linear-gradient(90deg, #43cea2 0%, #185a9d 100%)', color: '#fff' },
             },
             {
               key: 'retro',
