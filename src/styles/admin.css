@@ -1,3 +1,44 @@
+/* --- Consistent Admin Navbar Theme Colors --- */
+.admin-navbar.theme-gradient .nav-link,
+.admin-navbar.theme-retro .nav-link,
+.admin-navbar.theme-aqua .nav-link,
+.admin-navbar.theme-indigo .nav-link,
+.admin-navbar.theme-pink-orange .nav-link {
+	color: #fff !important;
+	text-shadow: 0 1px 4px rgba(0,0,0,0.12);
+}
+.admin-navbar.theme-gradient .nav-link.active,
+.admin-navbar.theme-gradient .nav-link:focus,
+.admin-navbar.theme-gradient .nav-link:hover {
+	color: #ffe082 !important;
+	background: rgba(255,255,255,0.10);
+	text-shadow: none;
+}
+.admin-navbar.theme-retro .nav-link.active,
+.admin-navbar.theme-retro .nav-link:focus,
+.admin-navbar.theme-retro .nav-link:hover {
+	color: #222 !important;
+	background: rgba(255,255,255,0.15);
+	text-shadow: none;
+}
+.admin-navbar.theme-pastel .nav-link {
+	color: #222 !important;
+}
+.admin-navbar.theme-pastel .nav-link.active,
+.admin-navbar.theme-pastel .nav-link:focus,
+.admin-navbar.theme-pastel .nav-link:hover {
+	color: #0d6efd !important;
+	background: rgba(13,110,253,0.07);
+}
+.admin-navbar.theme-light .nav-link {
+	color: #222 !important;
+}
+.admin-navbar.theme-light .nav-link.active,
+.admin-navbar.theme-light .nav-link:focus,
+.admin-navbar.theme-light .nav-link:hover {
+	color: #0d6efd !important;
+	background: rgba(13,110,253,0.07);
+}
 /* Admin navbar logo color for each theme */
 .admin-navbar .navbar-brand {
 	transition: color 0.2s;

@@ -1,3 +1,57 @@
+/* --- Consistent Navbar Theme Colors --- */
+.navbar-gradient-aqua .nav-link,
+.navbar-gradient-indigo .nav-link,
+.navbar-gradient-pink .nav-link,
+.navbar-retro-sunset .nav-link {
+  color: #fff !important;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.12);
+}
+.navbar-gradient-aqua .nav-link.active,
+.navbar-gradient-aqua .nav-link:focus,
+.navbar-gradient-aqua .nav-link:hover {
+  color: #ffe082 !important;
+  background: rgba(255,255,255,0.10);
+  text-shadow: none;
+}
+.navbar-gradient-indigo .nav-link.active,
+.navbar-gradient-indigo .nav-link:focus,
+.navbar-gradient-indigo .nav-link:hover {
+  color: #ffe082 !important;
+  background: rgba(255,255,255,0.10);
+  text-shadow: none;
+}
+.navbar-gradient-pink .nav-link.active,
+.navbar-gradient-pink .nav-link:focus,
+.navbar-gradient-pink .nav-link:hover {
+  color: #222 !important;
+  background: rgba(255,255,255,0.15);
+  text-shadow: none;
+}
+.navbar-retro-sunset .nav-link.active,
+.navbar-retro-sunset .nav-link:focus,
+.navbar-retro-sunset .nav-link:hover {
+  color: #222 !important;
+  background: rgba(255,255,255,0.15);
+  text-shadow: none;
+}
+.navbar-pastel .nav-link {
+  color: #222 !important;
+}
+.navbar-pastel .nav-link.active,
+.navbar-pastel .nav-link:focus,
+.navbar-pastel .nav-link:hover {
+  color: #0d6efd !important;
+  background: rgba(13,110,253,0.07);
+}
+.navbar-frosted .nav-link {
+  color: #222 !important;
+}
+.navbar-frosted .nav-link.active,
+.navbar-frosted .nav-link:focus,
+.navbar-frosted .nav-link:hover {
+  color: #0d6efd !important;
+  background: rgba(13,110,253,0.07);
+}
 .nav-link:focus {
   outline: none;
   box-shadow: none;
