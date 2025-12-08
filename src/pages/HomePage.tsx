@@ -114,7 +114,7 @@ const HomePage: React.FC = () => {
                   <Col lg={6} className="text-white">
                     <h1 className="display-4 fw-bold mb-4">Welcome to {siteName}</h1>
                     <p className="lead mb-4">
-                      No hero slides configured. Please add slides from the admin panel.
+                      You don't have any hero slides made. Please create one in the admin panel.
                     </p>
                   </Col>
                 </Row>
