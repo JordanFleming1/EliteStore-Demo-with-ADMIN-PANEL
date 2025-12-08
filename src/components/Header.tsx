@@ -15,12 +15,6 @@ import { productService } from '../services/productService';
 
 
 const Header: React.FC = () => {
-    // Debug banner to show current theme
-    const DebugThemeBanner = () => (
-      <div style={{position: 'fixed', top: 0, left: 0, width: '100vw', zIndex: 9999, background: '#ffd700', color: '#222', textAlign: 'center', fontWeight: 700, fontSize: 16, padding: '4px 0'}}>
-        Main Site Theme: <span style={{textTransform: 'capitalize'}}>{navbarTheme}</span>
-      </div>
-    );
   const { currentUser, logout } = useAuth();
   const { totalItems } = useCart();
   // const { showToast } = useToast();
@@ -109,7 +103,6 @@ const Header: React.FC = () => {
   // Render the full navbar as before
   return (
     <>
-      <DebugThemeBanner />
       <Navbar 
         expand="lg" 
         bg={navbarBg}
