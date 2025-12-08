@@ -143,9 +143,10 @@ const AdminHeroSlides: React.FC = () => {
             <Col>
               <Card className="text-center p-5">
                 <Card.Body>
-                  <h5>No hero slides found.</h5>
-                  <Button variant="outline-primary" onClick={() => handleEdit()}>
-                    Add First Slide
+                  <h4 className="mb-3">No hero slides set for your store.</h4>
+                  <p className="mb-4 text-muted">Create a hero slide to welcome visitors and showcase your store's best features.</p>
+                  <Button variant="primary" size="lg" onClick={() => handleEdit()}>
+                    <i className="fas fa-plus me-2"></i>Create Hero Slide
                   </Button>
                 </Card.Body>
               </Card>
