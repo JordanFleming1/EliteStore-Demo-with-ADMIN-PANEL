@@ -188,7 +188,7 @@ const Header: React.FC = () => {
         style={{ minHeight: '70px', ...navbarStyles.style }}
       >
         <Container fluid className="px-4">
-          <Navbar.Brand as={Link} to="/" className={`fw-bold fs-3 ${(navbarTheme === 'light' || navbarTheme === 'frosted' || navbarTheme === 'minimal' || navbarTheme === 'pastel' || navbarTheme === 'underline' || navbarTheme === 'aqua') ? 'text-dark' : 'text-white'} ${(navbarTheme === 'pink-orange') ? 'text-white' : ''} d-flex align-items-center`}>
+          <Navbar.Brand as={Link} to="/" className="fw-bold fs-3 d-flex align-items-center">
             {storeLogo ? (
               <>
                 <img 
@@ -214,7 +214,7 @@ const Header: React.FC = () => {
           <div className="d-flex d-lg-none align-items-center">
             <Link 
               to="/cart" 
-              className={`btn ${navbarTheme === 'light' ? 'btn-outline-primary' : 'btn-outline-light'} position-relative me-2`}
+              className="btn btn-outline-light position-relative me-2"
               style={{ minWidth: '48px', minHeight: '48px' }}
               aria-label="Shopping cart"
             >
@@ -244,14 +244,14 @@ const Header: React.FC = () => {
               <Nav.Link 
                 as={Link} 
                 to="/" 
-                className={`fw-medium ${(navbarTheme === 'light' || navbarTheme === 'frosted' || navbarTheme === 'minimal' || navbarTheme === 'pastel' || navbarTheme === 'underline' || navbarTheme === 'aqua') ? 'text-dark' : 'text-white'} ${(navbarTheme === 'pink-orange') ? 'text-white' : ''} ${isActive('/') ? 'active' : ''}`}
+                className={`fw-medium ${isActive('/') ? 'active' : ''}`}
               >
                 Home
               </Nav.Link>
               <NavDropdown 
-                title={<span className={(navbarTheme === 'light' || navbarTheme === 'frosted' || navbarTheme === 'minimal' || navbarTheme === 'pastel' || navbarTheme === 'underline' || navbarTheme === 'aqua') ? 'text-dark' : 'text-white'}>{'Categories'}</span>} 
+                title={<span>Categories</span>} 
                 id="categories-dropdown" 
-                className={`fw-medium ${(navbarTheme === 'light' || navbarTheme === 'frosted' || navbarTheme === 'minimal' || navbarTheme === 'pastel' || navbarTheme === 'underline' || navbarTheme === 'aqua') ? 'text-dark' : 'text-white'} ${(navbarTheme === 'pink-orange') ? 'text-white' : ''}`}
+                className="fw-medium"
                 data-active={isCategoryActive() ? 'true' : 'false'}
               >
                 {categories.length > 0 ? (
@@ -261,34 +261,34 @@ const Header: React.FC = () => {
                         key={category}
                         as={Link} 
                         to={`/categories?filter=${encodeURIComponent(category)}`}
+                      <Nav.Link 
+                        as={Link} 
+                        to="/products" 
+                        className={`fw-medium ${isActive('/products') ? 'active' : ''}`}
                       >
-                        {category}
-                      </NavDropdown.Item>
-                    ))}
-                    <NavDropdown.Divider />
-                  </>
-                ) : (
-                  <NavDropdown.Item disabled>
-                    <span className="text-muted">No categories available</span>
-                  </NavDropdown.Item>
-                )}
-                <NavDropdown.Item as={Link} to="/categories">All Categories</NavDropdown.Item>
-              </NavDropdown>
-              <Nav.Link 
-                as={Link} 
-                to="/products" 
-                className={`fw-medium ${(navbarTheme === 'light' || navbarTheme === 'frosted' || navbarTheme === 'minimal' || navbarTheme === 'pastel' || navbarTheme === 'underline' || navbarTheme === 'aqua') ? 'text-dark' : 'text-white'} ${(navbarTheme === 'pink-orange') ? 'text-white' : ''} ${isActive('/products') ? 'active' : ''}`}
-              >
-                Products
-              </Nav.Link>
-              <Nav.Link 
-                as={Link} 
-                to="/deals" 
-                className={`fw-medium ${(navbarTheme === 'light' || navbarTheme === 'frosted' || navbarTheme === 'minimal' || navbarTheme === 'pastel' || navbarTheme === 'underline' || navbarTheme === 'aqua') ? 'text-dark' : 'text-white'} ${(navbarTheme === 'pink-orange') ? 'text-white' : ''} ${isActive('/deals') ? 'active' : ''}`}
-              >
-                Deals
-              </Nav.Link>
-              <Nav.Link 
+                        Products
+                      </Nav.Link>
+                      <Nav.Link 
+                        as={Link} 
+                        to="/deals" 
+                        className={`fw-medium ${isActive('/deals') ? 'active' : ''}`}
+                      >
+                        Deals
+                      </Nav.Link>
+                      <Nav.Link 
+                        as={Link} 
+                        to="/about" 
+                        className={`fw-medium ${isActive('/about') ? 'active' : ''}`}
+                      >
+                        About
+                      </Nav.Link>
+                      <Nav.Link 
+                        as={Link} 
+                        to="/contact" 
+                        className={`fw-medium ${isActive('/contact') ? 'active' : ''}`}
+                      >
+                        Contact
+                      </Nav.Link>
                 as={Link} 
                 to="/about" 
                 className={`fw-medium ${(navbarTheme === 'light' || navbarTheme === 'frosted' || navbarTheme === 'minimal' || navbarTheme === 'pastel' || navbarTheme === 'underline' || navbarTheme === 'aqua') ? 'text-dark' : 'text-white'} ${(navbarTheme === 'pink-orange') ? 'text-white' : ''} ${isActive('/about') ? 'active' : ''}`}
