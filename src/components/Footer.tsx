@@ -1,15 +1,51 @@
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useSiteSettings } from '../contexts/SiteSettingsContext';
 
 const Footer: React.FC = () => {
+
   const { siteName } = useSiteSettings();
-  // You can add more fields to SiteSettingsContext as needed (brandDescription, copyrightText, socialLinks)
-  const brandDescription = "Your premier destination for quality products at unbeatable prices. We're committed to providing exceptional customer service and fast, reliable shipping.";
-  const copyrightText = `${siteName}. All rights reserved.`;
-  // Social links could also be added to SiteSettingsContext if needed
+  const [footerSettings, setFooterSettings] = useState({
+    brandName: '',
+    brandDescription: '',
+    copyrightText: '',
+    socialLinks: {
+      facebook: '',
+      twitter: '',
+      instagram: '',
+      linkedin: ''
+    }
+  });
+  useEffect(() => {
+    const fetchFooterSettings = async () => {
+      try {
+        const { db } = await import('../firebase/firebase.config');
+        const { doc, getDoc } = await import('firebase/firestore');
+        const footerDoc = await getDoc(doc(db, 'settings', 'footer'));
+        if (footerDoc.exists()) {
+          const data = footerDoc.data();
+          setFooterSettings({
+            brandName: typeof data.brandName === 'string' ? data.brandName : siteName,
+            brandDescription: typeof data.brandDescription === 'string' ? data.brandDescription : '',
+            copyrightText: typeof data.copyrightText === 'string' ? data.copyrightText : `${siteName}. All rights reserved.`,
+            socialLinks: {
+              facebook: data.socialLinks?.facebook || '',
+              twitter: data.socialLinks?.twitter || '',
+              instagram: data.socialLinks?.instagram || '',
+              linkedin: data.socialLinks?.linkedin || ''
+            }
+          });
+        } else {
+          setFooterSettings(prev => ({ ...prev, brandName: siteName, copyrightText: `${siteName}. All rights reserved.` }));
+        }
+      } catch {
+        setFooterSettings(prev => ({ ...prev, brandName: siteName, copyrightText: `${siteName}. All rights reserved.` }));
+      }
+    };
+    fetchFooterSettings();
+  }, [siteName]);
 
   return (
     <footer className="bg-dark text-light mt-auto">
@@ -19,12 +55,25 @@ const Footer: React.FC = () => {
           <Col lg={4} md={6} className="mb-4 mb-lg-0">
             <h4 className="fw-bold mb-3" style={{ letterSpacing: '0.5px' }}>
               <i className="fas fa-shopping-bag me-2 text-primary"></i>
-              <span className="text-white">{siteName}</span>
+              <span className="text-white">{footerSettings.brandName || siteName}</span>
             </h4>
             <p className="text-white-50 mb-4 pe-lg-4" style={{ lineHeight: '1.7', fontSize: '0.95rem' }}>
-              {brandDescription}
+              {footerSettings.brandDescription || "Your premier destination for quality products at unbeatable prices. We're committed to providing exceptional customer service and fast, reliable shipping."}
             </p>
-            {/* Social links can be added here from context if needed */}
+            <div className="d-flex gap-3 mt-2">
+              {footerSettings.socialLinks.facebook && (
+                <a href={footerSettings.socialLinks.facebook} target="_blank" rel="noopener noreferrer" className="text-white-50 hover-primary" aria-label="Facebook"><i className="fab fa-facebook fa-lg"></i></a>
+              )}
+              {footerSettings.socialLinks.twitter && (
+                <a href={footerSettings.socialLinks.twitter} target="_blank" rel="noopener noreferrer" className="text-white-50 hover-primary" aria-label="Twitter"><i className="fab fa-twitter fa-lg"></i></a>
+              )}
+              {footerSettings.socialLinks.instagram && (
+                <a href={footerSettings.socialLinks.instagram} target="_blank" rel="noopener noreferrer" className="text-white-50 hover-primary" aria-label="Instagram"><i className="fab fa-instagram fa-lg"></i></a>
+              )}
+              {footerSettings.socialLinks.linkedin && (
+                <a href={footerSettings.socialLinks.linkedin} target="_blank" rel="noopener noreferrer" className="text-white-50 hover-primary" aria-label="LinkedIn"><i className="fab fa-linkedin fa-lg"></i></a>
+              )}
+            </div>
           </Col>
 
           {/* Quick Links */}
@@ -146,7 +195,7 @@ const Footer: React.FC = () => {
         <Row className="align-items-center g-3">
           <Col md={6} className="text-center text-md-start">
             <p className="mb-0 text-white-50" style={{ fontSize: '0.9rem' }}>
-              &copy; {new Date().getFullYear()} <span className="text-white">{copyrightText}</span>
+              &copy; {new Date().getFullYear()} <span className="text-white">{footerSettings.copyrightText || `${siteName}. All rights reserved.`}</span>
             </p>
           </Col>
           <Col md={6}>
