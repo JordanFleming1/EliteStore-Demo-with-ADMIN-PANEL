@@ -1,5 +1,4 @@
 import React from 'react';
-import { useSiteSettings } from '../../contexts/SiteSettingsContext';
 import { Container, Row, Col, Nav, Navbar, Button } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
