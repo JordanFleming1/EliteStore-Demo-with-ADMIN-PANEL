@@ -1,3 +1,26 @@
+.navbar-gradient-aqua,
+.navbar-gradient-indigo,
+.navbar-gradient-pink,
+.navbar-retro-sunset,
+.navbar-pastel,
+.navbar-darkmode,
+.navbar-minimal,
+.navbar-underline {
+  position: sticky;
+  top: 0;
+  z-index: 1050;
+  background-clip: padding-box;
+  opacity: 1 !important;
+  backdrop-filter: none !important;
+}
+.navbar-gradient-aqua,
+.navbar-gradient-indigo,
+.navbar-gradient-pink,
+.navbar-retro-sunset {
+  background: inherit !important;
+  opacity: 1 !important;
+  backdrop-filter: none !important;
+}
 /* --- Consistent Navbar Theme Colors --- */
 .navbar-gradient-aqua .nav-link,
 .navbar-gradient-indigo .nav-link,
