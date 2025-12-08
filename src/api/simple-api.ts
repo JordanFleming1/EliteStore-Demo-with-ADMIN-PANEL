@@ -85,7 +85,7 @@ class RealAPIService {
                   const aboutDoc = await getDoc(doc(db, 'settings', 'aboutPage'));
                   return aboutDoc.exists() ? aboutDoc.data() : {};
                 }
-                async saveAboutPageSettings(settings: Record<string, unknown>): Promise<void> {
+                async saveAboutPageSettings(settings: any): Promise<void> {
                   const { db } = await import('../firebase/firebase.config');
                   const { doc, setDoc } = await import('firebase/firestore');
                   await setDoc(doc(db, 'settings', 'aboutPage'), settings, { merge: true });
@@ -98,7 +98,7 @@ class RealAPIService {
                   const footerDoc = await getDoc(doc(db, 'settings', 'footer'));
                   return footerDoc.exists() ? footerDoc.data() : {};
                 }
-                async saveFooterSettings(settings: Record<string, unknown>): Promise<void> {
+                async saveFooterSettings(settings: any): Promise<void> {
                   const { db } = await import('../firebase/firebase.config');
                   const { doc, setDoc } = await import('firebase/firestore');
                   await setDoc(doc(db, 'settings', 'footer'), settings, { merge: true });
