@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSiteSettings } from '../../contexts/SiteSettingsContext';
 import { Container, Row, Col, Nav, Navbar, Button } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
@@ -21,23 +22,8 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
   };
 
   const [sidebarOpen, setSidebarOpen] = React.useState(false);
-  // Get current theme from localStorage
-  const [currentTheme, setCurrentTheme] = React.useState<string>('dark');
-  React.useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const local = window.localStorage.getItem('siteSettings');
-      if (local) {
-        try {
-          const parsed = JSON.parse(local);
-          setCurrentTheme(parsed.navbarTheme || 'dark');
-        } catch {
-          setCurrentTheme('dark');
-        }
-      } else {
-        setCurrentTheme('dark');
-      }
-    }
-  }, []);
+  // Use global site settings context for theme
+  const { navbarTheme: currentTheme } = useSiteSettings();
 
   const handleSidebarToggle = () => setSidebarOpen((open) => !open);
   const handleSidebarClose = () => setSidebarOpen(false);
