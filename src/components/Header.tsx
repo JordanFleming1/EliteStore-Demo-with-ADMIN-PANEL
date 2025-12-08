@@ -88,72 +88,72 @@ const Header: React.FC = () => {
         };
       case 'gradient':
         return {
-          bg: '',
-          variant: 'dark' as const,
+          bg: undefined,
+          variant: undefined,
           className: 'navbar-gradient-aqua shadow-sm sticky-top',
           style: {},
           textClass: 'text-white'
         };
       case 'frosted':
         return {
-          bg: '',
-          variant: 'light' as const,
+          bg: undefined,
+          variant: undefined,
           className: 'navbar-frosted shadow-sm sticky-top',
           style: {},
           textClass: 'text-dark'
         };
       case 'retro':
         return {
-          bg: '',
-          variant: 'light' as const,
+          bg: undefined,
+          variant: undefined,
           className: 'navbar-retro-sunset shadow-sm sticky-top',
           style: {},
           textClass: 'text-dark'
         };
       case 'pink-orange':
         return {
-          bg: '',
-          variant: 'light' as const,
+          bg: undefined,
+          variant: undefined,
           className: 'navbar-gradient-pink shadow-sm sticky-top',
           style: {},
           textClass: 'text-white'
         };
       case 'indigo':
         return {
-          bg: '',
-          variant: 'light' as const,
+          bg: undefined,
+          variant: undefined,
           className: 'navbar-gradient-indigo shadow-sm sticky-top',
           style: {},
           textClass: 'text-white'
         };
       case 'minimal':
         return {
-          bg: 'white',
-          variant: 'light' as const,
+          bg: undefined,
+          variant: undefined,
           className: 'navbar-minimal shadow-sm sticky-top',
           style: {},
           textClass: 'text-dark'
         };
       case 'pastel':
         return {
-          bg: '',
-          variant: 'light' as const,
+          bg: undefined,
+          variant: undefined,
           className: 'navbar-pastel shadow-sm sticky-top',
           style: {},
           textClass: 'text-dark'
         };
       case 'underline':
         return {
-          bg: 'white',
-          variant: 'light' as const,
+          bg: undefined,
+          variant: undefined,
           className: 'navbar-underline shadow-sm sticky-top',
           style: {},
           textClass: 'text-dark'
         };
       case 'aqua':
         return {
-          bg: '',
-          variant: 'light' as const,
+          bg: undefined,
+          variant: undefined,
           className: 'navbar-gradient-aqua shadow-sm sticky-top',
           style: {},
           textClass: 'text-white'
