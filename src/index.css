@@ -1,25 +1,49 @@
-.navbar-gradient-aqua,
-.navbar-gradient-indigo,
-.navbar-gradient-pink,
-.navbar-retro-sunset,
-.navbar-pastel,
-.navbar-darkmode,
-.navbar-minimal,
-.navbar-underline {
-  position: sticky;
-  top: 0;
-  z-index: 1050;
-  background-clip: padding-box;
+nav.navbar.navbar-gradient-aqua,
+nav.navbar.navbar-gradient-indigo,
+nav.navbar.navbar-gradient-pink,
+nav.navbar.navbar-retro-sunset,
+nav.navbar.navbar-pastel,
+nav.navbar.navbar-darkmode,
+nav.navbar.navbar-minimal,
+nav.navbar.navbar-underline {
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 1050 !important;
+  background-clip: padding-box !important;
   opacity: 1 !important;
   backdrop-filter: none !important;
 }
-.navbar-gradient-aqua,
-.navbar-gradient-indigo,
-.navbar-gradient-pink,
-.navbar-retro-sunset {
-  background: inherit !important;
-  opacity: 1 !important;
-  backdrop-filter: none !important;
+nav.navbar.navbar-gradient-aqua {
+  background: linear-gradient(90deg, #43cea2 0%, #185a9d 100%) !important;
+  color: #fff !important;
+}
+nav.navbar.navbar-gradient-indigo {
+  background: linear-gradient(90deg, #3f2b96 0%, #a8c0ff 100%) !important;
+  color: #fff !important;
+}
+nav.navbar.navbar-gradient-pink {
+  background: linear-gradient(90deg, #ff9966 0%, #ff5e62 50%, #ff7eb3 100%) !important;
+  color: #fff !important;
+}
+nav.navbar.navbar-retro-sunset {
+  background: linear-gradient(90deg, #ff9966 0%, #ff5e62 100%) !important;
+  color: #fff !important;
+}
+nav.navbar.navbar-pastel {
+  background: linear-gradient(90deg, #a1c4fd 0%, #c2e9fb 100%) !important;
+  color: #222 !important;
+}
+nav.navbar.navbar-darkmode {
+  background: #222 !important;
+  color: #fff !important;
+}
+nav.navbar.navbar-minimal {
+  background: #fff !important;
+  color: #222 !important;
+}
+nav.navbar.navbar-underline {
+  background: #fff !important;
+  color: #222 !important;
 }
 /* --- Consistent Navbar Theme Colors --- */
 .navbar-gradient-aqua .nav-link,
