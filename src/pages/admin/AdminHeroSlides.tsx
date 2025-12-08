@@ -21,6 +21,7 @@ const GRADIENT_OPTIONS = [
 ];
 
 const defaultSlide: Partial<HeroSlide> = {
+  id: '',
   title: '',
   subtitle: '',
   image: '',
@@ -56,7 +57,13 @@ const AdminHeroSlides: React.FC = () => {
 
 
   const handleEdit = (slide?: HeroSlide) => {
-    setEditingSlide(slide ? { ...slide } : { ...defaultSlide, order: slides.length + 1 });
+    if (slide) {
+      setEditingSlide({ ...slide });
+    } else {
+      // Generate a unique string ID for new slides (timestamp-based)
+      const newId = Date.now().toString();
+      setEditingSlide({ ...defaultSlide, id: newId, order: slides.length + 1 });
+    }
     setShowModal(true);
     setUploadingImage(false);
   };
@@ -94,23 +101,21 @@ const AdminHeroSlides: React.FC = () => {
   };
 
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [deleteSlideId, setDeleteSlideId] = useState<number | null>(null);
+  const [deleteSlideId, setDeleteSlideId] = useState<string | null>(null);
 
-  const confirmDeleteSlide = (id: number) => {
+  const confirmDeleteSlide = (id: string) => {
     setDeleteSlideId(id);
     setShowDeleteModal(true);
   };
 
   const handleDelete = async () => {
-    if (deleteSlideId == null) return;
+    if (!deleteSlideId) return;
     setSaving(true);
     try {
-      // Always use string ID for Firestore
-      await api.deleteHeroSlide(deleteSlideId.toString());
+      await api.deleteHeroSlide(deleteSlideId);
       setAlert({ show: true, variant: 'success', message: 'Hero slide deleted.' });
       setShowDeleteModal(false);
       setDeleteSlideId(null);
-      // Always reload slides from Firestore to reflect true state
       await fetchSlides();
     } catch (error) {
       setAlert({ show: true, variant: 'danger', message: `Failed to delete hero slide. ${error}` });

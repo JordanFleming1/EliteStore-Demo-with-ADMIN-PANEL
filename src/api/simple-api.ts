@@ -44,12 +44,13 @@ class RealAPIService {
                   const { db } = await import('../firebase/firebase.config');
                   const { collection, getDocs } = await import('firebase/firestore');
                   const snapshot = await getDocs(collection(db, 'heroSlides'));
-                  // Convert id to number if needed for type compatibility
-                  return snapshot.docs.map(doc => ({ id: Number(doc.id), ...(doc.data() as Omit<HeroSlide, 'id'>) })) as unknown as HeroSlide[];
+                  // Always use string IDs for hero slides
+                  return snapshot.docs.map(doc => ({ id: doc.id, ...(doc.data() as Omit<HeroSlide, 'id'>) })) as HeroSlide[];
                 }
                 async saveHeroSlide(slide: Partial<HeroSlide>): Promise<void> {
                   const { db } = await import('../firebase/firebase.config');
                   const { doc, setDoc } = await import('firebase/firestore');
+                  if (!slide.id) throw new Error('Slide must have an id');
                   await setDoc(doc(db, 'heroSlides', String(slide.id)), slide, { merge: true });
                 }
                 async deleteHeroSlide(id: string): Promise<void> {

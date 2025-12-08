@@ -42,7 +42,7 @@ export interface Customer {
 }
 
 export interface HeroSlide {
-  id: number;
+  id: string;
   title: string;
   subtitle: string;
   image: string;
