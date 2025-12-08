@@ -10,6 +10,21 @@ interface SiteSettingsContextType {
 const SiteSettingsContext = createContext<SiteSettingsContextType | undefined>(undefined);
 
 export const SiteSettingsProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+    // Listen for localStorage changes (e.g., theme change from admin panel)
+    useEffect(() => {
+      const handleStorage = (event: StorageEvent) => {
+        if (event.key === 'siteSettings' && event.newValue) {
+          try {
+            const parsed = JSON.parse(event.newValue);
+            if (parsed.navbarTheme) setNavbarTheme(parsed.navbarTheme);
+            if (parsed.siteName) setSiteName(parsed.siteName);
+            if (parsed.storeLogo) setStoreLogo(parsed.storeLogo);
+          } catch {}
+        }
+      };
+      window.addEventListener('storage', handleStorage);
+      return () => window.removeEventListener('storage', handleStorage);
+    }, []);
   // Try to load from localStorage first
   const local = typeof window !== 'undefined' ? localStorage.getItem('siteSettings') : null;
   let initial = { siteName: 'EliteStore', storeLogo: '', navbarTheme: 'light' };
