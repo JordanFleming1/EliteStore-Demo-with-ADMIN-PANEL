@@ -10,6 +10,24 @@ interface SiteSettingsContextType {
 const SiteSettingsContext = createContext<SiteSettingsContextType | undefined>(undefined);
 
 export const SiteSettingsProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+      // Real-time Firestore listener for theme changes
+      useEffect(() => {
+        let unsubscribe: (() => void) | undefined;
+        (async () => {
+          const { db } = await import('../firebase/firebase.config');
+          const { doc, onSnapshot } = await import('firebase/firestore');
+          const navbarDocRef = doc(db, 'settings', 'navbar');
+          unsubscribe = onSnapshot(navbarDocRef, (docSnap) => {
+            if (docSnap.exists()) {
+              const data = docSnap.data();
+              if (data && data.theme) setNavbarTheme(data.theme);
+            }
+          });
+        })();
+        return () => {
+          if (unsubscribe) unsubscribe();
+        };
+      }, []);
     // Listen for localStorage changes (e.g., theme change from admin panel)
     useEffect(() => {
       const handleStorage = (event: StorageEvent) => {
