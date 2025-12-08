@@ -126,9 +126,9 @@ const AdminHeroSlides: React.FC = () => {
       <Row className="mb-4">
         <Col>
           <h2 className="fw-bold">Hero Slides</h2>
-                    {/* Removed gradient/background badge */}
-                    <span className="badge bg-warning">Gradient: {slide.gradient || 'none'}</span>
-                    </div>
+        </Col>
+      </Row>
+      {alert.show && (
         <Alert variant={alert.variant} dismissible onClose={() => setAlert({ ...alert, show: false })}>
           {alert.message}
         </Alert>
@@ -180,23 +180,23 @@ const AdminHeroSlides: React.FC = () => {
                       <Button variant="outline-danger" size="sm" onClick={() => confirmDeleteSlide(slide.id)}>
                         <i className="fas fa-trash me-1"></i>Delete
                       </Button>
-                          {/* Delete Confirmation Modal */}
-                          <Modal show={showDeleteModal} onHide={() => setShowDeleteModal(false)} centered>
-                            <Modal.Header closeButton>
-                              <Modal.Title>Delete Hero Slide</Modal.Title>
-                            </Modal.Header>
-                            <Modal.Body>
-                              <p>Are you sure you want to delete this hero slide? This action cannot be undone.</p>
-                            </Modal.Body>
-                            <Modal.Footer>
-                              <Button variant="secondary" onClick={() => setShowDeleteModal(false)} disabled={saving}>
-                                Cancel
-                              </Button>
-                              <Button variant="danger" onClick={handleDelete} disabled={saving}>
-                                {saving ? <Spinner animation="border" size="sm" /> : 'Delete'}
-                              </Button>
-                            </Modal.Footer>
-                          </Modal>
+                      {/* Delete Confirmation Modal */}
+                      <Modal show={showDeleteModal} onHide={() => setShowDeleteModal(false)} centered>
+                        <Modal.Header closeButton>
+                          <Modal.Title>Delete Hero Slide</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                          <p>Are you sure you want to delete this hero slide? This action cannot be undone.</p>
+                        </Modal.Body>
+                        <Modal.Footer>
+                          <Button variant="secondary" onClick={() => setShowDeleteModal(false)} disabled={saving}>
+                            Cancel
+                          </Button>
+                          <Button variant="danger" onClick={handleDelete} disabled={saving}>
+                            {saving ? <Spinner animation="border" size="sm" /> : 'Delete'}
+                          </Button>
+                        </Modal.Footer>
+                      </Modal>
                     </div>
                   </Card.Body>
                 </Card>
