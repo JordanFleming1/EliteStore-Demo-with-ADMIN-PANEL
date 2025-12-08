@@ -1,3 +1,22 @@
+/* Force admin navbar to always be dark and unchanging */
+nav.admin-navbar {
+	background: #222 !important;
+	color: #fff !important;
+	border-bottom: 1px solid #333 !important;
+	box-shadow: 0 2px 8px rgba(0,0,0,0.12) !important;
+}
+nav.admin-navbar .navbar-brand,
+nav.admin-navbar .nav-link,
+nav.admin-navbar .admin-sidebar-toggle {
+	color: #fff !important;
+	text-shadow: none !important;
+}
+nav.admin-navbar .nav-link.active,
+nav.admin-navbar .nav-link:focus,
+nav.admin-navbar .nav-link:hover {
+	color: #ffd700 !important;
+	background: rgba(255,255,255,0.08) !important;
+}
 /* --- Consistent Admin Navbar Theme Colors --- */
 .admin-navbar.theme-gradient .nav-link,
 .admin-navbar.theme-retro .nav-link,
