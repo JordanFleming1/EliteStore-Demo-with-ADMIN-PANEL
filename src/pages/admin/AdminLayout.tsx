@@ -37,10 +37,6 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
       <Navbar
         expand="lg"
         className={adminNavbarClass}
-        {...(isCustomTheme ? {} : {
-          bg: currentTheme === 'light' || currentTheme === 'pastel' ? 'light' : 'dark',
-          variant: currentTheme === 'light' || currentTheme === 'pastel' ? 'light' : 'dark'
-        })}
       >
         <Container fluid>
           <Nav className="w-100 align-items-center d-flex flex-row justify-content-between">
