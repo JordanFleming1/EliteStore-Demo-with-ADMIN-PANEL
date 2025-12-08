@@ -22,8 +22,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
   };
 
   const [sidebarOpen, setSidebarOpen] = React.useState(false);
-  // Use global site settings context for theme
-  const { navbarTheme: currentTheme } = useSiteSettings();
+  // No longer need currentTheme, always use dark theme for admin navbar
 
   const handleSidebarToggle = () => setSidebarOpen((open) => !open);
   const handleSidebarClose = () => setSidebarOpen(false);
