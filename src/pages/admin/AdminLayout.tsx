@@ -29,19 +29,8 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
   const handleSidebarClose = () => setSidebarOpen(false);
 
   // Determine if theme is custom (not light/dark/pastel)
-  // Map theme key to correct CSS class
-  const themeClassMap: Record<string, string> = {
-    light: 'theme-light',
-    dark: 'theme-dark',
-    gradient: 'theme-gradient',
-    retro: 'theme-retro',
-    pastel: 'theme-pastel',
-    aqua: 'theme-aqua',
-    'pink-orange': 'theme-pink-orange',
-    indigo: 'theme-indigo',
-  };
-  const adminNavbarClass = `admin-navbar fixed-top ${themeClassMap[currentTheme] || themeClassMap['light']}`;
-  const isCustomTheme = !['light', 'dark', 'pastel'].includes(currentTheme);
+  // Always use dark theme for admin panel navbar
+  const adminNavbarClass = 'admin-navbar fixed-top theme-dark';
   return (
     <div className="admin-layout">
       {/* Admin Header */}
