@@ -42,14 +42,18 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
   const handleSidebarToggle = () => setSidebarOpen((open) => !open);
   const handleSidebarClose = () => setSidebarOpen(false);
 
+  // Determine if theme is custom (not light/dark/pastel)
+  const isCustomTheme = !['light', 'dark', 'pastel'].includes(currentTheme);
   return (
     <div className="admin-layout">
       {/* Admin Header */}
       <Navbar
-        bg={currentTheme === 'light' || currentTheme === 'pastel' ? 'light' : 'dark'}
-        variant={currentTheme === 'light' || currentTheme === 'pastel' ? 'light' : 'dark'}
         expand="lg"
         className={`admin-navbar fixed-top theme-${currentTheme}`}
+        {...(isCustomTheme ? {} : {
+          bg: currentTheme === 'light' || currentTheme === 'pastel' ? 'light' : 'dark',
+          variant: currentTheme === 'light' || currentTheme === 'pastel' ? 'light' : 'dark'
+        })}
       >
         <Container fluid>
           <Nav className="w-100 align-items-center d-flex flex-row justify-content-between">
