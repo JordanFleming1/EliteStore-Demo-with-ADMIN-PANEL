@@ -86,16 +86,8 @@ const AdminFooter: React.FC = () => {
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
     setSaving(true);
-
     try {
-      const response = await fetch('http://localhost:3001/footerSettings', {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(settings)
-      });
-
-      if (!response.ok) throw new Error('Failed to save settings');
-
+      await api.saveFooterSettings(settings);
       showAlert('success', 'Footer settings saved successfully!');
       await fetchSettings();
     } catch (error) {

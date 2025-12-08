@@ -80,18 +80,28 @@ class RealAPIService {
 
                 // ABOUT PAGE SETTINGS
                 async getAboutPageSettings(): Promise<Record<string, unknown>> {
-                  return {};
+                  const { db } = await import('../firebase/firebase.config');
+                  const { doc, getDoc } = await import('firebase/firestore');
+                  const aboutDoc = await getDoc(doc(db, 'settings', 'aboutPage'));
+                  return aboutDoc.exists() ? aboutDoc.data() : {};
                 }
-                async saveAboutPageSettings(): Promise<void> {
-                  return;
+                async saveAboutPageSettings(settings: Record<string, unknown>): Promise<void> {
+                  const { db } = await import('../firebase/firebase.config');
+                  const { doc, setDoc } = await import('firebase/firestore');
+                  await setDoc(doc(db, 'settings', 'aboutPage'), settings, { merge: true });
                 }
 
                 // FOOTER SETTINGS
                 async getFooterSettings(): Promise<Record<string, unknown>> {
-                  return {};
+                  const { db } = await import('../firebase/firebase.config');
+                  const { doc, getDoc } = await import('firebase/firestore');
+                  const footerDoc = await getDoc(doc(db, 'settings', 'footer'));
+                  return footerDoc.exists() ? footerDoc.data() : {};
                 }
-                async saveFooterSettings(): Promise<void> {
-                  return;
+                async saveFooterSettings(settings: Record<string, unknown>): Promise<void> {
+                  const { db } = await import('../firebase/firebase.config');
+                  const { doc, setDoc } = await import('firebase/firestore');
+                  await setDoc(doc(db, 'settings', 'footer'), settings, { merge: true });
                 }
   async updateOrderStatus(): Promise<Order> {
     // Parameters removed; return dummy order or call request

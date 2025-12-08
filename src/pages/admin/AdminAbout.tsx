@@ -141,9 +141,8 @@ const AdminAbout: React.FC = () => {
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
     setSaving(true);
-
     try {
-      await api.saveAboutPageSettings();
+      await api.saveAboutPageSettings(settings);
       showAlert('success', 'About page settings saved successfully!');
       // Reload settings to confirm save
       await fetchSettings();
