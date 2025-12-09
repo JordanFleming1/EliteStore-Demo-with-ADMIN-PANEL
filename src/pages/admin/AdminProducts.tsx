@@ -1343,8 +1343,6 @@ const AdminProducts: React.FC = () => {
                     Add Another Image
                   </Button>
                 </Tab.Pane>
-                  </Form.Group>
-                </Tab.Pane>
 
                 {/* Details & Features Tab */}
                 <Tab.Pane eventKey="details">
