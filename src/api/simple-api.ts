@@ -110,8 +110,15 @@ class RealAPIService {
   async getAnalytics(): Promise<AnalyticsData> {
     return await this.request() as AnalyticsData;
   }
-  async createOrder(): Promise<Order> {
-    return await this.request() as Order;
+  async createOrder(orderData: Partial<Order>): Promise<string> {
+    const { db } = await import('../firebase/firebase.config');
+    const { collection, addDoc } = await import('firebase/firestore');
+    const docRef = await addDoc(collection(db, 'orders'), {
+      ...orderData,
+      createdAt: orderData.createdAt || new Date(),
+      updatedAt: new Date()
+    });
+    return docRef.id;
   }
   async getOrderStats(): Promise<AnalyticsData> {
     return await this.request() as AnalyticsData;
