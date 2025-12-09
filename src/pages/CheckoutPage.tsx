@@ -89,7 +89,7 @@ interface ShippingAddress {
 }
 
 interface PaymentInfo {
-  method: 'credit_card' | 'bank_transfer';
+  method: 'credit_card';
   cardNumber: string;
   expiryMonth: string;
   expiryYear: string;
@@ -481,43 +481,78 @@ const CheckoutPage: React.FC = () => {
       </Card.Header>
       <Card.Body>
         <Form onSubmit={handlePaymentSubmit}>
-          <Form.Group className="mb-4">
-            <Form.Label>Payment Method</Form.Label>
-            <div className="d-flex gap-3">
-              {[
-                { value: 'credit_card', icon: 'fas fa-credit-card', label: 'Credit Card' },
-                { value: 'bank_transfer', icon: 'fas fa-university', label: 'Bank Transfer' }
-              ].map(method => (
-                <Form.Check
-                  key={method.value}
-                  type="radio"
-                  id={method.value}
-                  name="paymentMethod"
-                  label={
-                    <span>
-                      <i className={`${method.icon} me-2`}></i>
-                      {method.label}
-                    </span>
-                  }
-                  checked={paymentInfo.method === method.value}
-                  onChange={() => setPaymentInfo({...paymentInfo, method: method.value as 'credit_card' | 'bank_transfer'})}
-                />
-              ))}
-            </div>
+          <Form.Group className="mb-3">
+            <Form.Label>Cardholder Name *</Form.Label>
+            <Form.Control
+              type="text"
+              value={paymentInfo.cardholderName}
+              onChange={e => setPaymentInfo({ ...paymentInfo, cardholderName: e.target.value })}
+              required
+            />
           </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label>Card Number *</Form.Label>
+            <Form.Control
+              type="text"
+              value={paymentInfo.cardNumber}
+              onChange={e => setPaymentInfo({ ...paymentInfo, cardNumber: e.target.value.replace(/[^0-9]/g, '') })}
+              maxLength={16}
+              placeholder="1234 5678 9012 3456"
+              required
+            />
+          </Form.Group>
+          <Row>
+            <Col md={4}>
+              <Form.Group className="mb-3">
+                <Form.Label>Expiry Month *</Form.Label>
+                <Form.Control
+                  type="text"
+                  value={paymentInfo.expiryMonth}
+                  onChange={e => setPaymentInfo({ ...paymentInfo, expiryMonth: e.target.value })}
+                  maxLength={2}
+                  placeholder="MM"
+                  required
+                />
+              </Form.Group>
+            </Col>
+            <Col md={4}>
+              <Form.Group className="mb-3">
+                <Form.Label>Expiry Year *</Form.Label>
+                <Form.Control
+                  type="text"
+                  value={paymentInfo.expiryYear}
+                  onChange={e => setPaymentInfo({ ...paymentInfo, expiryYear: e.target.value })}
+                  maxLength={4}
+                  placeholder="YYYY"
+                  required
+                />
+              </Form.Group>
+            </Col>
+            <Col md={4}>
+              <Form.Group className="mb-3">
+                <Form.Label>CVV *</Form.Label>
+                <Form.Control
+                  type="text"
+                  value={paymentInfo.cvv}
+                  onChange={e => setPaymentInfo({ ...paymentInfo, cvv: e.target.value.replace(/[^0-9]/g, '') })}
+                  maxLength={4}
+                  placeholder="123"
+                  required
+                />
+              </Form.Group>
+            </Col>
+          </Row>
+          <div className="d-flex justify-content-between mt-3">
+            <Button variant="outline-secondary" onClick={() => setCurrentStep(1)}>
+              <i className="fas fa-arrow-left me-2"></i>
+              Back to Shipping
+            </Button>
+            <Button type="submit" variant="primary" disabled={!validateStep(2)}>
+              Continue to Review
+              <i className="fas fa-arrow-right ms-2"></i>
+            </Button>
+          </div>
         </Form>
-        {paymentInfo.method === 'bank_transfer' && (
-          <Alert variant="info">
-            <i className="fas fa-university me-2"></i>
-            Bank transfer instructions will be provided after order confirmation.
-          </Alert>
-        )}
-        <div className="d-flex justify-content-between mt-3">
-          <Button variant="outline-secondary" onClick={() => setCurrentStep(1)}>
-            <i className="fas fa-arrow-left me-2"></i>
-            Back to Shipping
-          </Button>
-        </div>
       </Card.Body>
     </Card>
   );
@@ -545,26 +580,16 @@ const CheckoutPage: React.FC = () => {
           </div>
         </div>
 
-        {/* Payment Method Review */}
+        {/* Payment Information Review */}
         <div className="mb-4">
-          <h6>Payment Method</h6>
+          <h6>Payment Information</h6>
           <div className="bg-light p-3 rounded">
-            {paymentInfo.method === 'credit_card' && (
-              <>
-                <i className="fas fa-credit-card me-2"></i>
-                Credit Card ending in {paymentInfo.cardNumber.slice(-4)}
-                <br/>
-                <small className="text-muted">
-                  Expires: {paymentInfo.expiryMonth}/{paymentInfo.expiryYear}
-                </small>
-              </>
-            )}
-            {paymentInfo.method === 'bank_transfer' && (
-              <>
-                <i className="fas fa-university me-2"></i>
-                Bank Transfer
-              </>
-            )}
+            <i className="fas fa-credit-card me-2"></i>
+            Cardholder: {paymentInfo.cardholderName}<br/>
+            Card ending in {paymentInfo.cardNumber.slice(-4)}<br/>
+            <small className="text-muted">
+              Expires: {paymentInfo.expiryMonth}/{paymentInfo.expiryYear}
+            </small>
           </div>
         </div>
 
