@@ -15,17 +15,32 @@ interface FooterSettings {
 }
 
 const AdminFooter: React.FC = () => {
-  const [settings, setSettings] = useState<FooterSettings>({
-    brandName: '',
-    brandDescription: '',
-    copyrightText: '',
+  const defaultSettings: FooterSettings = {
+    brandName: 'EliteStore',
+    brandDescription: "Your premier destination for quality products at unbeatable prices. We're committed to providing exceptional customer service and fast, reliable shipping.",
+    copyrightText: 'EliteStore. All rights reserved.',
     socialLinks: {
       facebook: '',
       twitter: '',
       instagram: '',
       linkedin: ''
     }
-  });
+  };
+  const [settings, setSettings] = useState<FooterSettings>(defaultSettings);
+    const handleReset = async () => {
+      setSettings(defaultSettings);
+      setSaving(true);
+      try {
+        await api.saveFooterSettings(defaultSettings);
+        showAlert('success', 'Footer settings reset to default!');
+        await fetchSettings();
+      } catch (error) {
+        console.error('Error resetting settings:', error);
+        showAlert('danger', 'Failed to reset settings. Please try again.');
+      } finally {
+        setSaving(false);
+      }
+    };
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [alert, setAlert] = useState<{ show: boolean; variant: 'success' | 'danger'; message: string }>({
@@ -126,6 +141,11 @@ const AdminFooter: React.FC = () => {
       )}
 
       <Form onSubmit={handleSave}>
+        <div className="mb-3 d-flex justify-content-end">
+          <Button variant="outline-secondary" type="button" onClick={handleReset} disabled={saving}>
+            <i className="fas fa-undo me-2"></i>Reset to Default
+          </Button>
+        </div>
         <Row>
           {/* Brand Section */}
           <Col lg={6} className="mb-4">
