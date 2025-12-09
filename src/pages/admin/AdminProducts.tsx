@@ -1257,11 +1257,6 @@ const AdminProducts: React.FC = () => {
                 {/* Details & Features Tab */}
                 <Tab.Pane eventKey="details">
                   <div className="mb-4">
-                    <h5 className="fw-bold mb-3">
-                      <i className="fas fa-cogs me-2"></i>
-                      Product Specifications
-                    </h5>
-                    {formData.specifications.map((spec, index) => (
                       <Row>
                         <Col md={6}>
                           <Form.Group className="mb-3">
@@ -1377,100 +1372,114 @@ const AdminProducts: React.FC = () => {
                           onChange={(e) => setFormData({ ...formData, featured: e.target.checked })}
                         />
                       </Form.Group>
-                        <Form.Label className="fw-bold mb-0">
-                          <i className="fas fa-upload me-2"></i>
-                          Image {index + 1} {index === 0 && <Badge bg="primary">Main Image</Badge>}
-                        </Form.Label>
-                      </div>
 
-                      <div>
-                        <div className="d-flex align-items-center mb-2">
-                          <Form.Control
-                            type="file"
-                            accept="image/*"
-                            onChange={(e) => {
-                              console.log('=== FILE INPUT CHANGE EVENT ===');
-                              console.log('Event triggered:', e);
-                              const target = e.target as HTMLInputElement;
-                              console.log('Input target:', target);
-                              console.log('Files array:', target.files);
-                              console.log('Files length:', target.files?.length);
-                              const file = target.files?.[0];
-                              console.log('Selected file:', file);
-                              if (file) {
-                                console.log('File details:', {
-                                  name: file.name,
-                                  size: file.size,
-                                  type: file.type
-                                });
-                                console.log('Calling handleFileSelect...');
-                                handleFileSelect(index, file);
-                              } else {
-                                console.log('No file selected or file is null');
-                              }
-                            }}
-                            className="me-2"
-                            disabled={uploadingImages[index]}
-                          />
-                          {uploadingImages[index] && (
-                            <Spinner animation="border" size="sm" className="me-2" />
-                          )}
-                          {formData.images.length > 1 && (
+                      <h5 className="fw-bold mb-3">
+                        <i className="fas fa-cogs me-2"></i>
+                        Product Specifications
+                      </h5>
+                      {formData.specifications.map((spec, index) => (
+                        <Row key={index} className="mb-3">
+                          <Col md={4}>
+                            <Form.Control
+                              type="text"
+                              value={spec.name}
+                              onChange={(e) => handleSpecificationChange(index, 'name', e.target.value)}
+                              placeholder="Specification name (e.g., Screen Size)"
+                            />
+                          </Col>
+                          <Col md={6}>
+                            <Form.Control
+                              type="text"
+                              value={spec.value}
+                              onChange={(e) => handleSpecificationChange(index, 'value', e.target.value)}
+                              placeholder="Specification value (e.g., 6.1 inches)"
+                            />
+                          </Col>
+                          <Col md={2}>
                             <Button
                               variant="outline-danger"
-                              onClick={() => removeImageField(index)}
-                              disabled={uploadingImages[index]}
+                              onClick={() => removeSpecification(index)}
+                              disabled={formData.specifications.length === 1}
                             >
                               <i className="fas fa-trash"></i>
                             </Button>
-                          )}
-                        </div>
-                        {image ? (
-                          <div className="mt-2">
-                            <img
-                              src={image}
-                              alt={`Preview ${index + 1}`}
-                              className="rounded"
-                              style={{ width: '100px', height: '100px', objectFit: 'cover' }}
-                            />
-                            <p className="text-success small mt-1">
-                              <i className="fas fa-check me-1"></i>
-                              Image uploaded successfully
-                            </p>
+                          </Col>
+                        </Row>
+                      ))}
+                      <Button
+                        variant="outline-primary"
+                        onClick={addSpecification}
+                        className="mb-4"
+                      >
+                        <i className="fas fa-plus me-2"></i>
+                        Add Specification
+                      </Button>
+                    <>
+                      <h5 className="fw-bold mb-3">
+                        <i className="fas fa-images me-2"></i>
+                        Product Images
+                      </h5>
+                      {formData.images.map((image: string, index: number) => {
+                        return (
+                          <div key={index} className="mb-3 p-2 border rounded bg-light">
+                            <div className="d-flex align-items-center mb-2">
+                              <Form.Control
+                                type="file"
+                                accept="image/*"
+                                className="me-2"
+                                disabled={uploadingImages[index]}
+                                onChange={e => {
+                                  const file = (e.target as HTMLInputElement).files?.[0];
+                                  if (file) {
+                                    handleFileSelect(index, file);
+                                  }
+                                }}
+                              />
+                              {uploadingImages[index] && (
+                                <Spinner animation="border" size="sm" className="me-2" />
+                              )}
+                              {formData.images.length > 1 && (
+                                <Button
+                                  variant="outline-danger"
+                                  onClick={() => removeImageField(index)}
+                                  disabled={uploadingImages[index]}
+                                >
+                                  <i className="fas fa-trash"></i>
+                                </Button>
+                              )}
+                            </div>
+                            <div className="mt-2">
+                              <img
+                                src={image || noImagePlaceholder}
+                                alt={image ? `Preview ${index + 1}` : "No Image Placeholder"}
+                                className="rounded border"
+                                style={{ width: '100px', height: '100px', objectFit: 'cover' }}
+                              />
+                              <p className={`small mt-1 ${image ? "text-success" : "text-muted"}`}>
+                                <i className={`fas ${image ? "fa-check" : "fa-info-circle"} me-1`}></i>
+                                {image ? "Image uploaded successfully" : "Preview: No Image Yet... placeholder"}
+                              </p>
+                            </div>
+                            {uploadingImages[index] && (
+                              <p className="text-info small mt-2">
+                                <i className="fas fa-cloud-upload-alt me-1"></i>
+                                Uploading image...
+                              </p>
+                            )}
                           </div>
-                        ) : (
-                          <div className="mt-2">
-                            <img
-                              src={noImagePlaceholder}
-                              alt="No Image Placeholder"
-                              className="rounded border"
-                              style={{ width: '100px', height: '100px', objectFit: 'cover' }}
-                            />
-                            <p className="text-muted small mt-1">
-                              <i className="fas fa-info-circle me-1"></i>
-                              Preview: "No Image Yet..." placeholder
-                            </p>
-                          </div>
-                        )}
-                        {uploadingImages[index] && (
-                          <p className="text-info small mt-2">
-                            <i className="fas fa-cloud-upload-alt me-1"></i>
-                            Uploading image...
-                          </p>
-                        )}
-                      </div>
-                    </div>
-                  ))}
-                  
-                  <Button
-                    variant="outline-secondary"
-                    onClick={addImageField}
-                    className="mt-2"
-                  >
-                    <i className="fas fa-plus me-2"></i>
-                    Add Another Image
-                  </Button>
-                </Tab.Pane>
+                        );
+                      })}
+                      <Button
+                        variant="outline-secondary"
+                        onClick={addImageField}
+                        className="mt-2"
+                      >
+                        <i className="fas fa-plus me-2"></i>
+                        Add Another Image
+                      </Button>
+                    </>
+                  </div>
+                  </Tab.Pane>
 
                 {/* Pricing & Inventory Tab */}
                 <Tab.Pane eventKey="pricing">
@@ -1577,10 +1586,10 @@ const AdminProducts: React.FC = () => {
             disabled={saving || !formData.name || !formData.price || !formData.category}
           >
             {saving ? (
-              <>
+                    <>
                 <Spinner animation="border" size="sm" className="me-2" />
                 Saving...
-              </>
+                    </>
             ) : (
               <>
                 <i className={`fas ${editingProduct ? 'fa-save' : 'fa-plus'} me-2`}></i>
