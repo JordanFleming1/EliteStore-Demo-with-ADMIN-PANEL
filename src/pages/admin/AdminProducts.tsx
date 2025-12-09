@@ -410,25 +410,6 @@ const AdminProducts: React.FC = () => {
   };
 
   // Dynamic form handlers
-  const handleSpecificationChange = (index: number, field: 'name' | 'value', value: string) => {
-    const newSpecs = [...formData.specifications];
-    newSpecs[index] = { ...newSpecs[index], [field]: value };
-    setFormData({ ...formData, specifications: newSpecs });
-  };
-
-  const addSpecification = () => {
-    setFormData({ 
-      ...formData, 
-      specifications: [...formData.specifications, { name: '', value: '' }]
-    });
-  };
-
-  const removeSpecification = (index: number) => {
-    setFormData({ 
-      ...formData, 
-      specifications: formData.specifications.filter((_, i) => i !== index)
-    });
-  };
 
 
   const addImageField = () => {
