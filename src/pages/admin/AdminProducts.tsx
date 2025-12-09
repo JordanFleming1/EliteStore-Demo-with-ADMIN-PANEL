@@ -430,22 +430,6 @@ const AdminProducts: React.FC = () => {
     });
   };
 
-  const handleFeatureChange = (index: number, value: string) => {
-    const newFeatures = [...formData.features];
-    newFeatures[index] = value;
-    setFormData({ ...formData, features: newFeatures });
-  };
-
-  const addFeature = () => {
-    setFormData({ ...formData, features: [...formData.features, ''] });
-  };
-
-  const removeFeature = (index: number) => {
-    setFormData({ 
-      ...formData, 
-      features: formData.features.filter((_, i) => i !== index)
-    });
-  };
 
   const addImageField = () => {
     setFormData({ ...formData, images: [...formData.images, ''] });
