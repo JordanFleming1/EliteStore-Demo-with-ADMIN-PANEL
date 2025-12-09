@@ -55,6 +55,7 @@ const AdminProducts: React.FC = () => {
     description: '',
     price: '',
     discountPrice: '',
+    shippingCost: '',
     category: '',
     stock: '',
     images: [''],
@@ -149,6 +150,7 @@ const AdminProducts: React.FC = () => {
         description: product.description,
         price: product.price.toString(),
         discountPrice: product.discountPrice?.toString() || '',
+        shippingCost: product.shippingCost?.toString() || '',
         category: product.category,
         stock: product.stock.toString(),
         images: product.images || [''],
@@ -169,6 +171,7 @@ const AdminProducts: React.FC = () => {
         description: '',
         price: '',
         discountPrice: '',
+        shippingCost: '',
         category: '',
         stock: '',
         images: [''],
@@ -237,6 +240,7 @@ const AdminProducts: React.FC = () => {
         name: formData.name.trim(),
         description: formData.description.trim(),
         price: parseFloat(formData.price),
+        ...(formData.shippingCost && !isNaN(parseFloat(formData.shippingCost)) ? { shippingCost: parseFloat(formData.shippingCost) } : {}),
         category: formData.category.trim(),
         stock: parseInt(formData.stock),
         images: validImages,
@@ -1258,92 +1262,121 @@ const AdminProducts: React.FC = () => {
                       Product Specifications
                     </h5>
                     {formData.specifications.map((spec, index) => (
-                      <Row key={index} className="mb-3">
-                        <Col md={4}>
-                          <Form.Control
-                            type="text"
-                            value={spec.name}
-                            onChange={(e) => handleSpecificationChange(index, 'name', e.target.value)}
-                            placeholder="Specification name (e.g., Screen Size)"
-                          />
-                        </Col>
+                      <Row>
                         <Col md={6}>
-                          <Form.Control
-                            type="text"
-                            value={spec.value}
-                            onChange={(e) => handleSpecificationChange(index, 'value', e.target.value)}
-                            placeholder="Specification value (e.g., 6.1 inches)"
-                          />
-                        </Col>
-                        <Col md={2}>
-                          <Button
-                            variant="outline-danger"
-                            onClick={() => removeSpecification(index)}
-                            disabled={formData.specifications.length === 1}
-                          >
-                            <i className="fas fa-trash"></i>
-                          </Button>
+                          <Form.Group className="mb-3">
+                            <Form.Label className="fw-bold">
+                              Product Name <span className="text-danger">*</span>
+                            </Form.Label>
+                            <Form.Control
+                              type="text"
+                              value={formData.name}
+                              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                              placeholder="Enter product name"
+                              required
+                            />
+                          </Form.Group>
                         </Col>
                       </Row>
-                    ))}
-                    <Button
-                      variant="outline-primary"
-                      onClick={addSpecification}
-                      className="mb-4"
-                    >
-                      <i className="fas fa-plus me-2"></i>
-                      Add Specification
-                    </Button>
-                  </div>
 
-                  <div>
-                    <h5 className="fw-bold mb-3">
-                      <i className="fas fa-star me-2"></i>
-                      Product Features
-                    </h5>
-                    {formData.features.map((feature, index) => (
-                      <div key={index} className="d-flex mb-3">
+                      <Row>
+                        <Col md={6}>
+                          <Form.Group className="mb-3">
+                            <Form.Label className="fw-bold">
+                              Category <span className="text-danger">*</span>
+                            </Form.Label>
+                            <Form.Control
+                              type="text"
+                              value={formData.category}
+                              onChange={(e) => setFormData({ ...formData, category: e.target.value })}
+                              placeholder="Enter product category (e.g., Electronics, Fashion, Books, Home Decor)"
+                              required
+                            />
+                            <Form.Text className="text-muted">
+                              <i className="fas fa-lightbulb me-1"></i>
+                              Create a specific category for this product. 
+                              {uniqueCategories.length > 0 && (
+                                <>
+                                  <br />
+                                  <strong>Existing categories:</strong> {uniqueCategories.slice(0, 5).join(', ')}
+                                  {uniqueCategories.length > 5 && `... and ${uniqueCategories.length - 5} more`}
+                                </>
+                              )}
+                              <br />
+                              <strong>Examples:</strong> "Gaming Laptops", "Designer Handbags", "Kitchen Appliances", "Fitness Equipment"
+                            </Form.Text>
+                          </Form.Group>
+                        </Col>
+                      </Row>
+
+                      <Row>
+                        <Col md={6}>
+                          <Form.Group className="mb-3">
+                            <Form.Label className="fw-bold">Tags</Form.Label>
+                            <Form.Control
+                              type="text"
+                              value={formData.tags}
+                              onChange={(e) => setFormData({ ...formData, tags: e.target.value })}
+                              placeholder="smartphone, electronics, apple (comma separated)"
+                            />
+                            <Form.Text className="text-muted">
+                              Separate tags with commas to improve searchability
+                            </Form.Text>
+                          </Form.Group>
+                        </Col>
+                      </Row>
+
+                      <Row>
+                        <Col md={6}>
+                          <Form.Group className="mb-3">
+                            <Form.Label className="fw-bold">Price ($)</Form.Label>
+                            <Form.Control
+                              type="number"
+                              min="0"
+                              step="0.01"
+                              value={formData.price}
+                              onChange={e => setFormData({ ...formData, price: e.target.value })}
+                              required
+                            />
+                          </Form.Group>
+                        </Col>
+                        <Col md={6}>
+                          <Form.Group className="mb-3">
+                            <Form.Label className="fw-bold">Shipping Cost ($)</Form.Label>
+                            <Form.Control
+                              type="number"
+                              min="0"
+                              step="0.01"
+                              value={formData.shippingCost}
+                              onChange={e => setFormData({ ...formData, shippingCost: e.target.value })}
+                              placeholder="Set shipping cost for this product"
+                            />
+                          </Form.Group>
+                        </Col>
+                      </Row>
+
+                      <Form.Group className="mb-3">
+                        <Form.Label className="fw-bold">
+                          Product Description <span className="text-danger">*</span>
+                        </Form.Label>
                         <Form.Control
-                          type="text"
-                          value={feature}
-                          onChange={(e) => handleFeatureChange(index, e.target.value)}
-                          placeholder="Enter product feature"
-                          className="me-2"
+                          as="textarea"
+                          rows={5}
+                          value={formData.description}
+                          onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                          placeholder="Describe your product in detail..."
+                          required
                         />
-                        <Button
-                          variant="outline-danger"
-                          onClick={() => removeFeature(index)}
-                          disabled={formData.features.length === 1}
-                        >
-                          <i className="fas fa-trash"></i>
-                        </Button>
-                      </div>
-                    ))}
-                    <Button
-                      variant="outline-primary"
-                      onClick={addFeature}
-                    >
-                      <i className="fas fa-plus me-2"></i>
-                      Add Feature
-                    </Button>
-                  </div>
-                </Tab.Pane>
+                      </Form.Group>
 
-                {/* Media & Images Tab */}
-                <Tab.Pane eventKey="media">
-                  <h5 className="fw-bold mb-3">
-                    <i className="fas fa-images me-2"></i>
-                    Product Images <span className="badge bg-secondary ms-2">Optional</span>
-                  </h5>
-                  <p className="text-muted mb-3">
-                    Upload high-quality images of your product directly from your device. The first image will be used as the main product image.
-                    <br />
-                    <strong>Note:</strong> If no image is uploaded, a "No Image Yet..." placeholder will be shown.
-                  </p>
-                  
-                  {formData.images.map((image, index) => (
-                    <div key={index} className="mb-4 border rounded p-3">
-                      <div className="d-flex justify-content-between align-items-center mb-3">
+                      <Form.Group className="mb-3">
+                        <Form.Check
+                          type="checkbox"
+                          label="Feature this product (will appear in featured sections)"
+                          checked={formData.featured}
+                          onChange={(e) => setFormData({ ...formData, featured: e.target.checked })}
+                        />
+                      </Form.Group>
                         <Form.Label className="fw-bold mb-0">
                           <i className="fas fa-upload me-2"></i>
                           Image {index + 1} {index === 0 && <Badge bg="primary">Main Image</Badge>}

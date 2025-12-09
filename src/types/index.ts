@@ -8,6 +8,7 @@ export interface Product {
   price: number;
   discountPrice?: number;
   salePrice?: number; // Added this for admin interface
+  shippingCost?: number; // Added for admin control
   category: string;
   images: string[];
   stock: number;
