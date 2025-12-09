@@ -1678,10 +1678,10 @@ const AdminProducts: React.FC = () => {
             disabled={saving || !formData.name || !formData.price || !formData.category}
           >
             {saving ? (
-                    <>
+              <>
                 <Spinner animation="border" size="sm" className="me-2" />
                 Saving...
-                    </>
+              </>
             ) : (
               <>
                 <i className={`fas ${editingProduct ? 'fa-save' : 'fa-plus'} me-2`}></i>
